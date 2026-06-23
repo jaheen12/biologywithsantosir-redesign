@@ -52,6 +52,24 @@ const About: React.FC = () => {
           </div>
         </section>
 
+        {/* Personal Message from Santo Sir */}
+        <section className="bg-primary-light/40 border border-primary/20 rounded-2xl p-6 md:p-8">
+          <h2 className="text-xl font-bold text-text-primary mb-4 flex items-center gap-2">
+            <span role="img" aria-label="writing hand">✍️</span> আমার কথা ও স্বপ্ন (My Story & Vision)
+          </h2>
+          <div className="text-text-secondary text-base leading-relaxed space-y-4 font-sans">
+            <p>
+              আমি একজন শিক্ষক। পড়ানো পেশা থেকে কখন নেশায় পরিণত হয়েছে তা আমি নিজেই বুঝতেই পারিনি। মানুষকে শেখাতে আমার ভীষণ ভালোলাগে। আর ক্লাসরুমের চার দেয়ালের বাইরে গিয়েও শিক্ষার্থীদের শেখানোর তীব্র ইচ্ছা থেকেই মূলত এই জীববিজ্ঞানের ব্লগসাইট তৈরি করেছি।
+            </p>
+            <p>
+              আমার জ্ঞান সীমিত হতে পারে, তবে সঠিক ও নির্ভেজাল জ্ঞান মানুষের মাঝে ছড়িয়ে দিতে আমি দৃঢ় প্রতিজ্ঞ। আমি বই পড়তে ভালোবাসি এবং লেখালেখি করি একান্তই শখের বশে। খুব ভালো ব্যাকরণ না জানার কারণে লেখার মান হয়তো মোটামুটি হতে পারে, তবে আমার মূল দৃষ্টি শিক্ষার্থীদের সঠিকভাবে তথ্য জানানোর দিকে—ভাষার মাধুর্যের দিকে নয়।
+            </p>
+            <p>
+              আমার যেটুকু সামর্থ্য আছে, সেটুকু দিয়েই আমি চেষ্টা করে যাবো। স্বপ্ন দেখি এই ব্লগসাইট একদিন প্রতিটি শিক্ষার্থীর দরজায় পৌঁছাবে এবং সবার জ্ঞান ভাণ্ডার সমৃদ্ধ করবে। আপনাদের সবার কাছে আমার শুধু একটিই চাওয়া—আমার এই ভালো কাজে সহযোগিতা করুন এবং মানুষের মাঝে অজানাকে জানার কৌতুহল মেটানোর এই ক্ষুদ্র প্রচেষ্টাকে অব্যাহত রাখতে সাহায্য করুন।
+            </p>
+          </div>
+        </section>
+
         {/* Dynamic quotes */}
         <section className="text-center bg-primary-light border border-primary/10 rounded-xl p-8">
           <h3 className="text-primary font-bold text-lg mb-2">"জীববিজ্ঞান শেখো সহজভাবে, বুঝে বুঝে"</h3>

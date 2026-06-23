@@ -10,7 +10,11 @@ const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">🌿</span>
+              <img 
+                src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+                alt="Santo Sir Logo" 
+                className="w-8 h-8 rounded-full object-cover border border-primary/20"
+              />
               <span className="text-xl font-display font-bold text-primary">Santo Sir Bio</span>
             </Link>
             <p className="text-text-secondary text-sm leading-relaxed max-w-sm">

@@ -32,7 +32,11 @@ const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl">🌿</span>
+            <img 
+              src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+              alt="Santo Sir Logo" 
+              className="w-8 h-8 rounded-full object-cover border border-primary/20"
+            />
             <span className="text-xl font-display font-bold text-primary tracking-tight">
               Santo Sir Bio
             </span>
@@ -146,7 +150,11 @@ const Navbar: React.FC = () => {
           >
             <div className="flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2">
-                <span className="text-2xl">🌿</span>
+                <img 
+                  src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+                  alt="Santo Sir Logo" 
+                  className="w-8 h-8 rounded-full object-cover border border-primary/20"
+                />
                 <span className="text-xl font-display font-bold text-primary">Santo Sir Bio</span>
               </Link>
               <button 

@@ -193,13 +193,15 @@ const Article: React.FC = () => {
           <div className="lg:hidden w-full bg-surface-alt border border-border rounded-xl p-4">
             <button 
               onClick={() => setTocOpen(!tocOpen)}
-              className="flex items-center justify-between w-full font-bold text-sm text-text-primary uppercase tracking-wider"
+              className="flex items-center justify-between w-full font-bold text-sm text-text-primary uppercase tracking-wider cursor-pointer"
+              aria-expanded={tocOpen}
+              aria-controls="mobile-toc-menu"
             >
               <span className="flex items-center gap-2">📂 সূচিপত্র</span>
               {tocOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
             {tocOpen && (
-              <ul className="mt-4 space-y-2 border-t border-border pt-3 text-sm font-medium">
+              <ul id="mobile-toc-menu" className="mt-4 space-y-2 border-t border-border pt-3 text-sm font-medium">
                 {headings.map((heading, i) => {
                   const id = heading.toLowerCase().replace(/[^\w\u0e00-\u0e7f\u0980-\u09ff]/g, '-');
                   return (

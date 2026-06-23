@@ -50,12 +50,16 @@ const Navbar: React.FC = () => {
                 onClick={() => setClassesOpen(!classesOpen)}
                 onBlur={() => setTimeout(() => setClassesOpen(false), 200)}
                 className="flex items-center gap-1 hover:text-primary transition-colors duration-200 py-2 cursor-pointer"
+                aria-expanded={classesOpen}
+                aria-haspopup="menu"
+                aria-controls="classes-menu"
+                id="classes-menu-btn"
               >
                 Classes
                 <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" />
               </button>
               
-              <div className="absolute top-full left-0 mt-1 w-64 bg-surface border border-border rounded-xl shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div id="classes-menu" role="menu" aria-labelledby="classes-menu-btn" className="absolute top-full left-0 mt-1 w-64 bg-surface border border-border rounded-xl shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="grid gap-3">
                   <div>
                     <h5 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">School Level</h5>
@@ -80,12 +84,16 @@ const Navbar: React.FC = () => {
                 onClick={() => setTopicsOpen(!topicsOpen)}
                 onBlur={() => setTimeout(() => setTopicsOpen(false), 200)}
                 className="flex items-center gap-1 hover:text-primary transition-colors duration-200 py-2 cursor-pointer"
+                aria-expanded={topicsOpen}
+                aria-haspopup="menu"
+                aria-controls="topics-menu"
+                id="topics-menu-btn"
               >
                 Topics
                 <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" />
               </button>
               
-              <div className="absolute top-full left-0 mt-1 w-48 bg-surface border border-border rounded-xl shadow-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div id="topics-menu" role="menu" aria-labelledby="topics-menu-btn" className="absolute top-full left-0 mt-1 w-48 bg-surface border border-border rounded-xl shadow-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <Link to="/topics/genetics" className="block text-sm text-text-primary hover:bg-primary-light hover:text-primary px-3 py-2 rounded-lg">Genetics</Link>
                 <Link to="/topics/cell-biology" className="block text-sm text-text-primary hover:bg-primary-light hover:text-primary px-3 py-2 rounded-lg">Cell Biology</Link>
                 <Link to="/topics/physiology" className="block text-sm text-text-primary hover:bg-primary-light hover:text-primary px-3 py-2 rounded-lg">Physiology</Link>
@@ -144,6 +152,7 @@ const Navbar: React.FC = () => {
               <button 
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-text-secondary hover:text-primary p-1 rounded-full hover:bg-surface-alt"
+                aria-label="Close mobile menu"
               >
                 <X size={20} />
               </button>
@@ -157,12 +166,14 @@ const Navbar: React.FC = () => {
                 <button 
                   onClick={() => setClassesOpen(!classesOpen)}
                   className="flex items-center justify-between w-full hover:text-primary py-1 text-left"
+                  aria-expanded={classesOpen}
+                  aria-controls="mobile-classes-menu"
                 >
                   Classes
                   <ChevronDown size={16} className={`transition-transform duration-200 ${classesOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {classesOpen && (
-                  <div className="pl-4 mt-2 flex flex-col gap-2 border-l border-border text-sm font-medium">
+                  <div id="mobile-classes-menu" className="pl-4 mt-2 flex flex-col gap-2 border-l border-border text-sm font-medium">
                     <Link to="/classes/ssc-biology" className="hover:text-primary py-1">SSC Biology</Link>
                     <Link to="/classes/hsc-zoology" className="hover:text-primary py-1">HSC Zoology</Link>
                     <Link to="/classes/hsc-botany" className="hover:text-primary py-1">HSC Botany</Link>
@@ -176,12 +187,14 @@ const Navbar: React.FC = () => {
                 <button 
                   onClick={() => setTopicsOpen(!topicsOpen)}
                   className="flex items-center justify-between w-full hover:text-primary py-1 text-left"
+                  aria-expanded={topicsOpen}
+                  aria-controls="mobile-topics-menu"
                 >
                   Topics
                   <ChevronDown size={16} className={`transition-transform duration-200 ${topicsOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {topicsOpen && (
-                  <div className="pl-4 mt-2 flex flex-col gap-2 border-l border-border text-sm font-medium">
+                  <div id="mobile-topics-menu" className="pl-4 mt-2 flex flex-col gap-2 border-l border-border text-sm font-medium">
                     <Link to="/topics/genetics" className="hover:text-primary py-1">Genetics</Link>
                     <Link to="/topics/cell-biology" className="hover:text-primary py-1">Cell Biology</Link>
                     <Link to="/topics/physiology" className="hover:text-primary py-1">Physiology</Link>

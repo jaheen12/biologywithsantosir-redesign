@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
                 loading="lazy"
                 className="w-8 h-8 rounded-full object-cover border border-primary/20"
               />
-              <span className="text-xl font-display font-bold text-primary">Santo Sir Bio</span>
+              <span className="text-xl font-display font-bold text-primary">Santo Sir Biology</span>
             </Link>
             <p className="text-text-secondary text-base leading-relaxed max-w-sm">
               জীববিজ্ঞান শেখো সহজভাবে, বুঝে বুঝে। এসএসসি, এইচএসসি এবং অনার্স পর্যায়ের জীববিজ্ঞান পাঠ্যক্রমের সহায়িকা।

@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
               className="w-8 h-8 rounded-full object-cover border border-primary/20"
             />
             <span className="text-xl font-display font-bold text-primary tracking-tight">
-              Santo Sir Bio
+              Santo Sir Biology
             </span>
           </Link>
 
@@ -159,7 +159,7 @@ const Navbar: React.FC = () => {
                   height="32"
                   className="w-8 h-8 rounded-full object-cover border border-primary/20"
                 />
-                <span className="text-xl font-display font-bold text-primary">Santo Sir Bio</span>
+                <span className="text-xl font-display font-bold text-primary">Santo Sir Biology</span>
               </Link>
               <button 
                 onClick={() => setMobileMenuOpen(false)}

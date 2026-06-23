@@ -37,7 +37,7 @@ Chosen palette: **Teal-Leaf Green** — inspired by the color of fresh plant cel
 
 | Role | Font | Weight | Size |
 |---|---|---|---|
-| Display / Hero headline | `Playfair Display` | 700 | 48–64px |
+| Display / Hero headline | `Inter` | 700 | 48–64px |
 | Section headings (H2) | `Inter` | 700 | 28–32px |
 | Card headings (H3) | `Inter` | 600 | 18–20px |
 | Body / prose | `Inter` | 400 | 16px, line-height 1.75 |
@@ -153,7 +153,7 @@ e.g. `/topics/genetics` not `/বিষয়/জেনেটিক্স`
 
 **Hero section specifics:**
 - Background: `--surface-alt` (#F7FAFA) with a very subtle leaf-cell SVG pattern (opacity 4%)
-- Headline in `Playfair Display` 56px, color `--text-primary`
+- Headline in `Inter` 56px, color `--text-primary`
 - Green underline accent on key word (জীববিজ্ঞান)
 - No ads in the hero. First ad placement: after the 3rd post card.
 

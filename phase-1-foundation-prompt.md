@@ -29,9 +29,8 @@ Please set up the foundational layer of the application. Focus on modularity so 
      - `--border`: `#DCE8E4`
      - `--error`: `#D94040`
    - Configure typography (import from Google Fonts):
-     - Display/Hero: `Playfair Display`
-     - Headings & UI: `Inter`
-     - Bangla text: `Hind Siliguri`
+     - Display/Hero & Headings: `Inter`
+     - Bangla text & digits: `Hind Siliguri`
      - Code/Formulas: `JetBrains Mono`
 
 3. **Routing Setup:**

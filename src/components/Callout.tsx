@@ -1,11 +1,14 @@
 import React from 'react';
 
 interface CalloutProps {
-  title?: string;
+  title?: React.ReactNode;
   children: React.ReactNode;
 }
 
-const Callout: React.FC<CalloutProps> = ({ title = '💡 সংজ্ঞা', children }) => {
+const Callout: React.FC<CalloutProps> = ({ 
+  title = <><span role="img" aria-label="lightbulb">💡</span> সংজ্ঞা</>, 
+  children 
+}) => {
   return (
     <div className="my-6 p-5 bg-[#FFF8E8] border-l-4 border-accent rounded-r-lg shadow-sm">
       {title && (

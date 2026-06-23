@@ -69,7 +69,7 @@ const Article: React.FC = () => {
       // Callout Block Definition (if it contains definition indicators)
       if (paragraph.includes('💡') || paragraph.includes('সংজ্ঞা')) {
         return (
-          <Callout key={index} title="💡 গুরুত্বপূর্ণ সংজ্ঞা">
+          <Callout key={index} title={<><span role="img" aria-label="lightbulb">💡</span> গুরুত্বপূর্ণ সংজ্ঞা</>}>
             {paragraph.replace('💡', '').trim()}
           </Callout>
         );
@@ -122,13 +122,13 @@ const Article: React.FC = () => {
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-1 text-sm text-text-muted mb-6 flex-wrap font-semibold uppercase tracking-wider">
         <Link to="/" className="hover:text-primary">Home</Link>
-        <ChevronRight size={12} />
+        <ChevronRight size={12} aria-hidden="true" />
         <Link to="/topics" className="hover:text-primary">Topics</Link>
-        <ChevronRight size={12} />
+        <ChevronRight size={12} aria-hidden="true" />
         <Link to={`/topics/${post.topic_id}`} className="hover:text-primary capitalize">
           {post.topic_id.replace('-', ' ')}
         </Link>
-        <ChevronRight size={12} />
+        <ChevronRight size={12} aria-hidden="true" />
         <span className="text-text-secondary truncate max-w-[200px]">{post.title}</span>
       </nav>
 
@@ -147,15 +147,21 @@ const Article: React.FC = () => {
 
         <div className="flex flex-wrap items-center gap-6 text-sm text-text-secondary">
           <span className="flex items-center gap-1.5">
-            <User size={16} className="text-primary-mid" />
+            <User size={16} className="text-primary-mid" aria-hidden="true" />
             {post.author}
           </span>
           <span className="flex items-center gap-1.5">
-            <Calendar size={16} className="text-primary-mid" />
-            {new Date(post.created_at).toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' })}
+            <Calendar size={16} className="text-primary-mid" aria-hidden="true" />
+            {(() => {
+              const dateObj = new Date(post.created_at);
+              const day = dateObj.getDate();
+              const month = dateObj.toLocaleDateString('bn-BD', { month: 'long' });
+              const year = dateObj.getFullYear();
+              return `${day} ${month}, ${year}`;
+            })()}
           </span>
           <span className="flex items-center gap-1.5">
-            <Clock size={16} className="text-primary-mid" />
+            <Clock size={16} className="text-primary-mid" aria-hidden="true" />
             {post.read_time} মিনিট পাঠ
           </span>
         </div>
@@ -167,7 +173,7 @@ const Article: React.FC = () => {
         <aside className="hidden lg:block lg:col-span-1 border-r border-border pr-6">
           <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
             <h4 className="text-sm font-bold text-text-primary uppercase tracking-wider mb-4 flex items-center gap-2">
-              📂 সূচিপত্র
+              <span role="img" aria-label="open file folder">📂</span> সূচিপত্র
             </h4>
             {headings.length === 0 ? (
               <p className="text-sm text-text-muted">এই নিবন্ধে কোন সাব-হেডিং নেই।</p>
@@ -197,8 +203,8 @@ const Article: React.FC = () => {
               aria-expanded={tocOpen}
               aria-controls="mobile-toc-menu"
             >
-              <span className="flex items-center gap-2">📂 সূচিপত্র</span>
-              {tocOpen ? <X size={16} /> : <Menu size={16} />}
+              <span className="flex items-center gap-2"><span role="img" aria-label="open file folder">📂</span> সূচিপত্র</span>
+              {tocOpen ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
             </button>
             {tocOpen && (
               <ul id="mobile-toc-menu" className="mt-4 space-y-2 border-t border-border pt-3 text-sm font-medium">

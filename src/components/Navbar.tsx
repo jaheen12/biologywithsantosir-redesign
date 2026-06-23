@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img 
-              src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+              src="/favicon.png" 
               alt="Santo Sir Logo" 
               className="w-8 h-8 rounded-full object-cover border border-primary/20"
             />
@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
                 id="classes-menu-btn"
               >
                 Classes
-                <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" />
+                <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" aria-hidden="true" />
               </button>
               
               <div id="classes-menu" role="menu" aria-labelledby="classes-menu-btn" className="absolute top-full left-0 mt-1 w-64 bg-surface border border-border rounded-xl shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
                 id="topics-menu-btn"
               >
                 Topics
-                <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" />
+                <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" aria-hidden="true" />
               </button>
               
               <div id="topics-menu" role="menu" aria-labelledby="topics-menu-btn" className="absolute top-full left-0 mt-1 w-48 bg-surface border border-border rounded-xl shadow-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
@@ -126,7 +126,7 @@ const Navbar: React.FC = () => {
               className="text-text-secondary hover:text-primary transition-colors duration-200 p-2 rounded-full hover:bg-surface-alt"
               aria-label="Search articles"
             >
-              <Search size={20} />
+              <Search size={20} aria-hidden="true" />
             </Link>
 
             {/* Mobile Hamburger Toggle */}
@@ -135,7 +135,7 @@ const Navbar: React.FC = () => {
               className="md:hidden text-text-secondary hover:text-primary p-2 rounded-full hover:bg-surface-alt"
               aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
             </button>
           </div>
         </div>
@@ -151,7 +151,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2">
                 <img 
-                  src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+                  src="/favicon.png" 
                   alt="Santo Sir Logo" 
                   className="w-8 h-8 rounded-full object-cover border border-primary/20"
                 />
@@ -162,7 +162,7 @@ const Navbar: React.FC = () => {
                 className="text-text-secondary hover:text-primary p-1 rounded-full hover:bg-surface-alt"
                 aria-label="Close mobile menu"
               >
-                <X size={20} />
+                <X size={20} aria-hidden="true" />
               </button>
             </div>
 
@@ -178,7 +178,7 @@ const Navbar: React.FC = () => {
                   aria-controls="mobile-classes-menu"
                 >
                   Classes
-                  <ChevronDown size={16} className={`transition-transform duration-200 ${classesOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={16} className={`transition-transform duration-200 ${classesOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
                 {classesOpen && (
                   <div id="mobile-classes-menu" className="pl-4 mt-2 flex flex-col gap-2 border-l border-border text-sm font-medium">
@@ -199,7 +199,7 @@ const Navbar: React.FC = () => {
                   aria-controls="mobile-topics-menu"
                 >
                   Topics
-                  <ChevronDown size={16} className={`transition-transform duration-200 ${topicsOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={16} className={`transition-transform duration-200 ${topicsOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
                 {topicsOpen && (
                   <div id="mobile-topics-menu" className="pl-4 mt-2 flex flex-col gap-2 border-l border-border text-sm font-medium">

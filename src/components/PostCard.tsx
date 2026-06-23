@@ -32,11 +32,11 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
       <div className="flex items-center justify-between text-sm text-text-muted border-t border-border/50 pt-3 mt-auto font-sans">
         <span className="flex items-center gap-1">
-          <User size={14} />
+          <User size={14} aria-hidden="true" />
           {post.author}
         </span>
         <span className="flex items-center gap-1">
-          <Clock size={14} />
+          <Clock size={14} aria-hidden="true" />
           {post.read_time} min read
         </span>
       </div>

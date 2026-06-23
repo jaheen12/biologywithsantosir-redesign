@@ -15,28 +15,28 @@ const Home: React.FC = () => {
       title: 'SSC Biology',
       subTitle: 'দশম শ্রেণী',
       link: '/classes/ssc-biology',
-      icon: <BookOpen className="text-primary" size={24} />,
+      icon: <BookOpen className="text-primary" size={24} aria-hidden="true" />,
       bg: 'bg-primary-light border-primary/20',
     },
     {
       title: 'HSC Zoology',
       subTitle: 'একাদশ-দ্বাদশ প্রাণিবিজ্ঞান',
       link: '/classes/hsc-zoology',
-      icon: <Dna className="text-primary" size={24} />,
+      icon: <Dna className="text-primary" size={24} aria-hidden="true" />,
       bg: 'bg-primary-light border-primary/20',
     },
     {
       title: 'HSC Botany',
       subTitle: 'একাদশ-দ্বাদশ উদ্ভিদবিজ্ঞান',
       link: '/classes/hsc-botany',
-      icon: <GraduationCap className="text-primary" size={24} />,
+      icon: <GraduationCap className="text-primary" size={24} aria-hidden="true" />,
       bg: 'bg-primary-light border-primary/20',
     },
     {
       title: 'Honours Biology',
       subTitle: 'বিশ্ববিদ্যালয় কোর্স',
       link: '/classes/honours',
-      icon: <Award className="text-primary" size={24} />,
+      icon: <Award className="text-primary" size={24} aria-hidden="true" />,
       bg: 'bg-primary-light border-primary/20',
     },
   ];
@@ -47,7 +47,7 @@ const Home: React.FC = () => {
       <section className="bg-surface-alt border-y border-border py-16 md:py-24 relative overflow-hidden">
         {/* Subtle leaf cell SVG background pattern */}
         <div className="absolute inset-0 opacity-4 pointer-events-none flex items-center justify-center">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
             <defs>
               <pattern id="cells" width="60" height="60" patternUnits="userSpaceOnUse">
                 <path d="M 30 0 L 60 15 L 60 45 L 30 60 L 0 45 L 0 15 Z" fill="none" stroke="#1A7A5E" strokeWidth="1" />
@@ -127,7 +127,7 @@ const Home: React.FC = () => {
           </div>
           <Link to="/topics/all" className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-mid">
             সবগুলো দেখো
-            <ArrowRight size={16} />
+            <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
 
@@ -165,7 +165,7 @@ const Home: React.FC = () => {
           <Link to="/topics/all">
             <Button variant="outline" className="w-full">
               সবগুলো পোস্ট দেখো
-              <ArrowRight size={16} className="ml-1 inline" />
+              <ArrowRight size={16} className="ml-1 inline" aria-hidden="true" />
             </Button>
           </Link>
         </div>
@@ -175,7 +175,7 @@ const Home: React.FC = () => {
       <section className="bg-surface-alt border-y border-border py-16">
         <Container className="grid grid-cols-1 md:grid-cols-3 items-center gap-12">
             <img 
-              src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+              src="/favicon.png" 
               alt="Santo Sir" 
               className="w-48 h-48 rounded-full object-cover border-4 border-primary/20 shadow-md"
             />

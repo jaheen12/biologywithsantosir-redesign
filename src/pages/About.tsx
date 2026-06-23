@@ -7,7 +7,7 @@ const About: React.FC = () => {
     <Container className="py-12 font-sans max-w-4xl">
       <div className="text-center mb-12">
         <img 
-          src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+          src="/favicon.png" 
           alt="Santo Sir" 
           className="w-32 h-32 rounded-full object-cover border-4 border-primary/20 shadow-md mx-auto mb-4"
         />
@@ -21,7 +21,7 @@ const About: React.FC = () => {
         {/* Academic Credentials */}
         <section className="bg-surface-alt border border-border rounded-xl p-6 md:p-8">
           <h2 className="text-xl font-bold text-text-primary mb-4 flex items-center gap-2">
-            🎓 শিক্ষাগত যোগ্যতা (Academic Credentials)
+            <span role="img" aria-label="graduation cap">🎓</span> শিক্ষাগত যোগ্যতা (Academic Credentials)
           </h2>
           <div className="space-y-4">
             <div className="border-l-2 border-primary pl-4">
@@ -39,13 +39,13 @@ const About: React.FC = () => {
         {/* Experience & stats */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="border border-border rounded-xl p-6">
-            <h3 className="font-bold text-text-primary mb-2">📚 শিক্ষাদানের অভিজ্ঞতা</h3>
+            <h3 className="font-bold text-text-primary mb-2"><span role="img" aria-label="books">📚</span> শিক্ষাদানের অভিজ্ঞতা</h3>
             <p className="text-text-secondary text-sm leading-relaxed">
               বিগত 10 বছর ধরে অফলাইন ও অনলাইনে নিয়মিত এসএসসি, এইচএসসি এবং অনার্স স্তরের জীববিজ্ঞানের ক্লাস নিয়ে আসছি। এই সময়ে 50,000-এরও বেশি শিক্ষার্থী আমার লেকচার এবং নোটস দ্বারা উপকৃত হয়েছে।
             </p>
           </div>
           <div className="border border-border rounded-xl p-6">
-            <h3 className="font-bold text-text-primary mb-2">🎯 আমার মূল লক্ষ্য</h3>
+            <h3 className="font-bold text-text-primary mb-2"><span role="img" aria-label="bullseye">🎯</span> আমার মূল লক্ষ্য</h3>
             <p className="text-text-secondary text-sm leading-relaxed">
               জীববিজ্ঞান শুধু চিত্র আঁকা আর মুখস্থ করার বিষয় নয়। আমাদের শরীরের অঙ্গাণু ও উদ্ভিদকোষের জটিল বিক্রিয়াগুলো যদি শিক্ষার্থীরা অন্তর দিয়ে অনুধাবন করতে পারে, তবেই আমার শিক্ষকতা সফল।
             </p>

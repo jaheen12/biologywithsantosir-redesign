@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <img 
-                src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+                src="/favicon.png" 
                 alt="Santo Sir Logo" 
                 className="w-8 h-8 rounded-full object-cover border border-primary/20"
               />

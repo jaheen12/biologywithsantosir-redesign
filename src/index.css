@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+Bengali:wght@300;400;500;600;700;800&display=swap');
 
 @import "tailwindcss";
 
@@ -15,9 +15,9 @@
   --color-border: #DCE8E4;
   --color-error: #D94040;
 
-  /* Standard professional fonts: Inter for English and numerals, Hind Siliguri for Bangla text and numerals */
-  --font-display: 'Inter', 'Hind Siliguri', system-ui, -apple-system, sans-serif;
-  --font-sans: 'Inter', 'Hind Siliguri', system-ui, -apple-system, sans-serif;
+  /* Traditional book/newspaper serif style for Bengali, Inter for clean English digits/text */
+  --font-display: 'Inter', 'Noto Serif Bengali', 'SolaimanLipi', 'Kalpurush', Georgia, serif;
+  --font-sans: 'Inter', 'Noto Serif Bengali', 'SolaimanLipi', 'Kalpurush', Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 

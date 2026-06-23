@@ -31,4 +31,22 @@ body {
   padding: 0;
   background-color: var(--color-surface);
   color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure all interactive controls and form elements inherit the standard font stack */
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Set default heading font family globally across the application */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+/* Ensure mono font overrides are handled natively */
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
 }

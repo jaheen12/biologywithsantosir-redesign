@@ -49,7 +49,7 @@ const Article: React.FC = () => {
       // Bullets
       if (paragraph.startsWith('- ') || paragraph.startsWith('* ')) {
         return (
-          <ul key={index} className="list-disc pl-6 my-4 space-y-2 text-text-secondary font-sans leading-relaxed">
+          <ul key={index} className="list-disc pl-6 my-4 space-y-2 text-text-primary font-sans leading-relaxed">
             {paragraph.split('\n').map((li, i) => (
               <li key={i}>{li.replace(/^[-*]\s+/, '')}</li>
             ))}
@@ -59,7 +59,7 @@ const Article: React.FC = () => {
       // Numbered List
       if (/^\d+\.\s+/.test(paragraph)) {
         return (
-          <ol key={index} className="list-decimal pl-6 my-4 space-y-2 text-text-secondary font-sans leading-relaxed">
+          <ol key={index} className="list-decimal pl-6 my-4 space-y-2 text-text-primary font-sans leading-relaxed">
             {paragraph.split('\n').map((li, i) => (
               <li key={i}>{li.replace(/^\d+\.\s+/, '')}</li>
             ))}
@@ -84,7 +84,7 @@ const Article: React.FC = () => {
       });
 
       return (
-        <p key={index} className="text-text-secondary text-base leading-relaxed my-4 font-sans">
+        <p key={index} className="text-text-primary text-base leading-relaxed my-4 font-sans">
           {formattedText}
         </p>
       );

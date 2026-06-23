@@ -174,11 +174,11 @@ const Home: React.FC = () => {
       {/* About Instructor Snippet */}
       <section className="bg-surface-alt border-y border-border py-16">
         <Container className="grid grid-cols-1 md:grid-cols-3 items-center gap-12">
-          <div className="flex justify-center md:justify-start">
-            <div className="w-48 h-48 rounded-full border-4 border-primary/20 bg-primary/10 flex items-center justify-center text-6xl shadow-inner" role="img" aria-label="Instructor profile photo placeholder">
-              👨‍🏫
-            </div>
-          </div>
+            <img 
+              src="https://biologywithsantosir.com/wp-content/uploads/2024/12/About-Me-biologywithsantosir.com_-1536x866.png" 
+              alt="Santo Sir" 
+              className="w-48 h-48 rounded-full object-cover border-4 border-primary/20 shadow-md"
+            />
           <div className="md:col-span-2 text-center md:text-left font-sans">
             <Badge variant="hsc" className="mb-2">শিক্ষক পরিচিতি</Badge>
             <h2 className="text-3xl font-bold text-text-primary mb-4">Santo Sir (সান্টো স্যার)</h2>

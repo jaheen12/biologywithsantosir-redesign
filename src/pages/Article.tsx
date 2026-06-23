@@ -5,6 +5,8 @@ import { usePost } from '../hooks/usePosts';
 import Container from '../components/ui/Container';
 import Badge from '../components/ui/Badge';
 import Callout from '../components/Callout';
+import SEO from '../components/SEO';
+import ReadingProgress from '../components/ReadingProgress';
 
 const Article: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -117,8 +119,72 @@ const Article: React.FC = () => {
     );
   }
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `https://biologywithsantosir.com/topics/${post.topic_id}/${post.slug}#article`,
+        "headline": post.title,
+        "description": post.excerpt,
+        "author": {
+          "@type": "Person",
+          "name": post.author
+        },
+        "datePublished": post.created_at,
+        "dateModified": post.updated_at || post.created_at,
+        "publisher": {
+          "@type": "Organization",
+          "name": "Biology with Santo Sir",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://biologywithsantosir.com/favicon.png"
+          }
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `https://biologywithsantosir.com/topics/${post.topic_id}/${post.slug}#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://biologywithsantosir.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Topics",
+            "item": "https://biologywithsantosir.com/topics"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": post.topic_id.replace('-', ' '),
+            "item": `https://biologywithsantosir.com/topics/${post.topic_id}`
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": post.title,
+            "item": `https://biologywithsantosir.com/topics/${post.topic_id}/${post.slug}`
+          }
+        ]
+      }
+    ]
+  };
+
   return (
-    <Container className="py-8 font-sans">
+    <>
+      <SEO 
+        title={post.title} 
+        description={post.excerpt} 
+        type="article"
+        schema={schema}
+      />
+      <ReadingProgress />
+      <Container className="py-8 font-sans">
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-1 text-sm text-text-muted mb-6 flex-wrap font-semibold uppercase tracking-wider">
         <Link to="/" className="hover:text-primary">Home</Link>
@@ -233,6 +299,7 @@ const Article: React.FC = () => {
         </article>
       </div>
     </Container>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
 import { useMCQs } from '../hooks/useMCQs';
 import { HelpCircle, ChevronRight, RotateCcw, CheckCircle2, XCircle } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Mcq: React.FC = () => {
   const [topicFilter, setTopicFilter] = useState('all');
@@ -78,7 +79,12 @@ const Mcq: React.FC = () => {
   const completedProgressPercentage = mcqs.length > 0 ? ((currentIndex + (isSubmitted ? 1 : 0)) / mcqs.length) * 100 : 0;
 
   return (
-    <Container className="py-12 font-sans max-w-4xl">
+    <>
+      <SEO 
+        title="কুইজ ও MCQ অনুশীলন" 
+        description="জীববিজ্ঞানের অধ্যায়ভিত্তিক ইন্টারেক্টিভ বহুনির্বাচনী প্রশ্ন (MCQ) এবং কুইজ অনুশীলন করে নিজের প্রস্তুতি ঝালিয়ে নিন সঠিক ব্যাখ্যার মাধ্যমে।" 
+      />
+      <Container className="py-12 font-sans max-w-4xl">
       {/* Page Header */}
       <div className="border-b border-border pb-8 mb-8 text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">
@@ -303,6 +309,7 @@ const Mcq: React.FC = () => {
         </div>
       )}
     </Container>
+    </>
   );
 };
 

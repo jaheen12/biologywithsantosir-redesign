@@ -35,6 +35,8 @@ const Navbar: React.FC = () => {
             <img 
               src="/favicon.png" 
               alt="Santo Sir Logo" 
+              width="32"
+              height="32"
               className="w-8 h-8 rounded-full object-cover border border-primary/20"
             />
             <span className="text-xl font-display font-bold text-primary tracking-tight">
@@ -153,6 +155,8 @@ const Navbar: React.FC = () => {
                 <img 
                   src="/favicon.png" 
                   alt="Santo Sir Logo" 
+                  width="32"
+                  height="32"
                   className="w-8 h-8 rounded-full object-cover border border-primary/20"
                 />
                 <span className="text-xl font-display font-bold text-primary">Santo Sir Bio</span>

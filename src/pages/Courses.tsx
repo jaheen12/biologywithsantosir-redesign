@@ -2,10 +2,16 @@ import React from 'react';
 import Container from '../components/ui/Container';
 import { BookOpen, Star, ArrowRight } from 'lucide-react';
 import Button from '../components/ui/Button';
+import SEO from '../components/SEO';
 
 const Courses: React.FC = () => {
   return (
-    <Container className="py-12 font-sans">
+    <>
+      <SEO 
+        title="পেইড কোর্সসমূহ" 
+        description="সান্টো স্যারের বিশেষ তত্ত্বাবধানে জীববিজ্ঞান প্রিপারেশন। লাইভ ক্লাস, নিয়মিত পরীক্ষা এবং ডাউট সলভিং সেশন।" 
+      />
+      <Container className="py-12 font-sans">
       <div className="border-b border-border pb-8 mb-8 text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">
           পেইড কোর্সসমূহ (Premium Courses)
@@ -41,6 +47,7 @@ const Courses: React.FC = () => {
         </div>
       </div>
     </Container>
+    </>
   );
 };
 

@@ -1,14 +1,22 @@
 import React from 'react';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
+import SEO from '../components/SEO';
 
 const About: React.FC = () => {
   return (
-    <Container className="py-12 font-sans max-w-4xl">
+    <>
+      <SEO 
+        title="শিক্ষক পরিচিতি" 
+        description="সান্টো স্যার (Santo Sir) - ঢাকা বিশ্ববিদ্যালয় থেকে প্রাণিবিদ্যায় এমএসসি এবং দীর্ঘ ১০ বছরেরও বেশি সময় ধরে জীববিজ্ঞান শিক্ষকতায় নিয়োজিত।" 
+      />
+      <Container className="py-12 font-sans max-w-4xl">
       <div className="text-center mb-12">
         <img 
           src="/favicon.png" 
           alt="Santo Sir" 
+          width="128"
+          height="128"
           className="w-32 h-32 rounded-full object-cover border-4 border-primary/20 shadow-md mx-auto mb-4"
         />
         <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-2">
@@ -85,6 +93,7 @@ const About: React.FC = () => {
         </div>
       </div>
     </Container>
+    </>
   );
 };
 

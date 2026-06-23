@@ -6,6 +6,7 @@ import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
 import PostCard from '../components/PostCard';
+import SEO from '../components/SEO';
 
 const Home: React.FC = () => {
   const { posts, loading, error } = useLatestPosts(6);
@@ -42,7 +43,12 @@ const Home: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-16 py-8">
+    <>
+      <SEO 
+        title="জীববিজ্ঞান সহজভাবে, বুঝে বুঝে" 
+        description="এসএসসি, এইচএসসি এবং অনার্স স্তরের জীববিজ্ঞান সিলেবাসের জটিল বিষয়গুলো সহজ বাংলায় শিখুন সান্টো স্যারের সাথে।" 
+      />
+      <div className="flex flex-col gap-16 py-8">
       {/* Hero Section */}
       <section className="bg-surface-alt border-y border-border py-16 md:py-24 relative overflow-hidden">
         {/* Subtle leaf cell SVG background pattern */}
@@ -177,6 +183,9 @@ const Home: React.FC = () => {
             <img 
               src="/favicon.png" 
               alt="Santo Sir" 
+              width="192"
+              height="192"
+              loading="lazy"
               className="w-48 h-48 rounded-full object-cover border-4 border-primary/20 shadow-md"
             />
           <div className="md:col-span-2 text-center md:text-left font-sans">
@@ -193,6 +202,7 @@ const Home: React.FC = () => {
         </Container>
       </section>
     </div>
+    </>
   );
 };
 

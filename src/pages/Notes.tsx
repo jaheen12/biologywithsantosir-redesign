@@ -4,6 +4,7 @@ import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import { useNotes, trackDownload } from '../hooks/useNotes';
 import { FileText, Download, Share2, HelpCircle } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Notes: React.FC = () => {
   const [levelFilter, setLevelFilter] = useState<'all' | 'ssc' | 'hsc' | 'honours'>('all');
@@ -24,7 +25,12 @@ const Notes: React.FC = () => {
   };
 
   return (
-    <Container className="py-12 font-sans">
+    <>
+      <SEO 
+        title="ফ্রি পিডিএফ নোটস ডাউনলোড" 
+        description="এসএসসি, এইচএসসি এবং বিশ্ববিদ্যালয় অনার্স জীববিজ্ঞানের গুরুত্বপূর্ণ চিত্রসমূহ, অধ্যায়ভিত্তিক হ্যান্ডনোট এবং লেকচার শিটের ফ্রি পিডিএফ সংস্করণ ডাউনলোড করুন।" 
+      />
+      <Container className="py-12 font-sans">
       {/* Page Header */}
       <div className="border-b border-border pb-8 mb-8 text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">
@@ -131,6 +137,7 @@ const Notes: React.FC = () => {
         </div>
       )}
     </Container>
+    </>
   );
 };
 

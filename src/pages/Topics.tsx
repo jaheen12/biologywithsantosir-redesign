@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useTopicPosts } from '../hooks/usePosts';
 import Container from '../components/ui/Container';
 import PostCard from '../components/PostCard';
+import SEO from '../components/SEO';
 
 const Topics: React.FC = () => {
   const { topicId } = useParams<{ topicId?: string }>();
@@ -45,7 +46,12 @@ const Topics: React.FC = () => {
   ];
 
   return (
-    <Container className="py-12 font-sans">
+    <>
+      <SEO 
+        title={currentTopic.title} 
+        description={currentTopic.desc} 
+      />
+      <Container className="py-12 font-sans">
       <div className="border-b border-border pb-8 mb-8">
         <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">
           {currentTopic.title}
@@ -103,6 +109,7 @@ const Topics: React.FC = () => {
         </div>
       )}
     </Container>
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </h3>
         </Link>
         
-        <p className="text-text-secondary text-sm leading-relaxed mb-4 line-clamp-3 font-sans">
+        <p className="text-text-secondary text-base leading-relaxed mb-4 line-clamp-3 font-sans">
           {post.excerpt}
         </p>
       </div>

@@ -26,12 +26,12 @@ const About: React.FC = () => {
           <div className="space-y-4">
             <div className="border-l-2 border-primary pl-4">
               <h4 className="font-bold text-text-primary">MSc in Zoology</h4>
-              <p className="text-sm text-text-secondary">University of Dhaka (ঢাকা বিশ্ববিদ্যালয়)</p>
-              <p className="text-sm text-text-muted">Specialization: Entomology/Fisheries</p>
+              <p className="text-base text-text-secondary">University of Dhaka (ঢাকা বিশ্ববিদ্যালয়)</p>
+              <p className="text-base text-text-muted">Specialization: Entomology/Fisheries</p>
             </div>
             <div className="border-l-2 border-primary pl-4">
               <h4 className="font-bold text-text-primary">BSc (Hons) in Zoology</h4>
-              <p className="text-sm text-text-secondary">University of Dhaka (ঢাকা বিশ্ববিদ্যালয়)</p>
+              <p className="text-base text-text-secondary">University of Dhaka (ঢাকা বিশ্ববিদ্যালয়)</p>
             </div>
           </div>
         </section>
@@ -39,14 +39,14 @@ const About: React.FC = () => {
         {/* Experience & stats */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="border border-border rounded-xl p-6">
-            <h3 className="font-bold text-text-primary mb-2"><span role="img" aria-label="books">📚</span> শিক্ষাদানের অভিজ্ঞতা</h3>
-            <p className="text-text-secondary text-sm leading-relaxed">
+            <h3 className="text-lg font-bold text-text-primary mb-2"><span role="img" aria-label="books">📚</span> শিক্ষাদানের অভিজ্ঞতা</h3>
+            <p className="text-text-secondary text-base leading-relaxed">
               বিগত 10 বছর ধরে অফলাইন ও অনলাইনে নিয়মিত এসএসসি, এইচএসসি এবং অনার্স স্তরের জীববিজ্ঞানের ক্লাস নিয়ে আসছি। এই সময়ে 50,000-এরও বেশি শিক্ষার্থী আমার লেকচার এবং নোটস দ্বারা উপকৃত হয়েছে।
             </p>
           </div>
           <div className="border border-border rounded-xl p-6">
-            <h3 className="font-bold text-text-primary mb-2"><span role="img" aria-label="bullseye">🎯</span> আমার মূল লক্ষ্য</h3>
-            <p className="text-text-secondary text-sm leading-relaxed">
+            <h3 className="text-lg font-bold text-text-primary mb-2"><span role="img" aria-label="bullseye">🎯</span> আমার মূল লক্ষ্য</h3>
+            <p className="text-text-secondary text-base leading-relaxed">
               জীববিজ্ঞান শুধু চিত্র আঁকা আর মুখস্থ করার বিষয় নয়। আমাদের শরীরের অঙ্গাণু ও উদ্ভিদকোষের জটিল বিক্রিয়াগুলো যদি শিক্ষার্থীরা অন্তর দিয়ে অনুধাবন করতে পারে, তবেই আমার শিক্ষকতা সফল।
             </p>
           </div>
@@ -55,7 +55,7 @@ const About: React.FC = () => {
         {/* Dynamic quotes */}
         <section className="text-center bg-primary-light border border-primary/10 rounded-xl p-8">
           <h3 className="text-primary font-bold text-lg mb-2">"জীববিজ্ঞান শেখো সহজভাবে, বুঝে বুঝে"</h3>
-          <p className="text-text-secondary text-sm max-w-xl mx-auto italic leading-relaxed">
+          <p className="text-text-secondary text-base max-w-xl mx-auto italic leading-relaxed">
             পরীক্ষার চাপে জীববিজ্ঞানের সংজ্ঞাগুলো যেন বোঝা মনে না হয়। প্রতিটি জটিল চক্র (যেমন- ক্রেবস চক্র, গ্লাইকোলাইসিস) আমরা চিত্রসহ সহজ ও আকর্ষণীয় করে শিখবো।
           </p>
         </section>

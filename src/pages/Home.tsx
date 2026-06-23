@@ -81,15 +81,15 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-2xl mx-auto mt-16 border-t border-border/50 pt-8 font-sans">
             <div>
               <span className="block text-3xl font-bold text-primary">50,000+</span>
-              <span className="text-sm text-text-secondary">সন্তুষ্ট শিক্ষার্থী</span>
+              <span className="text-base text-text-secondary">সন্তুষ্ট শিক্ষার্থী</span>
             </div>
             <div>
               <span className="block text-3xl font-bold text-primary">200+</span>
-              <span className="text-sm text-text-secondary">ফ্রি ভিডিও ও পোস্ট</span>
+              <span className="text-base text-text-secondary">ফ্রি ভিডিও ও পোস্ট</span>
             </div>
             <div className="col-span-2 md:col-span-1">
               <span className="block text-3xl font-bold text-primary">10+ বছর</span>
-              <span className="text-sm text-text-secondary">শিক্ষাদানের অভিজ্ঞতা</span>
+              <span className="text-base text-text-secondary">শিক্ষাদানের অভিজ্ঞতা</span>
             </div>
           </div>
         </Container>
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-base font-bold text-text-primary">{nav.title}</h3>
-                <p className="text-sm text-text-secondary mt-0.5">{nav.subTitle}</p>
+                <p className="text-base text-text-secondary mt-0.5">{nav.subTitle}</p>
               </div>
             </Link>
           ))}
@@ -123,9 +123,9 @@ const Home: React.FC = () => {
             <h2 className="text-2xl md:text-3xl font-sans font-bold text-text-primary">
               সাম্প্রতিক জীববিজ্ঞান পাঠসমূহ
             </h2>
-            <p className="text-text-secondary text-sm mt-1">স্যার কর্তৃক লিখিত সর্বশেষ তথ্যবহুল পোস্টসমূহ</p>
+            <p className="text-text-secondary text-base mt-1">স্যার কর্তৃক লিখিত সর্বশেষ তথ্যবহুল পোস্টসমূহ</p>
           </div>
-          <Link to="/topics/all" className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-mid">
+          <Link to="/topics/all" className="hidden sm:inline-flex items-center gap-1 text-base font-semibold text-primary hover:text-primary-mid">
             সবগুলো দেখো
             <ArrowRight size={16} aria-hidden="true" />
           </Link>

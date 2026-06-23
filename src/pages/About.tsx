@@ -39,7 +39,7 @@ const About: React.FC = () => {
           <div className="border border-border rounded-xl p-6">
             <h3 className="font-bold text-text-primary mb-2">📚 শিক্ষাদানের অভিজ্ঞতা</h3>
             <p className="text-text-secondary text-sm leading-relaxed">
-              বিগত ১০ বছর ধরে অফলাইন ও অনলাইনে নিয়মিত এসএসসি, এইচএসসি এবং অনার্স স্তরের জীববিজ্ঞানের ক্লাস নিয়ে আসছি। এই সময়ে ৫০,০০০-এরও বেশি শিক্ষার্থী আমার লেকচার এবং নোটস দ্বারা উপকৃত হয়েছে।
+              বিগত 10 বছর ধরে অফলাইন ও অনলাইনে নিয়মিত এসএসসি, এইচএসসি এবং অনার্স স্তরের জীববিজ্ঞানের ক্লাস নিয়ে আসছি। এই সময়ে 50,000-এরও বেশি শিক্ষার্থী আমার লেকচার এবং নোটস দ্বারা উপকৃত হয়েছে।
             </p>
           </div>
           <div className="border border-border rounded-xl p-6">

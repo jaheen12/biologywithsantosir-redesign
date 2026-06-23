@@ -80,15 +80,15 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-2xl mx-auto mt-16 border-t border-border/50 pt-8 font-sans">
             <div>
-              <span className="block text-3xl font-bold text-primary">৫০,০০০+</span>
+              <span className="block text-3xl font-bold text-primary">50,000+</span>
               <span className="text-sm text-text-secondary">সন্তুষ্ট শিক্ষার্থী</span>
             </div>
             <div>
-              <span className="block text-3xl font-bold text-primary">২০০+</span>
+              <span className="block text-3xl font-bold text-primary">200+</span>
               <span className="text-sm text-text-secondary">ফ্রি ভিডিও ও পোস্ট</span>
             </div>
             <div className="col-span-2 md:col-span-1">
-              <span className="block text-3xl font-bold text-primary">১০+ বছর</span>
+              <span className="block text-3xl font-bold text-primary">10+ বছর</span>
               <span className="text-sm text-text-secondary">শিক্ষাদানের অভিজ্ঞতা</span>
             </div>
           </div>
@@ -184,7 +184,7 @@ const Home: React.FC = () => {
             <h2 className="text-3xl font-bold text-text-primary mb-4">Santo Sir (সান্টো স্যার)</h2>
             <h4 className="text-primary font-semibold text-lg mb-4">MSc in Zoology, University of Dhaka</h4>
             <p className="text-text-secondary text-base leading-relaxed mb-6">
-              আমি দীর্ঘ ১০ বছরেরও বেশি সময় ধরে এসএসসি, এইচএসসি এবং অনার্স পর্যায়ের জীববিজ্ঞানের জটিল টপিকগুলো শিক্ষার্থীদের একদম গোড়া থেকে বুঝিয়ে আসছি। আমার মূল লক্ষ্য মুখস্থ করার পরিবর্তে জীববিজ্ঞানের জটিল প্রক্রিয়াগুলোকে সহজভাবে মস্তিষ্কে গেঁথে দেওয়া।
+              আমি দীর্ঘ 10 বছরেরও বেশি সময় ধরে এসএসসি, এইচএসসি এবং অনার্স পর্যায়ের জীববিজ্ঞানের জটিল টপিকগুলো শিক্ষার্থীদের একদম গোড়া থেকে বুঝিয়ে আসছি। আমার মূল লক্ষ্য মুখস্থ করার পরিবর্তে জীববিজ্ঞানের জটিল প্রক্রিয়াগুলোকে সহজভাবে মস্তিষ্কে গেঁথে দেওয়া।
             </p>
             <Link to="/about">
               <Button>বিস্তারিত সার্টিফিকেট ও অভিজ্ঞতা দেখুন</Button>

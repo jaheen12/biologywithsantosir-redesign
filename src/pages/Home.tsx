@@ -109,7 +109,7 @@ const Home: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-base font-bold text-text-primary">{nav.title}</h3>
-                <p className="text-xs text-text-secondary mt-0.5">{nav.subTitle}</p>
+                <p className="text-sm text-text-secondary mt-0.5">{nav.subTitle}</p>
               </div>
             </Link>
           ))}

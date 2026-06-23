@@ -25,7 +25,7 @@ const About: React.FC = () => {
             <div className="border-l-2 border-primary pl-4">
               <h4 className="font-bold text-text-primary">MSc in Zoology</h4>
               <p className="text-sm text-text-secondary">University of Dhaka (ঢাকা বিশ্ববিদ্যালয়)</p>
-              <p className="text-xs text-text-muted">Specialization: Entomology/Fisheries</p>
+              <p className="text-sm text-text-muted">Specialization: Entomology/Fisheries</p>
             </div>
             <div className="border-l-2 border-primary pl-4">
               <h4 className="font-bold text-text-primary">BSc (Hons) in Zoology</h4>

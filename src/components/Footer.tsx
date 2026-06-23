@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-4">রিসোর্স</h4>
+            <h4 className="text-sm font-bold text-text-primary uppercase tracking-wider mb-4">রিসোর্স</h4>
             <ul className="space-y-2 text-sm text-text-secondary font-medium">
               <li>
                 <Link to="/notes" className="hover:text-primary transition-colors">ফ্রি পিডিএফ নোটস</Link>
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
 
           {/* Support */}
           <div>
-            <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-4">যোগাযোগ ও সাহায্য</h4>
+            <h4 className="text-sm font-bold text-text-primary uppercase tracking-wider mb-4">যোগাযোগ ও সাহায্য</h4>
             <ul className="space-y-2 text-sm text-text-secondary font-medium">
               <li>
                 <Link to="/about" className="hover:text-primary transition-colors">শিক্ষক পরিচিতি</Link>
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-text-muted gap-4">
+        <div className="border-t border-border mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between text-sm text-text-muted gap-4">
           <p>© 2026 BiologywithSantosir.com. All rights reserved.</p>
           <div className="flex gap-4">
             <a href="https://facebook.com" className="hover:text-primary">Facebook Group</a>

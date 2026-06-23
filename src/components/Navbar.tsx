@@ -62,16 +62,16 @@ const Navbar: React.FC = () => {
               <div id="classes-menu" role="menu" aria-labelledby="classes-menu-btn" className="absolute top-full left-0 mt-1 w-64 bg-surface border border-border rounded-xl shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="grid gap-3">
                   <div>
-                    <h5 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">School Level</h5>
+                    <h5 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-1">School Level</h5>
                     <Link to="/classes/ssc-biology" className="block text-sm text-text-primary hover:text-primary py-1">SSC Biology</Link>
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">College Level</h5>
+                    <h5 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-1">College Level</h5>
                     <Link to="/classes/hsc-zoology" className="block text-sm text-text-primary hover:text-primary py-1">HSC Zoology</Link>
                     <Link to="/classes/hsc-botany" className="block text-sm text-text-primary hover:text-primary py-1">HSC Botany</Link>
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">University Level</h5>
+                    <h5 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-1">University Level</h5>
                     <Link to="/classes/honours" className="block text-sm text-text-primary hover:text-primary py-1">Honours (Zoology)</Link>
                   </div>
                 </div>

@@ -30,7 +30,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </p>
       </div>
 
-      <div className="flex items-center justify-between text-xs text-text-muted border-t border-border/50 pt-3 mt-auto font-sans">
+      <div className="flex items-center justify-between text-sm text-text-muted border-t border-border/50 pt-3 mt-auto font-sans">
         <span className="flex items-center gap-1">
           <User size={14} />
           {post.author}

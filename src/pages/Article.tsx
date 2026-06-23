@@ -120,7 +120,7 @@ const Article: React.FC = () => {
   return (
     <Container className="py-8 font-sans">
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-1 text-xs text-text-muted mb-6 flex-wrap font-semibold uppercase tracking-wider">
+      <nav className="flex items-center gap-1 text-sm text-text-muted mb-6 flex-wrap font-semibold uppercase tracking-wider">
         <Link to="/" className="hover:text-primary">Home</Link>
         <ChevronRight size={12} />
         <Link to="/topics" className="hover:text-primary">Topics</Link>
@@ -166,11 +166,11 @@ const Article: React.FC = () => {
         {/* Sticky Sidebar TOC (Desktop) */}
         <aside className="hidden lg:block lg:col-span-1 border-r border-border pr-6">
           <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
-            <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider mb-4 flex items-center gap-2">
+            <h4 className="text-sm font-bold text-text-primary uppercase tracking-wider mb-4 flex items-center gap-2">
               📂 সূচিপত্র
             </h4>
             {headings.length === 0 ? (
-              <p className="text-xs text-text-muted">এই নিবন্ধে কোন সাব-হেডিং নেই।</p>
+              <p className="text-sm text-text-muted">এই নিবন্ধে কোন সাব-হেডিং নেই।</p>
             ) : (
               <ul className="space-y-3 text-sm font-semibold">
                 {headings.map((heading, i) => {

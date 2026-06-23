@@ -6,7 +6,7 @@ const About: React.FC = () => {
   return (
     <Container className="py-12 font-sans max-w-4xl">
       <div className="text-center mb-12">
-        <div className="w-32 h-32 rounded-full border-4 border-primary/20 bg-primary/10 flex items-center justify-center text-5xl shadow-inner mx-auto mb-4">
+        <div className="w-32 h-32 rounded-full border-4 border-primary/20 bg-primary/10 flex items-center justify-center text-5xl shadow-inner mx-auto mb-4" role="img" aria-label="Instructor profile photo placeholder">
           👨‍🏫
         </div>
         <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-2">

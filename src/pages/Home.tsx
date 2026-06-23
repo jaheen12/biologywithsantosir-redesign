@@ -175,7 +175,7 @@ const Home: React.FC = () => {
       <section className="bg-surface-alt border-y border-border py-16">
         <Container className="grid grid-cols-1 md:grid-cols-3 items-center gap-12">
           <div className="flex justify-center md:justify-start">
-            <div className="w-48 h-48 rounded-full border-4 border-primary/20 bg-primary/10 flex items-center justify-center text-6xl shadow-inner">
+            <div className="w-48 h-48 rounded-full border-4 border-primary/20 bg-primary/10 flex items-center justify-center text-6xl shadow-inner" role="img" aria-label="Instructor profile photo placeholder">
               👨‍🏫
             </div>
           </div>

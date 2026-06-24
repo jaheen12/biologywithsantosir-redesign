@@ -1,0 +1,226 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Santo Sir Biology" [ref=e4]:
+        - /url: /
+        - img [ref=e5]
+        - generic [ref=e7]: Santo Sir Biology
+      - navigation [ref=e8]:
+        - button "Classes" [ref=e10]:
+          - text: Classes
+          - img [ref=e11]
+        - button "Topics" [ref=e14]:
+          - text: Topics
+          - img [ref=e15]
+        - link "Notes" [ref=e17]:
+          - /url: /notes
+        - link "MCQ" [ref=e18]:
+          - /url: /mcq
+        - link "Courses" [ref=e19]:
+          - /url: /courses
+        - link "About" [ref=e20]:
+          - /url: /about
+        - link "Contact" [ref=e21]:
+          - /url: /contact
+      - generic [ref=e22]:
+        - button "Open search" [ref=e23] [cursor=pointer]:
+          - img [ref=e24]
+        - link "লগ ইন" [ref=e27]:
+          - /url: /login
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic:
+        - img
+      - generic [ref=e31]:
+        - generic [ref=e32]: বাংলায় জীববিজ্ঞান শিক্ষা
+        - heading "জীববিজ্ঞান শেখো সহজভাবে, বুঝে বুঝে" [level=1] [ref=e33]:
+          - generic [ref=e34]:
+            - text: জীববিজ্ঞান
+            - img [ref=e35]
+          - text: শেখো সহজভাবে, বুঝে বুঝে
+        - paragraph [ref=e37]: SSC · HSC · Honours স্তরের শিক্ষার্থীদের জন্য Santo Sir-এর তৈরি বিশেষ ও গোছানো পাঠ। কোনো মুখস্থ নয়, কেবল বুঝে পড়ার আনন্দ।
+        - generic [ref=e38]:
+          - link "শেখা শুরু করো" [ref=e39]:
+            - /url: /topics
+            - button "শেখা শুরু করো" [ref=e40]
+          - link "নোটস ডাউনলোড করো" [ref=e41]:
+            - /url: /notes
+            - button "নোটস ডাউনলোড করো" [ref=e42]
+        - generic [ref=e43]:
+          - generic [ref=e44]: ৫০,০০০+
+          - text: শিক্ষার্থী
+          - generic [ref=e45]: ·
+          - generic [ref=e46]: ২০০+
+          - text: বিস্তারিত টপিক
+          - generic [ref=e47]: ·
+          - generic [ref=e48]: সম্পূর্ণ বিনামূল্যে
+    - generic [ref=e51]:
+      - link "SSC Biology মাধ্যমিক জীববিজ্ঞান" [ref=e52] [cursor=pointer]:
+        - /url: /classes/ssc-biology
+        - generic [ref=e53]:
+          - img [ref=e55]
+          - generic [ref=e59]:
+            - generic [ref=e60]: SSC Biology
+            - generic [ref=e61]: মাধ্যমিক জীববিজ্ঞান
+      - link "HSC Zoology উচ্চ মাধ্যমিক প্রাণিবিজ্ঞান" [ref=e62] [cursor=pointer]:
+        - /url: /classes/hsc-zoology
+        - generic [ref=e63]:
+          - img [ref=e65]
+          - generic [ref=e74]:
+            - generic [ref=e75]: HSC Zoology
+            - generic [ref=e76]: উচ্চ মাধ্যমিক প্রাণিবিজ্ঞান
+      - link "HSC Botany উচ্চ মাধ্যমিক উদ্ভিদবিজ্ঞান" [ref=e77] [cursor=pointer]:
+        - /url: /classes/hsc-botany
+        - generic [ref=e78]:
+          - img [ref=e80]
+          - generic [ref=e83]:
+            - generic [ref=e84]: HSC Botany
+            - generic [ref=e85]: উচ্চ মাধ্যমিক উদ্ভিদবিজ্ঞান
+      - link "Honours অনার্স জীববিজ্ঞান" [ref=e86] [cursor=pointer]:
+        - /url: /classes/honours
+        - generic [ref=e87]:
+          - img [ref=e89]
+          - generic [ref=e91]:
+            - generic [ref=e92]: Honours
+            - generic [ref=e93]: অনার্স জীববিজ্ঞান
+    - generic [ref=e95]:
+      - generic [ref=e96]:
+        - generic [ref=e97]:
+          - heading "সাম্প্রতিক পোস্ট" [level=2] [ref=e98]
+          - paragraph [ref=e99]: Santo Sir-এর লেটেস্ট আপলোড করা টিউটোরিয়াল এবং গাইডসমূহ।
+        - link "সব পোস্ট দেখো →" [ref=e100]:
+          - /url: /topics
+      - generic [ref=e101]:
+        - link "SSC Genetics জেনেটিক্স কী? সংজ্ঞা, ইতিহাস ও গুরুত্ব জেনেটিক্স বা বংশগতিবিদ্যা হলো জীববিজ্ঞানের একটি শাখা যেখানে জিনের গঠন, কাজ এবং বংশানুসরণ নিয়ে আলোচনা করা হয়। Santo Sir ২৪ জুন, ২০২৬ · 8 মিনিট পঠিত" [ref=e102]:
+          - /url: /topics/genetics/what-is-genetics
+          - img [ref=e104]
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: SSC
+              - generic [ref=e109]: Genetics
+            - heading "জেনেটিক্স কী? সংজ্ঞা, ইতিহাস ও গুরুত্ব" [level=3] [ref=e110]
+            - paragraph [ref=e111]: জেনেটিক্স বা বংশগতিবিদ্যা হলো জীববিজ্ঞানের একটি শাখা যেখানে জিনের গঠন, কাজ এবং বংশানুসরণ নিয়ে আলোচনা করা হয়।
+            - generic [ref=e112]:
+              - generic [ref=e113]: Santo Sir
+              - generic [ref=e114]:
+                - generic [ref=e115]: ২৪ জুন, ২০২৬
+                - generic [ref=e116]: ·
+                - generic [ref=e117]: 8 মিনিট পঠিত
+        - link "HSC Cell Biology কোষ বিভাজন এবং এর প্রকারভেদ কোষ বিভাজন কী এবং জীবদেহে মাইটোসিস ও মিয়োসিস কোষ বিভাজনের ভূমিকা আলোচনা। Santo Sir ২৪ জুন, ২০২৬ · 6 মিনিট পঠিত" [ref=e118]:
+          - /url: /topics/cell-biology/cell-division-types
+          - img [ref=e120]
+          - generic [ref=e122]:
+            - generic [ref=e123]:
+              - generic [ref=e124]: HSC
+              - generic [ref=e125]: Cell Biology
+            - heading "কোষ বিভাজন এবং এর প্রকারভেদ" [level=3] [ref=e126]
+            - paragraph [ref=e127]: কোষ বিভাজন কী এবং জীবদেহে মাইটোসিস ও মিয়োসিস কোষ বিভাজনের ভূমিকা আলোচনা।
+            - generic [ref=e128]:
+              - generic [ref=e129]: Santo Sir
+              - generic [ref=e130]:
+                - generic [ref=e131]: ২৪ জুন, ২০২৬
+                - generic [ref=e132]: ·
+                - generic [ref=e133]: 6 মিনিট পঠিত
+    - generic [ref=e136]:
+      - img "Santo Sir — Biology Teacher" [ref=e139]
+      - generic [ref=e140]:
+        - generic [ref=e141]: ইনস্ট্রাকটর
+        - heading "Santo Sir" [level=2] [ref=e142]
+        - paragraph [ref=e143]: MSc Zoology, University of Dhaka
+        - paragraph [ref=e144]: "\"আমি একজন শিক্ষক। পড়ানো পেশা থেকে নেশায় পরিণত হয়েছে কখন তা বুঝতেই পারিনি। মানুষকে শেখাতে ভালোলাগে। ক্লাশরুমের বাইরেও শেখানোর ইচ্ছা থেকেই এই ব্লগটি তৈরি করেছি।\""
+        - link "আরও জানুন →" [ref=e145]:
+          - /url: /about
+    - generic [ref=e147]:
+      - heading "জনপ্রিয় বিষয়" [level=2] [ref=e148]
+      - paragraph [ref=e149]: পছন্দের টপিকটি নির্বাচন করে বিস্তারিত পড়া শুরু করো।
+      - generic [ref=e150]:
+        - link "জেনেটিক্স" [ref=e151]:
+          - /url: /topics/genetics
+          - generic [ref=e152] [cursor=pointer]: জেনেটিক্স
+        - link "কোষ জীববিজ্ঞান" [ref=e153]:
+          - /url: /topics/cell-biology
+          - generic [ref=e154] [cursor=pointer]: কোষ জীববিজ্ঞান
+        - link "অণুজীববিজ্ঞান" [ref=e155]:
+          - /url: /topics/microbiology
+          - generic [ref=e156] [cursor=pointer]: অণুজীববিজ্ঞান
+        - link "শারীরতত্ত্ব" [ref=e157]:
+          - /url: /topics/physiology
+          - generic [ref=e158] [cursor=pointer]: শারীরতত্ত্ব
+  - contentinfo [ref=e159]:
+    - generic [ref=e160]:
+      - generic [ref=e161]:
+        - link "Santo Sir Biology" [ref=e162]:
+          - /url: /
+          - img [ref=e163]
+          - generic [ref=e165]: Santo Sir Biology
+        - paragraph [ref=e166]: জীববিজ্ঞান শেখো সহজভাবে, বুঝে বুঝে।
+        - paragraph [ref=e167]: HSC • SSC • Honours স্তরের শিক্ষার্থীদের জন্য একটি পূর্ণাঙ্গ জীববিজ্ঞান শিক্ষা প্ল্যাটফর্ম।
+      - generic [ref=e168]:
+        - heading "Classes" [level=3] [ref=e169]
+        - list [ref=e170]:
+          - listitem [ref=e171]:
+            - link "SSC Biology" [ref=e172]:
+              - /url: /classes/ssc-biology
+          - listitem [ref=e173]:
+            - link "HSC Zoology" [ref=e174]:
+              - /url: /classes/hsc-zoology
+          - listitem [ref=e175]:
+            - link "HSC Botany" [ref=e176]:
+              - /url: /classes/hsc-botany
+          - listitem [ref=e177]:
+            - link "Honours 3rd Year" [ref=e178]:
+              - /url: /classes/honours-3rd-year
+          - listitem [ref=e179]:
+            - link "Honours 4th Year" [ref=e180]:
+              - /url: /classes/honours-4th-year
+      - generic [ref=e181]:
+        - heading "Popular Topics" [level=3] [ref=e182]
+        - list [ref=e183]:
+          - listitem [ref=e184]:
+            - link "জেনেটিক্স" [ref=e185]:
+              - /url: /topics/genetics
+          - listitem [ref=e186]:
+            - link "কোষ জীববিজ্ঞান" [ref=e187]:
+              - /url: /topics/cell-biology
+          - listitem [ref=e188]:
+            - link "অণুজীববিজ্ঞান" [ref=e189]:
+              - /url: /topics/microbiology
+          - listitem [ref=e190]:
+            - link "শারীরতত্ত্ব" [ref=e191]:
+              - /url: /topics/physiology
+      - generic [ref=e192]:
+        - heading "Quick Links" [level=3] [ref=e193]
+        - list [ref=e194]:
+          - listitem [ref=e195]:
+            - link "• About (সান্তো স্যার সম্পর্কে)" [ref=e196]:
+              - /url: /about
+          - listitem [ref=e197]:
+            - link "• Contact (যোগাযোগ)" [ref=e198]:
+              - /url: /contact
+          - listitem [ref=e199]:
+            - link "• Courses (কোর্সসমূহ)" [ref=e200]:
+              - /url: /courses
+          - listitem [ref=e201]:
+            - link "• MCQ Practice" [ref=e202]:
+              - /url: /mcq
+          - listitem [ref=e203]:
+            - link "• Download Notes" [ref=e204]:
+              - /url: /notes
+        - heading "Follow Us" [level=3] [ref=e205]
+        - generic [ref=e206]:
+          - link "Facebook page" [ref=e207]:
+            - /url: https://facebook.com/biologywithsantosir
+            - img [ref=e208]
+          - link "YouTube channel" [ref=e210]:
+            - /url: https://youtube.com
+            - img [ref=e211]
+          - link "Instagram profile" [ref=e214]:
+            - /url: https://instagram.com
+            - img [ref=e215]
+    - generic [ref=e219]:
+      - generic [ref=e220]: © 2026 BiologywithSantosir.com · All rights reserved.
+      - generic [ref=e221]:
+        - link "About" [ref=e222]:
+          - /url: /about
+        - link "Contact" [ref=e223]:
+          - /url: /contact

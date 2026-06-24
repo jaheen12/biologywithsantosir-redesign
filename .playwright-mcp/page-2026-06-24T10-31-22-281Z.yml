@@ -1,0 +1,126 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Santo Sir Biology" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e5]
+        - generic [ref=e7]: Santo Sir Biology
+      - navigation [ref=e8]:
+        - button "Classes" [ref=e10]:
+          - text: Classes
+          - img [ref=e11]
+        - button "Topics" [ref=e14]:
+          - text: Topics
+          - img [ref=e15]
+        - link "Notes" [ref=e17] [cursor=pointer]:
+          - /url: /notes
+        - link "MCQ" [ref=e18] [cursor=pointer]:
+          - /url: /mcq
+        - link "Courses" [ref=e19] [cursor=pointer]:
+          - /url: /courses
+        - link "About" [ref=e20] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=e21] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e22]:
+        - button "Open search" [ref=e23] [cursor=pointer]:
+          - img [ref=e24]
+        - link "লগ ইন" [ref=e27] [cursor=pointer]:
+          - /url: /login
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]: অনুশীলন কেন্দ্র
+        - heading "MCQ প্র্যাকটিস ইঞ্জিন" [level=1] [ref=e33]
+        - paragraph [ref=e34]: SSC, HSC এবং অনার্স লেভেলের জীববিজ্ঞান বিষয়ের অধ্যায়ভিত্তিক বহুনির্বাচনী প্রশ্ন অনুশীলন করুন।
+      - generic [ref=e36]:
+        - img [ref=e37]
+        - generic [ref=e39]: ফিল্টার লোড হচ্ছে...
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - img [ref=e42]
+          - heading "অনুশীলন শুরু করো" [level=3] [ref=e45]
+          - paragraph [ref=e46]: আপনার নির্বাচিত ফিল্টার অনুযায়ী প্রশ্ন প্রস্তুত রয়েছে। অনুশীলনের মাধ্যমে নিজের প্রস্তুতি যাচাই করুন।
+        - button "শুরু করুন (Start Quiz)" [ref=e47]:
+          - img [ref=e48]
+          - text: শুরু করুন (Start Quiz)
+  - contentinfo [ref=e51]:
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - link "Santo Sir Biology" [ref=e54] [cursor=pointer]:
+          - /url: /
+          - img [ref=e55]
+          - generic [ref=e57]: Santo Sir Biology
+        - paragraph [ref=e58]: জীববিজ্ঞান শেখো সহজভাবে, বুঝে বুঝে।
+        - paragraph [ref=e59]: HSC • SSC • Honours স্তরের শিক্ষার্থীদের জন্য একটি পূর্ণাঙ্গ জীববিজ্ঞান শিক্ষা প্ল্যাটফর্ম।
+      - generic [ref=e60]:
+        - heading "Classes" [level=3] [ref=e61]
+        - list [ref=e62]:
+          - listitem [ref=e63]:
+            - link "SSC Biology" [ref=e64] [cursor=pointer]:
+              - /url: /classes/ssc-biology
+          - listitem [ref=e65]:
+            - link "HSC Zoology" [ref=e66] [cursor=pointer]:
+              - /url: /classes/hsc-zoology
+          - listitem [ref=e67]:
+            - link "HSC Botany" [ref=e68] [cursor=pointer]:
+              - /url: /classes/hsc-botany
+          - listitem [ref=e69]:
+            - link "Honours 3rd Year" [ref=e70] [cursor=pointer]:
+              - /url: /classes/honours-3rd-year
+          - listitem [ref=e71]:
+            - link "Honours 4th Year" [ref=e72] [cursor=pointer]:
+              - /url: /classes/honours-4th-year
+      - generic [ref=e73]:
+        - heading "Popular Topics" [level=3] [ref=e74]
+        - list [ref=e75]:
+          - listitem [ref=e76]:
+            - link "জেনেটিক্স" [ref=e77] [cursor=pointer]:
+              - /url: /topics/genetics
+          - listitem [ref=e78]:
+            - link "কোষ জীববিজ্ঞান" [ref=e79] [cursor=pointer]:
+              - /url: /topics/cell-biology
+          - listitem [ref=e80]:
+            - link "অণুজীববিজ্ঞান" [ref=e81] [cursor=pointer]:
+              - /url: /topics/microbiology
+          - listitem [ref=e82]:
+            - link "শারীরতত্ত্ব" [ref=e83] [cursor=pointer]:
+              - /url: /topics/physiology
+      - generic [ref=e84]:
+        - heading "Quick Links" [level=3] [ref=e85]
+        - list [ref=e86]:
+          - listitem [ref=e87]:
+            - link "• About (সান্তো স্যার সম্পর্কে)" [ref=e88] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e89]:
+            - link "• Contact (যোগাযোগ)" [ref=e90] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=e91]:
+            - link "• Courses (কোর্সসমূহ)" [ref=e92] [cursor=pointer]:
+              - /url: /courses
+          - listitem [ref=e93]:
+            - link "• MCQ Practice" [ref=e94] [cursor=pointer]:
+              - /url: /mcq
+          - listitem [ref=e95]:
+            - link "• Download Notes" [ref=e96] [cursor=pointer]:
+              - /url: /notes
+        - heading "Follow Us" [level=3] [ref=e97]
+        - generic [ref=e98]:
+          - link "Facebook page" [ref=e99] [cursor=pointer]:
+            - /url: https://facebook.com/biologywithsantosir
+            - img [ref=e100]
+          - link "YouTube channel" [ref=e102] [cursor=pointer]:
+            - /url: https://youtube.com
+            - img [ref=e103]
+          - link "Instagram profile" [ref=e106] [cursor=pointer]:
+            - /url: https://instagram.com
+            - img [ref=e107]
+    - generic [ref=e112]:
+      - generic [ref=e113]: © 2026 BiologywithSantosir.com · All rights reserved.
+      - generic [ref=e114]:
+        - link "About" [ref=e115] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=e116] [cursor=pointer]:
+          - /url: /contact
+  - button "Open Next.js Dev Tools" [ref=e122] [cursor=pointer]:
+    - img [ref=e123]

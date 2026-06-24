@@ -1,0 +1,209 @@
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { 
+  LayoutDashboard,
+  Users,
+  GraduationCap,
+  CheckSquare,
+  CreditCard,
+  PlusCircle,
+  CheckCircle,
+  BookOpen,
+  Calendar,
+  FileText,
+  Award,
+  Trophy,
+  Megaphone,
+  Shield,
+  Menu,
+  X,
+  LogOut,
+  ArrowLeft
+} from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+
+interface AdminSidebarProps {
+  fullName: string;
+}
+
+export default function AdminSidebar({ fullName }: AdminSidebarProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const supabase = createClient();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navigationGroups = [
+    {
+      title: '👥 শিক্ষার্থী',
+      items: [
+        { label: 'শিক্ষার্থী তালিকা', path: '/admin/students', icon: Users },
+        { label: 'ভর্তি ব্যবস্থাপনা', path: '/admin/enrollments', icon: GraduationCap },
+        { label: 'উপস্থিতি', path: '/admin/attendance', icon: CheckSquare },
+      ]
+    },
+    {
+      title: '💰 পেমেন্ট',
+      items: [
+        { label: 'পেমেন্ট লেজার', path: '/admin/payments', icon: CreditCard },
+        { label: 'নতুন পেমেন্ট', path: '/admin/payments/new', icon: PlusCircle },
+        { label: 'bKash যাচাই', path: '/admin/payments/reconcile', icon: CheckCircle },
+      ]
+    },
+    {
+      title: '🏫 ব্যাচ ও কোর্স',
+      items: [
+        { label: 'ব্যাচ ব্যবস্থাপনা', path: '/admin/batches', icon: BookOpen },
+        { label: 'রুটিন', path: '/admin/routine', icon: Calendar },
+      ]
+    },
+    {
+      title: '📝 পরীক্ষা',
+      items: [
+        { label: 'পরীক্ষা পরিচালনা', path: '/admin/exams', icon: FileText },
+        { label: 'ফলাফল প্রবেশ', path: '/admin/results', icon: Award },
+        { label: 'র‍্যাংকিং', path: '/admin/leaderboard', icon: Trophy },
+      ]
+    },
+    {
+      title: '📢 অন্যান্য',
+      items: [
+        { label: 'নোটিশ বোর্ড', path: '/admin/announcements', icon: Megaphone },
+        { label: 'রোল ব্যবস্থাপনা', path: '/admin/roles', icon: Shield },
+      ]
+    }
+  ];
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/');
+    router.refresh();
+  };
+
+  return (
+    <>
+      {/* Mobile Header Bar */}
+      <div className="lg:hidden flex items-center justify-between bg-surface border-b border-border px-4 py-3 sticky top-0 z-40 h-[56px] w-full">
+        <Link href="/admin" className="flex items-center gap-2 text-primary font-bold font-ui">
+          <Shield className="w-6 h-6" />
+          <span>এডমিন প্যানেল</span>
+        </Link>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-2 text-text-primary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+        >
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Overlay for Mobile */}
+      {isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden transition-opacity duration-300"
+        />
+      )}
+
+      {/* Sidebar Panel */}
+      <aside
+        className={`fixed lg:sticky top-0 left-0 h-screen w-64 bg-surface border-r border-border flex flex-col z-35 transition-transform duration-300 lg:translate-x-0 ${
+          isOpen ? 'translate-x-0 pt-[56px] lg:pt-0' : '-translate-x-full'
+        }`}
+      >
+        {/* Header (Desktop) */}
+        <div className="hidden lg:block border-b border-border">
+          <Link href="/admin" className="flex items-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity">
+            <Shield className="w-6 h-6 text-primary" />
+            <span className="font-bold text-base text-primary font-ui">এডমিন প্যানেল</span>
+          </Link>
+          {/* Admin User Summary */}
+          <div className="px-6 pb-4 pt-2 flex flex-col">
+            <span className="text-sm font-semibold text-text-primary truncate">{fullName}</span>
+            <span className="text-xs text-text-secondary mt-0.5 inline-flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+              প্রধান শিক্ষক (এডমিন)
+            </span>
+          </div>
+        </div>
+
+        {/* Mobile User Summary */}
+        <div className="lg:hidden px-6 py-4 border-b border-border bg-surface-alt/40">
+          <span className="text-sm font-semibold text-text-primary block truncate">{fullName}</span>
+          <span className="text-xs text-text-secondary mt-0.5 inline-flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+            প্রধান শিক্ষক (এডমিন)
+          </span>
+        </div>
+
+        {/* Nav Links */}
+        <nav className="flex-1 px-4 py-4 space-y-5 overflow-y-auto font-ui scrollbar-thin">
+          {/* Dashboard Home Link */}
+          <div>
+            <Link
+              href="/admin"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition duration-150 ${
+                pathname === '/admin'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-text-secondary hover:bg-surface-alt hover:text-primary'
+              }`}
+            >
+              <LayoutDashboard className={`w-5 h-5 ${pathname === '/admin' ? 'text-primary' : 'text-text-muted'}`} />
+              <span>ড্যাশবোর্ড হোম</span>
+            </Link>
+          </div>
+
+          {/* Grouped Links */}
+          {navigationGroups.map((group) => (
+            <div key={group.title} className="space-y-1.5">
+              <h3 className="px-4 text-xs font-bold text-text-muted uppercase tracking-wider">
+                {group.title}
+              </h3>
+              <div className="space-y-1">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = pathname === item.path;
+                  return (
+                    <Link
+                      key={item.path}
+                      href={item.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-2 rounded-xl text-sm font-medium transition duration-150 ${
+                        isActive
+                          ? 'bg-primary/10 text-primary font-semibold'
+                          : 'text-text-secondary hover:bg-surface-alt hover:text-primary'
+                      }`}
+                    >
+                      <Icon className={`w-4 h-4 ${isActive ? 'text-primary' : 'text-text-muted'}`} />
+                      <span>{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </nav>
+
+        {/* Footer / Back & Logout */}
+        <div className="px-5 py-3.5 border-t border-border font-ui flex flex-col gap-2 bg-surface-alt/30">
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-2.5 py-1 text-xs font-medium text-text-secondary hover:text-primary transition duration-150"
+          >
+            <ArrowLeft className="w-4 h-4 text-text-muted" />
+            <span>ছাত্র প্যানেলে ফিরুন</span>
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2.5 py-1 text-xs font-medium text-error hover:text-error transition duration-150 cursor-pointer text-left w-full"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>লগ আউট</span>
+          </button>
+        </div>
+      </aside>
+    </>
+  );
+}

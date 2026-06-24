@@ -64,7 +64,7 @@ export default async function AdminPaymentsPage() {
   // 1. Fetch all payments
   const { data: paymentsRaw } = await supabase
     .from('payments')
-    .select('*, profiles(full_name, phone), batches(name, fee)')
+    .select('*, profiles:profiles!student_id(full_name, phone), batches(name, fee)')
     .order('created_at', { ascending: false });
 
   const payments = (paymentsRaw as unknown as PaymentDetail[]) || [];

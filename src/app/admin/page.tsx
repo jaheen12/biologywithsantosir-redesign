@@ -123,7 +123,7 @@ export default async function AdminDashboardPage() {
   // 6. Unreconciled payment list (top 5)
   const { data: unreconciledPaymentsRaw } = await supabase
     .from('payments')
-    .select('*, profiles(full_name, phone)')
+    .select('*, profiles:profiles!student_id(full_name, phone)')
     .eq('reconciled', false)
     .in('method', ['bKash', 'Nagad'])
     .order('created_at', { ascending: false })

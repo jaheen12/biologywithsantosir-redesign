@@ -152,15 +152,6 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
           </div>
         </div>
 
-        {/* Mobile User Summary */}
-        <div className="lg:hidden px-6 py-4 border-b border-border bg-surface-alt/40">
-          <span className="text-sm font-semibold text-text-primary block truncate">{fullName}</span>
-          <span className="text-xs text-text-secondary mt-0.5 inline-flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
-            প্রধান শিক্ষক (এডমিন)
-          </span>
-        </div>
-
         {/* Nav Links */}
         <nav className="flex-1 px-4 py-4 space-y-5 overflow-y-auto font-ui scrollbar-thin">
           {/* Dashboard Home Link */}

@@ -21,9 +21,52 @@ import {
   Menu,
   X,
   LogOut,
-  ArrowLeft
+  ArrowLeft,
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+
+const navigationGroups = [
+  {
+    title: '👥 শিক্ষার্থী',
+    items: [
+      { label: 'শিক্ষার্থী তালিকা', path: '/admin/students', icon: Users },
+      { label: 'ভর্তি ব্যবস্থাপনা', path: '/admin/enrollments', icon: GraduationCap },
+      { label: 'উপস্থিতি', path: '/admin/attendance', icon: CheckSquare },
+    ]
+  },
+  {
+    title: '💰 পেমেন্ট',
+    items: [
+      { label: 'পেমেন্ট লেজার', path: '/admin/payments', icon: CreditCard },
+      { label: 'নতুন পেমেন্ট', path: '/admin/payments/new', icon: PlusCircle },
+      { label: 'bKash যাচাই', path: '/admin/payments/reconcile', icon: CheckCircle },
+    ]
+  },
+  {
+    title: '🏫 ব্যাচ ও কোর্স',
+    items: [
+      { label: 'ব্যাচ ব্যবস্থাপনা', path: '/admin/batches', icon: BookOpen },
+      { label: 'রুটিন', path: '/admin/routine', icon: Calendar },
+    ]
+  },
+  {
+    title: '📝 পরীক্ষা',
+    items: [
+      { label: 'পরীক্ষা পরিচালনা', path: '/admin/exams', icon: FileText },
+      { label: 'ফলাফল প্রবেশ', path: '/admin/results', icon: Award },
+      { label: 'র‍্যাংকিং', path: '/admin/leaderboard', icon: Trophy },
+    ]
+  },
+  {
+    title: '📢 অন্যান্য',
+    items: [
+      { label: 'নোটিশ বোর্ড', path: '/admin/announcements', icon: Megaphone },
+      { label: 'রোল ব্যবস্থাপনা', path: '/admin/roles', icon: Shield },
+    ]
+  }
+];
 
 interface AdminSidebarProps {
   fullName: string;
@@ -34,47 +77,28 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
   const router = useRouter();
   const supabase = createClient();
   const [isOpen, setIsOpen] = useState(false);
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
 
-  const navigationGroups = [
-    {
-      title: '👥 শিক্ষার্থী',
-      items: [
-        { label: 'শিক্ষার্থী তালিকা', path: '/admin/students', icon: Users },
-        { label: 'ভর্তি ব্যবস্থাপনা', path: '/admin/enrollments', icon: GraduationCap },
-        { label: 'উপস্থিতি', path: '/admin/attendance', icon: CheckSquare },
-      ]
-    },
-    {
-      title: '💰 পেমেন্ট',
-      items: [
-        { label: 'পেমেন্ট লেজার', path: '/admin/payments', icon: CreditCard },
-        { label: 'নতুন পেমেন্ট', path: '/admin/payments/new', icon: PlusCircle },
-        { label: 'bKash যাচাই', path: '/admin/payments/reconcile', icon: CheckCircle },
-      ]
-    },
-    {
-      title: '🏫 ব্যাচ ও কোর্স',
-      items: [
-        { label: 'ব্যাচ ব্যবস্থাপনা', path: '/admin/batches', icon: BookOpen },
-        { label: 'রুটিন', path: '/admin/routine', icon: Calendar },
-      ]
-    },
-    {
-      title: '📝 পরীক্ষা',
-      items: [
-        { label: 'পরীক্ষা পরিচালনা', path: '/admin/exams', icon: FileText },
-        { label: 'ফলাফল প্রবেশ', path: '/admin/results', icon: Award },
-        { label: 'র‍্যাংকিং', path: '/admin/leaderboard', icon: Trophy },
-      ]
-    },
-    {
-      title: '📢 অন্যান্য',
-      items: [
-        { label: 'নোটিশ বোর্ড', path: '/admin/announcements', icon: Megaphone },
-        { label: 'রোল ব্যবস্থাপনা', path: '/admin/roles', icon: Shield },
-      ]
-    }
-  ];
+  // Auto-expand group of active page on load / pathname change
+  React.useEffect(() => {
+    navigationGroups.forEach((group) => {
+      const hasActiveItem = group.items.some(item => pathname === item.path);
+      if (hasActiveItem) {
+        setExpandedGroups(prev => ({
+          ...prev,
+          [group.title]: true
+        }));
+      }
+    });
+  }, [pathname]);
+
+  const toggleGroup = (title: string) => {
+    setExpandedGroups(prev => ({
+      ...prev,
+      [title]: prev[title] !== false ? false : true
+    }));
+  };
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -156,34 +180,48 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
           </div>
 
           {/* Grouped Links */}
-          {navigationGroups.map((group) => (
-            <div key={group.title} className="space-y-1.5">
-              <h3 className="px-4 text-xs font-bold text-text-muted uppercase tracking-wider">
-                {group.title}
-              </h3>
-              <div className="space-y-1">
-                {group.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname === item.path;
-                  return (
-                    <Link
-                      key={item.path}
-                      href={item.path}
-                      onClick={() => setIsOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-2 rounded-xl text-sm font-medium transition duration-150 ${
-                        isActive
-                          ? 'bg-primary/10 text-primary font-semibold'
-                          : 'text-text-secondary hover:bg-surface-alt hover:text-primary'
-                      }`}
-                    >
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-primary' : 'text-text-muted'}`} />
-                      <span>{item.label}</span>
-                    </Link>
-                  );
-                })}
+          {navigationGroups.map((group) => {
+            const isExpanded = expandedGroups[group.title] !== false;
+            return (
+              <div key={group.title} className="space-y-1.5">
+                <button
+                  type="button"
+                  onClick={() => toggleGroup(group.title)}
+                  className="w-full flex items-center justify-between px-4 py-1 text-xs font-bold text-text-muted hover:text-primary uppercase tracking-wider transition-colors text-left cursor-pointer group/btn"
+                >
+                  <span>{group.title}</span>
+                  {isExpanded ? (
+                    <ChevronDown className="w-3.5 h-3.5 text-text-muted group-hover/btn:text-primary transition-colors" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 text-text-muted group-hover/btn:text-primary transition-colors" />
+                  )}
+                </button>
+                {isExpanded && (
+                  <div className="space-y-1">
+                    {group.items.map((item) => {
+                      const Icon = item.icon;
+                      const isActive = pathname === item.path;
+                      return (
+                        <Link
+                          key={item.path}
+                          href={item.path}
+                          onClick={() => setIsOpen(false)}
+                          className={`flex items-center gap-3 px-4 py-2 rounded-xl text-sm font-medium transition duration-150 ${
+                            isActive
+                              ? 'bg-primary/10 text-primary font-semibold'
+                              : 'text-text-secondary hover:bg-surface-alt hover:text-primary'
+                          }`}
+                        >
+                          <Icon className={`w-4 h-4 ${isActive ? 'text-primary' : 'text-text-muted'}`} />
+                          <span>{item.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </nav>
 
         {/* Footer / Back & Logout */}

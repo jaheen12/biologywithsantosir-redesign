@@ -102,10 +102,10 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
         />
       )}
 
-      {/* Sidebar Panel — w-[85vw] max-w-[280px] scales on mobile, keeps desktop w-64 feel */}
+      {/* Sidebar Panel — anchored to right (matches hamburger on right) */}
       <aside
-        className={`fixed md:sticky top-0 left-0 h-screen w-[85vw] max-w-[280px] bg-surface border-r border-border flex flex-col z-35 transition-transform duration-300 md:translate-x-0 ${
-          isOpen ? 'translate-x-0 pt-[56px] md:pt-0' : '-translate-x-full'
+        className={`fixed md:sticky top-0 right-0 h-screen w-[85vw] max-w-[280px] bg-surface border-l border-border flex flex-col z-35 transition-transform duration-300 md:translate-x-0 ${
+          isOpen ? 'translate-x-0 pt-[56px] md:pt-0' : 'translate-x-full'
         }`}
       >
         {/* Header (Desktop) */}

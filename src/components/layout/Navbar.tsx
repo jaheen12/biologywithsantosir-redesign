@@ -390,7 +390,8 @@ export default function Navbar() {
 
       {/* Mobile Slide-in Drawer */}
       {isDrawerOpen && (
-        <div className="fixed inset-0 z-[60] lg:hidden flex">
+        {/* justify-end anchors drawer to the right (matching hamburger position) */}
+        <div className="fixed inset-0 z-[60] lg:hidden flex justify-end">
           {/* Overlay — touch-action: manipulation prevents double-tap zoom on mobile */}
           <div
             onClick={toggleDrawer}

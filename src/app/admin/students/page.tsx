@@ -37,6 +37,12 @@ export default async function AdminStudentsPage() {
     paymentDueRaw?.map((item) => [item.student_id, item]) || []
   );
 
+  // Fetch all batches for dropdown selections
+  const { data: batches } = await supabase
+    .from('batches')
+    .select('id, name, is_active')
+    .order('name');
+
   const students = (studentsRaw || []).map((student) => ({
     ...student,
     payment_due: paymentDueMap.get(student.id) || null,
@@ -51,7 +57,7 @@ export default async function AdminStudentsPage() {
         </p>
       </div>
 
-      <StudentsClient students={students} />
+      <StudentsClient students={students} batches={batches || []} />
     </div>
   );
 }

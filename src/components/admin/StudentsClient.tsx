@@ -2,16 +2,29 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Search, Eye, CreditCard, UserCheck, UserX, AlertCircle, Phone, BookOpen } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { 
+  Search, 
+  Eye, 
+  CreditCard, 
+  UserCheck, 
+  UserX, 
+  AlertCircle, 
+  CheckCircle,
+  Phone, 
+  BookOpen, 
+  Plus, 
+  Edit, 
+  Trash2, 
+  X, 
+  Loader2 
+} from 'lucide-react';
+import { createStudent, updateStudent, deleteStudent } from '@/app/admin/students/actions';
 
-interface StudentProps {
+interface Batch {
   id: string;
-  full_name: string;
-  phone: string | null;
-  role: string;
-  created_at: string;
-  enrollments: any;
-  payment_due: any;
+  name: string;
+  is_active: boolean;
 }
 
 // Converts numbers to Bengali numerals
@@ -25,9 +38,155 @@ function toBengaliNumerals(num: number | string | null | undefined): string {
   return numStr.replace(/[0-9]/g, (digit) => banglaDigits[digit] || digit);
 }
 
-export default function StudentsClient({ students }: { students: any[] }) {
+export default function StudentsClient({ 
+  students,
+  batches
+}: { 
+  students: any[];
+  batches: Batch[];
+}) {
+  const router = useRouter();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'active' | 'due' | 'paid'>('all');
+
+  // Modal Open states
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  // Form states - Create
+  const [createName, setCreateName] = useState('');
+  const [createPhone, setCreatePhone] = useState('');
+  const [createEmail, setCreateEmail] = useState('');
+  const [createPassword, setCreatePassword] = useState('');
+  const [createBatchId, setCreateBatchId] = useState('');
+
+  // Form states - Edit
+  const [selectedStudent, setSelectedStudent] = useState<any>(null);
+  const [editName, setEditName] = useState('');
+  const [editPhone, setEditPhone] = useState('');
+  const [editBatchId, setEditBatchId] = useState('');
+
+  // Delete state
+  const [studentToDelete, setStudentToDelete] = useState<any>(null);
+
+  // Form submit loading / errors / success states
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleCreateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    if (!createName || !createEmail || !createPassword) {
+      setError('দয়া করে নাম, ইমেল এবং পাসওয়ার্ড প্রদান করুন।');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await createStudent({
+        fullName: createName,
+        phone: createPhone,
+        email: createEmail,
+        password: createPassword,
+        batchId: createBatchId || undefined,
+      });
+
+      if (res?.error) {
+        setError(res.error);
+      } else {
+        showToast('শিক্ষার্থী সফলভাবে তৈরি হয়েছে ✓', 'success');
+        setIsCreateOpen(false);
+        // Reset states
+        setCreateName('');
+        setCreatePhone('');
+        setCreateEmail('');
+        setCreatePassword('');
+        setCreateBatchId('');
+        router.refresh();
+      }
+    } catch (err: any) {
+      setError(err.message || 'শিক্ষার্থী তৈরিতে সমস্যা হয়েছে।');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditClick = (student: any) => {
+    setSelectedStudent(student);
+    setEditName(student.full_name || '');
+    setEditPhone(student.phone || '');
+    const activeEnrollment = student.enrollments?.find((e: any) => e.status === 'active');
+    setEditBatchId(activeEnrollment?.batch_id || '');
+    setIsEditOpen(true);
+    setError(null);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedStudent) return;
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await updateStudent(selectedStudent.id, {
+        fullName: editName,
+        phone: editPhone,
+        batchId: editBatchId || undefined,
+      });
+
+      if (res?.error) {
+        setError(res.error);
+      } else {
+        showToast('শিক্ষার্থীর তথ্য সফলভাবে আপডেট হয়েছে ✓', 'success');
+        setIsEditOpen(false);
+        setSelectedStudent(null);
+        router.refresh();
+      }
+    } catch (err: any) {
+      setError(err.message || 'তথ্য পরিবর্তনে সমস্যা হয়েছে।');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = (student: any) => {
+    setStudentToDelete(student);
+    setIsDeleteOpen(true);
+    setError(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!studentToDelete) return;
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await deleteStudent(studentToDelete.id);
+
+      if (res?.error) {
+        setError(res.error);
+      } else {
+        showToast('শিক্ষার্থী সফলভাবে ডিলিট হয়েছে ✓', 'success');
+        setIsDeleteOpen(false);
+        setStudentToDelete(null);
+        router.refresh();
+      }
+    } catch (err: any) {
+      setError(err.message || 'ডিলিট করতে সমস্যা হয়েছে।');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredStudents = students.filter((student) => {
     // 1. Process search
@@ -61,6 +220,22 @@ export default function StudentsClient({ students }: { students: any[] }) {
 
   return (
     <div className="space-y-6">
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed bottom-5 right-5 z-50 bg-surface border rounded-xl p-4 flex items-center gap-3 shadow-lg text-sm animate-in slide-in-from-bottom-5 duration-200 ${
+          toast.type === 'success' 
+            ? 'bg-primary-light/95 border-primary/20 text-primary' 
+            : 'bg-error/10 border-error/20 text-error'
+        }`}>
+          {toast.type === 'success' ? (
+            <CheckCircle className="w-5 h-5 shrink-0" />
+          ) : (
+            <AlertCircle className="w-5 h-5 shrink-0" />
+          )}
+          <span className="font-bold">{toast.message}</span>
+        </div>
+      )}
+
       {/* Search and Filter Controls */}
       <div className="bg-surface p-5 rounded-2xl border border-border shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Search Input */}
@@ -78,7 +253,7 @@ export default function StudentsClient({ students }: { students: any[] }) {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex flex-wrap gap-2 text-xs">
+        <div className="flex flex-wrap gap-2 text-xs font-semibold">
           <button
             onClick={() => setFilterType('all')}
             className={`px-4 py-2.5 rounded-xl font-bold transition duration-150 cursor-pointer ${
@@ -128,9 +303,21 @@ export default function StudentsClient({ students }: { students: any[] }) {
         </div>
       </div>
 
-      {/* Results Count Banner */}
-      <div className="text-sm text-text-secondary font-semibold">
-        মোট {toBengaliNumerals(filteredStudents.length)} জন শিক্ষার্থী পাওয়া গেছে
+      {/* Results Count Banner and Add Student Button */}
+      <div className="flex justify-between items-center gap-4">
+        <div className="text-sm text-text-secondary font-semibold">
+          মোট {toBengaliNumerals(filteredStudents.length)} জন শিক্ষার্থী পাওয়া গেছে
+        </div>
+        <button
+          onClick={() => {
+            setError(null);
+            setIsCreateOpen(true);
+          }}
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-white text-xs md:text-sm font-bold rounded-xl hover:bg-primary-dark shadow-sm transition duration-150 cursor-pointer"
+        >
+          <Plus className="w-4.5 h-4.5" />
+          <span>নতুন শিক্ষার্থী যোগ করুন</span>
+        </button>
       </div>
 
       {/* Students Table */}
@@ -253,7 +440,7 @@ export default function StudentsClient({ students }: { students: any[] }) {
                       <td className="px-6 py-4">
                         {paymentBadge}
                       </td>
-                      <td className="px-6 py-4 text-right flex items-center justify-end gap-2.5">
+                      <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
                         {activeEnrollment && (
                           <Link
                             href={`/admin/payments/new?student_id=${student.id}`}
@@ -265,11 +452,25 @@ export default function StudentsClient({ students }: { students: any[] }) {
                         )}
                         <Link
                           href={`/admin/students/${student.id}`}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary-dark transition duration-150"
+                          className="inline-flex items-center gap-1 p-2 border border-border text-text-secondary hover:text-primary hover:bg-surface-alt rounded-lg transition duration-150"
+                          title="বিস্তারিত"
                         >
-                          <Eye className="w-3.5 h-3.5" />
-                          <span>বিস্তারিত</span>
+                          <Eye className="w-4 h-4" />
                         </Link>
+                        <button
+                          onClick={() => handleEditClick(student)}
+                          className="inline-flex items-center gap-1 p-2 border border-border text-text-secondary hover:text-accent hover:bg-surface-alt rounded-lg transition duration-150 cursor-pointer"
+                          title="সম্পাদনা করুন"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteClick(student)}
+                          className="inline-flex items-center gap-1 p-2 border border-border text-text-secondary hover:text-error hover:bg-surface-alt rounded-lg transition duration-150 cursor-pointer"
+                          title="মুছে ফেলুন"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </td>
                     </tr>
                   );
@@ -279,6 +480,282 @@ export default function StudentsClient({ students }: { students: any[] }) {
           </div>
         )}
       </div>
+
+      {/* 1. Add Student Modal */}
+      {isCreateOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+          <div className="bg-surface border border-border w-full max-w-md rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-border flex items-center justify-between">
+              <h3 className="font-bold text-text-primary text-base">নতুন শিক্ষার্থী যোগ করুন</h3>
+              <button 
+                onClick={() => setIsCreateOpen(false)}
+                className="text-text-muted hover:text-text-primary transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Form */}
+            <form onSubmit={handleCreateSubmit} className="p-6 space-y-4">
+              {error && (
+                <div className="p-3 bg-error/10 border border-error/20 rounded-xl text-error text-xs font-semibold flex items-center gap-2">
+                  <AlertCircle className="w-4.5 h-4.5 shrink-0" />
+                  <span>{error}</span>
+                </div>
+              )}
+
+              {/* Name field */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">সম্পূর্ণ নাম <span className="text-error">*</span></label>
+                <input
+                  type="text"
+                  required
+                  placeholder="যেমন: সায়মন রহমান"
+                  value={createName}
+                  onChange={(e) => setCreateName(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted"
+                />
+              </div>
+
+              {/* Phone field */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">মোবাইল নম্বর</label>
+                <input
+                  type="tel"
+                  placeholder="যেমন: 017XXXXXXXX"
+                  value={createPhone}
+                  onChange={(e) => setCreatePhone(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted"
+                />
+              </div>
+
+              {/* Email field */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">ইমেইল ঠিকানা <span className="text-error">*</span></label>
+                <input
+                  type="email"
+                  required
+                  placeholder="যেমন: student@email.com"
+                  value={createEmail}
+                  onChange={(e) => setCreateEmail(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted font-sans"
+                />
+              </div>
+
+              {/* Password field */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">লগইন পাসওয়ার্ড <span className="text-error">*</span></label>
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড"
+                  value={createPassword}
+                  onChange={(e) => setCreatePassword(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted font-sans"
+                />
+              </div>
+
+              {/* Batch selection */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">ব্যাচ ভর্তি</label>
+                <select
+                  value={createBatchId}
+                  onChange={(e) => setCreateBatchId(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer text-text-primary font-medium"
+                >
+                  <option value="">কোনো ব্যাচ নেই (পরে ভর্তি করুন)</option>
+                  {batches.map((batch) => (
+                    <option key={batch.id} value={batch.id}>
+                      {batch.name} {!batch.is_active && '(নিষ্ক্রিয়)'}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Form Actions */}
+              <div className="flex items-center gap-3 justify-end pt-2 border-t border-border mt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsCreateOpen(false)}
+                  className="px-4 py-2 bg-surface-alt border border-border text-xs font-semibold text-text-secondary rounded-xl hover:bg-surface-alt/75 transition cursor-pointer"
+                >
+                  বাতিল
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-dark transition cursor-pointer disabled:opacity-50 inline-flex items-center gap-1.5"
+                >
+                  {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  <span>শিক্ষার্থী তৈরি করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 2. Edit Student Modal */}
+      {isEditOpen && selectedStudent && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+          <div className="bg-surface border border-border w-full max-w-md rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-border flex items-center justify-between">
+              <h3 className="font-bold text-text-primary text-base">শিক্ষার্থীর তথ্য সম্পাদনা</h3>
+              <button 
+                onClick={() => {
+                  setIsEditOpen(false);
+                  setSelectedStudent(null);
+                }}
+                className="text-text-muted hover:text-text-primary transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Form */}
+            <form onSubmit={handleEditSubmit} className="p-6 space-y-4">
+              {error && (
+                <div className="p-3 bg-error/10 border border-error/20 rounded-xl text-error text-xs font-semibold flex items-center gap-2">
+                  <AlertCircle className="w-4.5 h-4.5 shrink-0" />
+                  <span>{error}</span>
+                </div>
+              )}
+
+              {/* Name field */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">সম্পূর্ণ নাম <span className="text-error">*</span></label>
+                <input
+                  type="text"
+                  required
+                  placeholder="যেমন: সায়মন রহমান"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted"
+                />
+              </div>
+
+              {/* Phone field */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">মোবাইল নম্বর</label>
+                <input
+                  type="tel"
+                  placeholder="যেমন: 017XXXXXXXX"
+                  value={editPhone}
+                  onChange={(e) => setEditPhone(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted"
+                />
+              </div>
+
+              {/* Batch selection */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-text-secondary">ব্যাচ পরিবর্তন</label>
+                <select
+                  value={editBatchId}
+                  onChange={(e) => setEditBatchId(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-surface border border-border rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer text-text-primary font-medium"
+                >
+                  <option value="">কোনো ব্যাচ নেই (ভর্তি বাতিল)</option>
+                  {batches.map((batch) => (
+                    <option key={batch.id} value={batch.id}>
+                      {batch.name} {!batch.is_active && '(নিষ্ক্রিয়)'}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Form Actions */}
+              <div className="flex items-center gap-3 justify-end pt-2 border-t border-border mt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditOpen(false);
+                    setSelectedStudent(null);
+                  }}
+                  className="px-4 py-2 bg-surface-alt border border-border text-xs font-semibold text-text-secondary rounded-xl hover:bg-surface-alt/75 transition cursor-pointer"
+                >
+                  বাতিল
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-dark transition cursor-pointer disabled:opacity-50 inline-flex items-center gap-1.5"
+                >
+                  {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  <span>তথ্য আপডেট করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 3. Delete Student Confirmation Modal */}
+      {isDeleteOpen && studentToDelete && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+          <div className="bg-surface border border-border w-full max-w-md rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-border flex items-center justify-between">
+              <h3 className="font-bold text-text-primary text-base">শিক্ষার্থী ডিলিট নিশ্চিত করুন</h3>
+              <button 
+                onClick={() => {
+                  setIsDeleteOpen(false);
+                  setStudentToDelete(null);
+                }}
+                className="text-text-muted hover:text-text-primary transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-4">
+              {error && (
+                <div className="p-3 bg-error/10 border border-error/20 rounded-xl text-error text-xs font-semibold flex items-center gap-2">
+                  <AlertCircle className="w-4.5 h-4.5 shrink-0" />
+                  <span>{error}</span>
+                </div>
+              )}
+
+              <div className="flex items-start gap-3 bg-error/5 p-4 border border-error/10 rounded-xl">
+                <AlertCircle className="w-5 h-5 text-error shrink-0 mt-0.5 animate-bounce" />
+                <div className="space-y-1">
+                  <p className="text-text-primary font-bold text-sm">সতর্কতা!</p>
+                  <p className="text-text-secondary text-xs leading-relaxed">
+                    আপনি কি নিশ্চিতভাবে <strong className="text-text-primary">{studentToDelete.full_name}</strong>-কে ডিলিট করতে চান? ডিলিট করলে তার পেমেন্ট হিস্টোরি, উপস্থিতি এবং পরীক্ষার ফলাফল সহ ডাটাবেজের সকল তথ্য চিরতরে মুছে যাবে। এই কাজ আর ফিরিয়ে আনা যাবে না।
+                  </p>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-3 justify-end pt-2 border-t border-border mt-4">
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => {
+                    setIsDeleteOpen(false);
+                    setStudentToDelete(null);
+                  }}
+                  className="px-4 py-2 bg-surface-alt border border-border text-xs font-semibold text-text-secondary rounded-xl hover:bg-surface-alt/75 transition cursor-pointer"
+                >
+                  বাতিল
+                </button>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={handleDeleteConfirm}
+                  className="px-4 py-2 bg-error text-white text-xs font-bold rounded-xl hover:bg-error/90 transition cursor-pointer disabled:opacity-50 inline-flex items-center gap-1.5"
+                >
+                  {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  <span>হ্যাঁ, ডিলিট করুন</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

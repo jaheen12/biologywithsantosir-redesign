@@ -142,14 +142,6 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
             <Shield className="w-6 h-6 text-primary" />
             <span className="font-bold text-base text-primary font-ui">এডমিন প্যানেল</span>
           </Link>
-          {/* Admin User Summary */}
-          <div className="px-6 pb-4 pt-2 flex flex-col">
-            <span className="text-sm font-semibold text-text-primary truncate">{fullName}</span>
-            <span className="text-xs text-text-secondary mt-0.5 inline-flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
-              প্রধান শিক্ষক (এডমিন)
-            </span>
-          </div>
         </div>
 
         {/* Nav Links */}

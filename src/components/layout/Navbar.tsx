@@ -367,8 +367,8 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
-                // Mobile: larger touch target (py-3) + text-base to match 16px minimum that prevents iOS zoom
-                className="inline-flex items-center justify-center px-5 py-3 sm:px-4 sm:py-2 text-sm sm:text-xs font-medium text-primary-dark border border-primary hover:bg-primary-light rounded-lg transition duration-150 min-h-[44px] sm:min-h-0"
+                // Mobile: py-2.5 keeps 44px min-height accessible without filling the 56px header
+                className="inline-flex items-center justify-center px-4 py-2.5 sm:px-4 sm:py-2 text-sm sm:text-xs font-medium text-primary-dark border border-primary hover:bg-primary-light rounded-lg transition duration-150 min-h-[44px] sm:min-h-0"
               >
                 লগ ইন
               </Link>

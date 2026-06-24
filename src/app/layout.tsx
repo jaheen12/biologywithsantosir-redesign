@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Noto_Serif_Bengali, Hind_Siliguri, Tiro_Bangla } from "next/font/google";
+import { Inter, JetBrains_Mono, Noto_Serif_Bengali, Tiro_Bangla } from "next/font/google";
 import { SearchProvider } from "@/context/SearchContext";
 import "./globals.css";
 
@@ -19,13 +19,6 @@ const jetbrainsMono = JetBrains_Mono({
 const notoSerifBengali = Noto_Serif_Bengali({
   subsets: ["bengali"],
   variable: "--font-noto",
-  display: "swap",
-});
-
-const hindSiliguri = Hind_Siliguri({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["bengali"],
-  variable: "--font-hind",
   display: "swap",
 });
 
@@ -62,7 +55,7 @@ export default function RootLayout({
   return (
     <html
       lang="bn"
-      className={`${inter.variable} ${jetbrainsMono.variable} ${notoSerifBengali.variable} ${hindSiliguri.variable} ${tiroBangla.variable} antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} ${notoSerifBengali.variable} ${tiroBangla.variable} antialiased`}
     >
       <body className="flex flex-col min-h-screen">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg">

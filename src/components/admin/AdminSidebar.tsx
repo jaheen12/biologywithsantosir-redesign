@@ -29,7 +29,7 @@ import { createClient } from '@/lib/supabase/client';
 
 const navigationGroups = [
   {
-    title: '👥 শিক্ষার্থী',
+    title: 'শিক্ষার্থী',
     items: [
       { label: 'শিক্ষার্থী তালিকা', path: '/admin/students', icon: Users },
       { label: 'ভর্তি ব্যবস্থাপনা', path: '/admin/enrollments', icon: GraduationCap },
@@ -37,7 +37,7 @@ const navigationGroups = [
     ]
   },
   {
-    title: '💰 পেমেন্ট',
+    title: 'পেমেন্ট',
     items: [
       { label: 'পেমেন্ট লেজার', path: '/admin/payments', icon: CreditCard },
       { label: 'নতুন পেমেন্ট', path: '/admin/payments/new', icon: PlusCircle },
@@ -45,14 +45,14 @@ const navigationGroups = [
     ]
   },
   {
-    title: '🏫 ব্যাচ ও কোর্স',
+    title: 'ব্যাচ ও কোর্স',
     items: [
       { label: 'ব্যাচ ব্যবস্থাপনা', path: '/admin/batches', icon: BookOpen },
       { label: 'রুটিন', path: '/admin/routine', icon: Calendar },
     ]
   },
   {
-    title: '📝 পরীক্ষা',
+    title: 'পরীক্ষা',
     items: [
       { label: 'পরীক্ষা পরিচালনা', path: '/admin/exams', icon: FileText },
       { label: 'ফলাফল প্রবেশ', path: '/admin/results', icon: Award },
@@ -60,7 +60,7 @@ const navigationGroups = [
     ]
   },
   {
-    title: '📢 অন্যান্য',
+    title: 'অন্যান্য',
     items: [
       { label: 'নোটিশ বোর্ড', path: '/admin/announcements', icon: Megaphone },
       { label: 'রোল ব্যবস্থাপনা', path: '/admin/roles', icon: Shield },

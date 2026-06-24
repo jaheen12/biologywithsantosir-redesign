@@ -166,7 +166,7 @@ export default async function DashboardPage() {
             <AlertCircle className={`w-5 h-5 shrink-0 mt-0.5 sm:mt-0 ${paymentDue.status === 'overdue' ? 'text-error' : 'text-accent'}`} />
             <p className="text-sm font-medium">
               {paymentDue.status === 'overdue' 
-                ? `⚠️ এই মাসের বেতন বকেয়া আছে (৳${toBengaliNumerals(paymentDue.monthly_fee)})` 
+                ? `এই মাসের বেতন বকেয়া আছে (৳${toBengaliNumerals(paymentDue.monthly_fee)})` 
                 : `এই মাসের আংশিক পেমেন্ট হয়েছে। বকেয়া: ৳${toBengaliNumerals(paymentDue.outstanding)}`}
             </p>
           </div>

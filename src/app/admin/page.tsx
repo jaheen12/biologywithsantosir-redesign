@@ -192,12 +192,12 @@ export default async function AdminDashboardPage() {
         <div className="bg-surface p-6 rounded-2xl border border-border shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
           <div>
             <span className="text-xs font-semibold text-text-secondary uppercase tracking-wider block">বেতন বাকি</span>
-            <span className={`text-3xl font-bold mt-1 block ${(overdueCount ?? 0) > 0 ? 'text-error animate-pulse' : 'text-text-primary'}`}>
+            <span className="text-3xl font-bold mt-1 block text-text-primary">
               {toBengaliNumerals(overdueCount ?? 0)} <span className="text-base font-medium text-text-secondary">জন</span>
             </span>
             <span className="text-xs text-text-secondary mt-1 inline-block">এই মাসে অপরিশোধিত</span>
           </div>
-          <div className={`p-3.5 rounded-xl ${ (overdueCount ?? 0) > 0 ? 'bg-error/10 text-error' : 'bg-surface-alt text-text-muted'}`}>
+          <div className="p-3.5 rounded-xl bg-surface-alt text-text-muted">
             <UserX className="w-6 h-6" />
           </div>
         </div>
@@ -227,9 +227,9 @@ export default async function AdminDashboardPage() {
           <div className="bg-surface rounded-2xl border border-border shadow-sm overflow-hidden">
             <div className="px-6 py-5 border-b border-border bg-surface flex items-center justify-between">
               <h2 className="text-base font-bold text-text-primary flex items-center gap-2">
-                <span>⚠️ এই মাসের বেতন বাকি আছে</span>
+                <span>এই মাসের বেতন বাকি আছে</span>
                 {overdueCount !== null && overdueCount > 0 && (
-                  <span className="px-2 py-0.5 text-xs font-semibold bg-error/10 text-error rounded-full">
+                  <span className="px-2 py-0.5 text-xs font-semibold bg-surface-alt text-text-secondary border border-border rounded-full">
                     {toBengaliNumerals(overdueCount)} জন
                   </span>
                 )}
@@ -270,8 +270,8 @@ export default async function AdminDashboardPage() {
                         <td className="px-6 py-4 text-sm text-text-secondary">
                           {student.batch_name}
                         </td>
-                        <td className="px-6 py-4 text-sm font-semibold text-error">
-                          <span className="font-bold text-error mr-0.5">৳</span>
+                        <td className="px-6 py-4 text-sm font-semibold text-text-primary">
+                          <span className="font-bold text-text-secondary mr-0.5">৳</span>
                           {toBengaliNumerals(student.outstanding)}
                         </td>
                         <td className="px-6 py-4 text-right">
@@ -296,7 +296,7 @@ export default async function AdminDashboardPage() {
           <div className="bg-surface rounded-2xl border border-border shadow-sm overflow-hidden">
             <div className="px-6 py-5 border-b border-border bg-surface flex items-center justify-between">
               <h2 className="text-base font-bold text-text-primary flex items-center gap-2">
-                <span>📱 bKash/Nagad যাচাই বাকি</span>
+                <span>bKash/Nagad যাচাই বাকি</span>
                 {unreconciledCount !== null && unreconciledCount > 0 && (
                   <span className="px-2 py-0.5 text-xs font-semibold bg-accent-light text-accent rounded-full">
                     {toBengaliNumerals(unreconciledCount)} টি
@@ -382,11 +382,7 @@ export default async function AdminDashboardPage() {
                   let textColorClass = 'text-primary';
                   let badgeBgClass = 'bg-primary-light text-primary';
                   
-                  if (seatsRemaining <= 5) {
-                    barColorClass = 'bg-error';
-                    textColorClass = 'text-error';
-                    badgeBgClass = 'bg-error/10 text-error';
-                  } else if (seatsRemaining <= 10) {
+                  if (seatsRemaining <= 10) {
                     barColorClass = 'bg-accent';
                     textColorClass = 'text-accent';
                     badgeBgClass = 'bg-accent-light text-accent';

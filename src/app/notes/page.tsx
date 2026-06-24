@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { createClient } from '@/lib/supabase/server';
+import { supabasePublic as supabase } from '@/lib/supabase/public';
 import { Container } from '@/components/ui/Container';
 import NotesClient from '@/components/notes/NotesClient';
 
@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 export const revalidate = 3600; // Cache for 1 hour
 
 export default async function NotesPage() {
-  const supabase = await createClient();
   const { data: notes } = await supabase
     .from('notes')
     .select('*')

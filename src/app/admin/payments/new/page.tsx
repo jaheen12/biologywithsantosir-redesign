@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import NewPaymentForm from '@/components/admin/NewPaymentForm';
@@ -53,11 +53,20 @@ export default async function AdminNewPaymentPage() {
       </div>
 
       <div className="max-w-2xl">
-        <NewPaymentForm 
-          students={students} 
-          batches={batches} 
-          recordedBy={user.id} 
-        />
+        <Suspense fallback={
+          <div className="bg-bg-card p-6 rounded-2xl border border-border-color shadow-sm animate-pulse">
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
+            <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+            <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+            <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+          </div>
+        }>
+          <NewPaymentForm 
+            students={students} 
+            batches={batches} 
+            recordedBy={user.id} 
+          />
+        </Suspense>
       </div>
     </div>
   );

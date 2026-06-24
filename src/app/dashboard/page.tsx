@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { Container } from '@/components/ui/Container';
+import { toBengaliNumerals } from '@/lib/bangla';
 
 const dayTranslations: Record<string, string> = {
   'Saturday': 'শনিবার',
@@ -165,8 +166,8 @@ export default async function DashboardPage() {
             <AlertCircle className={`w-5 h-5 shrink-0 mt-0.5 sm:mt-0 ${paymentDue.status === 'overdue' ? 'text-error' : 'text-accent'}`} />
             <p className="text-sm font-medium">
               {paymentDue.status === 'overdue' 
-                ? `⚠️ এই মাসের বেতন বকেয়া আছে (৳${paymentDue.monthly_fee} টাকা)` 
-                : `এই মাসের আংশিক পেমেন্ট হয়েছে। বকেয়া বকেয়া: ৳${paymentDue.outstanding} টাকা`}
+                ? `⚠️ এই মাসের বেতন বকেয়া আছে (৳${toBengaliNumerals(paymentDue.monthly_fee)})` 
+                : `এই মাসের আংশিক পেমেন্ট হয়েছে। বকেয়া: ৳${toBengaliNumerals(paymentDue.outstanding)}`}
             </p>
           </div>
           <Link 
@@ -216,7 +217,7 @@ export default async function DashboardPage() {
                 <div className="flex flex-col gap-1 text-xs text-text-secondary">
                   <div className="flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 text-text-muted" />
-                    <span>{dayTranslations[nextClass.day_of_week] || nextClass.day_of_week} • {nextClass.start_time.slice(0, 5)} - {nextClass.end_time.slice(0, 5)}</span>
+                    <span>{dayTranslations[nextClass.day_of_week] || nextClass.day_of_week} • {toBengaliNumerals(nextClass.start_time.slice(0, 5))} - {toBengaliNumerals(nextClass.end_time.slice(0, 5))}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     {nextClass.platform === 'Physical' ? (
@@ -269,7 +270,7 @@ export default async function DashboardPage() {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <TrendingUp className="w-3.5 h-3.5 text-text-muted" />
-                    <span>পূর্ণমান: {nextExam.total_marks} ({nextExam.type === 'mcq' ? 'MCQ' : nextExam.type === 'written' ? 'লিখিত' : 'মক'})</span>
+                    <span>পূর্ণমান: {toBengaliNumerals(nextExam.total_marks)} ({nextExam.type === 'mcq' ? 'MCQ' : nextExam.type === 'written' ? 'লিখিত' : 'মক'})</span>
                   </div>
                 </div>
               </div>
@@ -300,10 +301,10 @@ export default async function DashboardPage() {
             {latestResult ? (
               <div className="space-y-2">
                 <h4 className="font-semibold text-text-primary text-base leading-snug">{latestResult.exams.title}</h4>
-                <div className="flex items-center gap-3">
-                  <div className="text-2xl font-bold text-primary font-ui">{latestResult.marks_obtained} <span className="text-xs text-text-secondary">/ {latestResult.exams.total_marks}</span></div>
-                  <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-lg bg-primary-light text-primary">{latestResult.grade}</span>
-                </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-2xl font-bold text-primary font-ui">{toBengaliNumerals(latestResult.marks_obtained)} <span className="text-xs text-text-secondary">/ {toBengaliNumerals(latestResult.exams.total_marks)}</span></div>
+                    <span className="inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-lg bg-primary-light text-primary">{latestResult.grade}</span>
+                  </div>
                 {latestResult.remarks && (
                   <p className="text-xs text-text-secondary truncate">মন্তব্য: {latestResult.remarks}</p>
                 )}

@@ -2,6 +2,7 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Trophy, Award, Calendar, Users, Star } from 'lucide-react';
+import { toBengaliNumerals, getBanglaOrdinal } from '@/lib/bangla';
 
 interface LeaderboardEntry {
   student_id: string;
@@ -9,27 +10,6 @@ interface LeaderboardEntry {
   total_marks: number | string;
   exams_count: number | string;
   rank: number;
-}
-
-// Converts numbers to Bengali numerals
-function toBengaliNumerals(num: number | string | null | undefined): string {
-  if (num === null || num === undefined) return '';
-  const numStr = num.toString();
-  const banglaDigits: Record<string, string> = {
-    '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
-    '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
-  };
-  return numStr.replace(/[0-9]/g, (digit) => banglaDigits[digit] || digit);
-}
-
-// Gets Bengali ordinal suffix for rank (e.g. 1 -> ১ম, 2 -> ২য়)
-function getBanglaOrdinal(rank: number): string {
-  const ordinals: Record<number, string> = {
-    1: '১ম', 2: '২য়', 3: '৩য়', 4: '৪র্থ', 5: '৫ম', 
-    6: '৬ষ্ঠ', 7: '৭ম', 8: '৮ম', 9: '৯ম', 10: '১০ম'
-  };
-  if (ordinals[rank]) return ordinals[rank];
-  return `${toBengaliNumerals(rank)}ম`;
 }
 
 export default async function LeaderboardPage() {
@@ -155,8 +135,7 @@ export default async function LeaderboardPage() {
                         {/* Rank */}
                         <td className="px-6 py-4.5 font-bold text-text-primary">
                           <div className="flex items-center gap-2">
-                            {rankDisplay}
-                            {row.rank > 3 && <span className="text-xs text-text-muted font-normal">তম</span>}
+                            {row.rank <= 3 ? rankDisplay : <span>{getBanglaOrdinal(row.rank)}</span>}
                           </div>
                         </td>
 

@@ -2,8 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { createClient } from '@/lib/supabase/server';
-import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { supabasePublic as supabase } from '@/lib/supabase/public';
 import PostCard from '@/components/ui/PostCard';
 import { Container } from '@/components/ui/Container';
 
@@ -12,11 +11,9 @@ interface PageProps {
   searchParams: Promise<{ level?: string }>;
 }
 
+export const revalidate = 3600; // Cache for 1 hour
+
 export async function generateStaticParams() {
-  const supabase = createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
   const { data: topics } = await supabase.from('topics').select('slug');
   if (!topics) return [];
   return topics.map((t) => ({ topicSlug: t.slug }));
@@ -24,7 +21,6 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ topicSlug: string }> }): Promise<Metadata> {
   const { topicSlug } = await params;
-  const supabase = await createClient();
   const { data: topic } = await supabase
     .from('topics')
     .select('name_en, name_bn, description')
@@ -52,8 +48,6 @@ export default async function TopicHubPage({ params, searchParams }: PageProps) 
   const { topicSlug } = await params;
   const resolvedSearchParams = await searchParams;
   const levelFilter = resolvedSearchParams.level ?? 'all';
-
-  const supabase = await createClient();
 
   // Fetch the topic details
   const { data: topic } = await supabase

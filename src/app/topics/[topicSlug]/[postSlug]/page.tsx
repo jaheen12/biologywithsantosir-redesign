@@ -3,8 +3,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Calendar, Clock, User, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
-import { createClient } from '@/lib/supabase/server';
-import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { supabasePublic as supabase } from '@/lib/supabase/public';
 import { Container } from '@/components/ui/Container';
 import { Badge } from '@/components/ui/Badge';
 import Breadcrumb from '@/components/article/Breadcrumb';
@@ -18,11 +17,9 @@ interface PageProps {
   params: Promise<{ topicSlug: string; postSlug: string }>;
 }
 
+export const revalidate = 3600; // Cache for 1 hour
+
 export async function generateStaticParams() {
-  const supabase = createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
   const { data: posts } = await supabase
     .from('posts')
     .select('slug, topic_id')
@@ -38,7 +35,6 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ topicSlug: string; postSlug: string }> }): Promise<Metadata> {
   const { postSlug } = await params;
-  const supabase = await createClient();
   const { data: post } = await supabase
     .from('posts')
     .select('title, excerpt')
@@ -70,7 +66,6 @@ export async function generateMetadata({ params }: { params: Promise<{ topicSlug
 
 export default async function PostPage({ params }: PageProps) {
   const { topicSlug, postSlug } = await params;
-  const supabase = await createClient();
 
   // Fetch the article details with joined topics
   const { data: postData } = await supabase

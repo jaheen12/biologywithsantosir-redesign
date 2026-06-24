@@ -2,6 +2,7 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Award, Calendar, BookOpen, BarChart2, Star, User, Trophy } from 'lucide-react';
+import { toBengaliNumerals, formatBanglaDate } from '@/lib/bangla';
 
 interface ExamDetails {
   id: string;
@@ -38,28 +39,6 @@ const gradeColor: Record<string, string> = {
   'F':  'bg-red-100 text-red-900 border-red-200',
 };
 
-// Converts numbers to Bengali numerals
-function toBengaliNumerals(num: number | string | null | undefined): string {
-  if (num === null || num === undefined) return '';
-  const numStr = num.toString();
-  const banglaDigits: Record<string, string> = {
-    '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
-    '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
-  };
-  return numStr.replace(/[0-9]/g, (digit) => banglaDigits[digit] || digit);
-}
-
-// Formats date string into Bangla format
-function formatBanglaDate(dateStr: string | null | undefined) {
-  if (!dateStr) return '';
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('bn-BD', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-}
-
 export default async function ResultsPage() {
   const supabase = await createClient();
 
@@ -86,21 +65,21 @@ export default async function ResultsPage() {
     return dateB - dateA;
   });
 
-  // Fetch class average and rank for each exam using RPC
-  const resultsWithStats = await Promise.all(
-    results.map(async (r) => {
-      const { data: statsData } = await supabase
-        .rpc('get_exam_stats', { p_exam_id: r.exam_id, p_student_id: user.id })
-        .maybeSingle();
+  // Fetch all stats at once using the new bulk RPC to avoid N+1 queries
+  const { data: allStats } = await supabase
+    .rpc('get_all_exam_stats_for_student', { p_student_id: user.id });
 
-      const stats = (statsData as unknown as ExamStats) || { class_avg: 0, student_rank: 0, total_appeared: 0 };
-
-      return {
-        ...r,
-        stats
-      };
-    })
+  const statsMap = new Map(
+    (allStats as any[])?.map((s) => [s.exam_id, s]) || []
   );
+
+  const resultsWithStats = results.map((r) => {
+    const stats = statsMap.get(r.exam_id) || { class_avg: 0, student_rank: 0, total_appeared: 0 };
+    return {
+      ...r,
+      stats
+    };
+  });
 
   return (
     <div className="space-y-8 font-ui max-w-4xl mx-auto pb-12">
@@ -167,7 +146,7 @@ export default async function ResultsPage() {
                     <div>
                       <span className="text-text-muted block text-xs mb-1">শ্রেণী গড়</span>
                       <span className="text-lg font-bold text-text-primary">
-                        {toBengaliNumerals(r.stats.class_avg)}
+                        {toBengaliNumerals(Number(r.stats.class_avg || 0).toFixed(1))}
                       </span>
                     </div>
 

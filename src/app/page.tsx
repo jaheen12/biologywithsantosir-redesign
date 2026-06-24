@@ -1,5 +1,5 @@
 import React from 'react';
-import { createClient } from '@/lib/supabase/server';
+import { supabasePublic as supabase } from '@/lib/supabase/public';
 import HeroSection from '@/components/home/HeroSection';
 import QuickNavCards from '@/components/home/QuickNavCards';
 import LatestPostsGrid from '@/components/home/LatestPostsGrid';
@@ -9,7 +9,6 @@ import PopularTopics from '@/components/home/PopularTopics';
 export const revalidate = 3600; // Revalidate cache every hour
 
 export default async function HomePage() {
-  const supabase = await createClient();
 
   // Fetch 6 latest published posts with their associated topic slug/name
   const { data: postsData } = await supabase

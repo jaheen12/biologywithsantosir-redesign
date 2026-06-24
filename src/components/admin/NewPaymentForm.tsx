@@ -63,6 +63,7 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
   const [studentId, setStudentId] = useState('');
   const [batchId, setBatchId] = useState('');
   const [batchName, setBatchName] = useState('');
+  const [isBatchSelectable, setIsBatchSelectable] = useState(false);
   const [month, setMonth] = useState('');
   const [method, setMethod] = useState('Cash');
   const [amount, setAmount] = useState('');
@@ -105,6 +106,7 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
     if (!selectedId) {
       setBatchId('');
       setBatchName('');
+      setIsBatchSelectable(false);
       setDueInfo(null);
       setAmount('');
       return;
@@ -112,23 +114,25 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
 
     setQueryLoading(true);
     try {
-      // 1. Fetch active enrollment details
-      const { data: enrollment, error: enrollError } = await supabase
+      // 1. Fetch active enrollment details (handle multiple gracefully)
+      const { data: enrollments, error: enrollError } = await supabase
         .from('enrollments')
         .select('batch_id, batches(name)')
         .eq('student_id', selectedId)
-        .eq('status', 'active')
-        .single();
+        .eq('status', 'active');
 
-      if (enrollError && enrollError.code !== 'PGRST116') throw enrollError;
+      if (enrollError) throw enrollError;
 
-      if (enrollment) {
+      if (enrollments && enrollments.length > 0) {
+        const enrollment = enrollments[0];
         setBatchId(enrollment.batch_id);
         const name = (enrollment.batches as any)?.name || 'অজানা ব্যাচ';
         setBatchName(name);
+        setIsBatchSelectable(false);
       } else {
         setBatchId('');
-        setBatchName('কোনো সক্রিয় ভর্তি নেই');
+        setBatchName('');
+        setIsBatchSelectable(true);
       }
 
       // 2. Fetch payment due information
@@ -193,7 +197,7 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
       batch_id: batchId,
       amount: payAmount,
       month,
-      paid_on: new Date().toISOString().split('T')[0],
+      paid_on: new Date().toLocaleDateString('en-CA'),
       method,
       is_installment: isInstallment,
       installment_number: isInstallment ? parseInt(installmentNumber, 10) : null,
@@ -263,16 +267,36 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
           </select>
         </div>
 
-        {/* Batch Info (auto-filled) */}
-        {batchId && (
+        {/* Batch Info (auto-filled or selectable fallback) */}
+        {studentId && (
           <div className="space-y-1.5">
             <label className="block font-bold text-text-secondary">ব্যাচ</label>
-            <input
-              type="text"
-              readOnly
-              value={batchName}
-              className="w-full px-3 py-2.5 bg-surface-alt border border-border rounded-xl text-text-primary font-semibold focus:outline-none"
-            />
+            {!isBatchSelectable ? (
+              <input
+                type="text"
+                readOnly
+                value={batchName}
+                className="w-full px-3 py-2.5 bg-surface-alt border border-border rounded-xl text-text-primary font-semibold focus:outline-none"
+              />
+            ) : (
+              <select
+                value={batchId}
+                onChange={(e) => {
+                  setBatchId(e.target.value);
+                  const selectedBatch = batches.find(b => b.id === e.target.value);
+                  setBatchName(selectedBatch ? selectedBatch.name : '');
+                }}
+                required
+                className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-text-primary font-semibold focus:outline-none focus:border-primary"
+              >
+                <option value="">ব্যাচ নির্বাচন করুন</option>
+                {batches.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
         )}
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Tag, BookOpen, ChevronRight } from 'lucide-react';
-import { createClient } from '@/lib/supabase/server';
+import { supabasePublic as supabase } from '@/lib/supabase/public';
 import { Container } from '@/components/ui/Container';
 
 export const metadata: Metadata = {
@@ -14,8 +14,9 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 3600; // Revalidate cache every hour
+
 export default async function TopicsPage() {
-  const supabase = await createClient();
   const { data: topicsData } = await supabase
     .from('topics')
     .select('*')

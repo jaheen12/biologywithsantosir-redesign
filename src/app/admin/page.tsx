@@ -15,6 +15,7 @@ import {
   CheckCircle,
   FileSpreadsheet
 } from 'lucide-react';
+import { toBengaliNumerals, formatBanglaDate } from '@/lib/bangla';
 
 interface OverdueStudent {
   student_id: string;
@@ -63,27 +64,7 @@ interface BatchCapacity {
   seats_remaining: number;
 }
 
-// Converts numbers to Bengali numerals
-function toBengaliNumerals(num: number | string | null | undefined): string {
-  if (num === null || num === undefined) return '';
-  const numStr = num.toString();
-  const banglaDigits: Record<string, string> = {
-    '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
-    '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
-  };
-  return numStr.replace(/[0-9]/g, (digit) => banglaDigits[digit] || digit);
-}
-
-// Formats date string into Bangla format (e.g. "2026-06-10" -> "১০ জুন ২০২৬")
-function formatBanglaDate(dateStr: string | null | undefined) {
-  if (!dateStr) return '';
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('bn-BD', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-}
+// Local helpers removed, imported from bangla.ts
 
 export default async function AdminDashboardPage() {
   const supabase = await createClient();

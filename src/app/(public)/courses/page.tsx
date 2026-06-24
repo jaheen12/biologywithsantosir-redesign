@@ -103,7 +103,7 @@ export default function CoursesPage() {
               
               <div>
                 <div className="flex items-center justify-between mb-4 mt-2">
-                  <Badge variant={course.level as any}>{course.level.toUpperCase()}</Badge>
+                  <Badge variant={course.level as 'ssc' | 'hsc' | 'honours'}>{course.level.toUpperCase()}</Badge>
                   <div className="text-right">
                     <span className="text-[1.5rem] font-bold text-primary block leading-none">
                       {course.price}

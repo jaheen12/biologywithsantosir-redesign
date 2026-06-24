@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
@@ -78,6 +78,32 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
   const supabase = createClient();
   const [isOpen, setIsOpen] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const toggleBtnRef = useRef<HTMLButtonElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  // Mobile sidebar focus management
+  useEffect(() => {
+    if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
+    } else if (previousFocusRef.current) {
+      previousFocusRef.current.focus();
+      previousFocusRef.current = null;
+    }
+  }, [isOpen]);
+
+  // Escape key closes mobile sidebar
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   // Auto-expand group of active page on load / pathname change
   React.useEffect(() => {
@@ -115,7 +141,9 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
           <span>এডমিন প্যানেল</span>
         </Link>
         <button
+          ref={toggleBtnRef}
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           className="p-2 text-text-primary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -126,6 +154,7 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
+          aria-hidden="true"
           className="fixed inset-0 bg-black/40 z-30 lg:hidden transition-opacity duration-300"
         />
       )}
@@ -170,6 +199,7 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
                 <button
                   type="button"
                   onClick={() => toggleGroup(group.title)}
+                  aria-expanded={isExpanded}
                   className="w-full flex items-center justify-between px-4 py-1 text-xs font-bold text-text-muted hover:text-primary uppercase tracking-wider transition-colors text-left cursor-pointer group/btn"
                 >
                   <span>{group.title}</span>

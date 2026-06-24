@@ -1,7 +1,11 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import StudentsClient from '@/components/admin/StudentsClient';
+
+const StudentsClient = dynamic(() => import('@/components/admin/StudentsClient'), {
+  loading: () => <div className="animate-pulse h-96 bg-surface-secondary rounded-xl" />,
+});
 
 export default async function AdminStudentsPage() {
   const supabase = await createClient();

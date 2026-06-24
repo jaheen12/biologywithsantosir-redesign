@@ -161,7 +161,7 @@ export default function MCQClient() {
             {mcqs.length === 0 && !loadingTopics ? (
               <div className="max-w-md flex flex-col items-center gap-3">
                 <AlertCircle className="w-12 h-12 text-primary/45" />
-                <h3 className="text-[1.125rem] font-bold text-text-primary">কোনো প্রশ্ন পাওয়া যায়নি</h3>
+                <h2 className="text-[1.125rem] font-bold text-text-primary">কোনো প্রশ্ন পাওয়া যায়নি</h2>
                 <p className="text-[0.875rem] text-text-secondary leading-relaxed">
                   এই লেভেলে বা বিষয়টির অধীনে এখনও কোনো প্রশ্ন যোগ করা হয়নি। অনুগ্রহ করে অন্য কোনো ফিল্টার নির্বাচন করুন।
                 </p>

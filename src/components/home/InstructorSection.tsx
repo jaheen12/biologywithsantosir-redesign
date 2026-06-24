@@ -16,7 +16,7 @@ export default function InstructorSection() {
                 alt="Santo Sir — Biology Teacher"
                 fill
                 className="object-cover"
-                priority
+                preload
                 sizes="96px"
               />
             </div>

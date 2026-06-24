@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Noto_Serif_Bengali, Hind_Siliguri, Tiro_Bangla } from "next/font/google";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import { SearchProvider } from "@/context/SearchContext";
-import SearchModal from "@/components/search/SearchModal";
-import PublicLayoutWrapper from "@/components/layout/PublicLayoutWrapper";
 import "./globals.css";
 
 // Same font setups below
@@ -27,7 +23,7 @@ const notoSerifBengali = Noto_Serif_Bengali({
 });
 
 const hindSiliguri = Hind_Siliguri({
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   subsets: ["bengali"],
   variable: "--font-hind",
   display: "swap",
@@ -69,14 +65,11 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable} ${notoSerifBengali.variable} ${hindSiliguri.variable} ${tiroBangla.variable} antialiased`}
     >
       <body className="flex flex-col min-h-screen">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg">
+          প্রধান কন্টেন্টে যান
+        </a>
         <SearchProvider>
-          <PublicLayoutWrapper
-            navbar={<Navbar />}
-            footer={<Footer />}
-            searchModal={<SearchModal />}
-          >
-            {children}
-          </PublicLayoutWrapper>
+          {children}
         </SearchProvider>
       </body>
     </html>

@@ -35,6 +35,10 @@ export default function Navbar() {
 
   const classesRef = useRef<HTMLDivElement>(null);
   const topicsRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const toggleBtnRef = useRef<HTMLButtonElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   // Fetch topics for the dropdown
   useEffect(() => {
@@ -112,6 +116,32 @@ export default function Navbar() {
     setIsDrawerOpen(false);
   }, [pathname]);
 
+  // Mobile drawer focus management
+  useEffect(() => {
+    if (isDrawerOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
+      // Focus the close button after render
+      requestAnimationFrame(() => {
+        closeBtnRef.current?.focus();
+      });
+    } else if (previousFocusRef.current) {
+      previousFocusRef.current.focus();
+      previousFocusRef.current = null;
+    }
+  }, [isDrawerOpen]);
+
+  // Escape key closes drawer
+  useEffect(() => {
+    if (!isDrawerOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsDrawerOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isDrawerOpen]);
+
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
   return (
@@ -140,6 +170,8 @@ export default function Navbar() {
             <div className="relative" ref={classesRef}>
               <button
                 onClick={() => setIsClassesOpen(!isClassesOpen)}
+                aria-expanded={isClassesOpen}
+                aria-controls="navbar-classes-dropdown"
                 className={`flex items-center gap-1 text-[0.9375rem] font-medium transition duration-150 py-2 hover:text-primary ${
                   isClassesOpen ? 'text-primary' : 'text-text-primary'
                 }`}
@@ -149,7 +181,7 @@ export default function Navbar() {
               </button>
 
               {isClassesOpen && (
-                <div className="absolute top-[48px] left-1/2 -translate-x-1/2 bg-surface border border-border rounded-xl shadow-lg p-5 grid grid-cols-2 gap-6 w-[420px]">
+                <div id="navbar-classes-dropdown" className="absolute top-[48px] left-1/2 -translate-x-1/2 bg-surface border border-border rounded-xl shadow-lg p-5 grid grid-cols-2 gap-6 w-[420px]">
                   <div>
                     <h3 className="text-[0.75rem] font-bold text-text-secondary uppercase tracking-wider mb-2 flex items-center gap-1">
                       <School className="w-3.5 h-3.5 text-primary" />
@@ -213,6 +245,8 @@ export default function Navbar() {
             <div className="relative" ref={topicsRef}>
               <button
                 onClick={() => setIsTopicsOpen(!isTopicsOpen)}
+                aria-expanded={isTopicsOpen}
+                aria-controls="navbar-topics-dropdown"
                 className={`flex items-center gap-1 text-[0.9375rem] font-medium transition duration-150 py-2 hover:text-primary ${
                   isTopicsOpen ? 'text-primary' : 'text-text-primary'
                 }`}
@@ -222,7 +256,7 @@ export default function Navbar() {
               </button>
 
               {isTopicsOpen && (
-                <div className="absolute top-[48px] left-0 bg-surface border border-border rounded-xl shadow-lg p-3 min-w-[200px] flex flex-col gap-1">
+                <div id="navbar-topics-dropdown" className="absolute top-[48px] left-0 bg-surface border border-border rounded-xl shadow-lg p-3 min-w-[200px] flex flex-col gap-1">
                   {topics.length > 0 ? (
                     topics.map((topic) => (
                       <Link
@@ -332,7 +366,7 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary border border-primary hover:bg-primary-light rounded-lg transition duration-150"
+                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary-dark border border-primary hover:bg-primary-light rounded-lg transition duration-150"
               >
                 লগ ইন
               </Link>
@@ -340,6 +374,7 @@ export default function Navbar() {
 
             {/* Mobile Hamburger menu */}
             <button
+              ref={toggleBtnRef}
               onClick={toggleDrawer}
               aria-label="Open navigation menu"
               className="lg:hidden p-2 text-text-primary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
@@ -356,6 +391,7 @@ export default function Navbar() {
           {/* Overlay */}
           <div
             onClick={toggleDrawer}
+            aria-hidden="true"
             className="fixed inset-0 bg-black/40 transition-opacity duration-300"
           />
 
@@ -364,6 +400,7 @@ export default function Navbar() {
             <div className="flex items-center justify-between mb-6">
               <span className="text-primary font-bold text-lg">Menu</span>
               <button
+                ref={closeBtnRef}
                 onClick={toggleDrawer}
                 aria-label="Close navigation menu"
                 className="p-2 text-text-primary hover:text-primary transition duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center"

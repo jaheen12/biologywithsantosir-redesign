@@ -105,40 +105,42 @@ export default async function PostPage({ params }: PageProps) {
   // Extract headings for Table of Contents
   const headings = extractHeadings(post.content || '');
 
-  // Fetch 3 related posts (same topic, excluding current post)
-  const { data: relatedPostsData } = await supabase
-    .from('posts')
-    .select('id, slug, title, excerpt, level, topic_id, read_time_min, published_at, topics(name_en, slug)')
-    .eq('topic_id', post.topic_id)
-    .eq('published', true)
-    .neq('id', post.id)
-    .order('published_at', { ascending: false })
-    .limit(3);
+  // Fetch 3 related posts, previous post, and next post in parallel
+  const [relatedPostsResult, prevPostResult, nextPostResult] = await Promise.all([
+    supabase
+      .from('posts')
+      .select('id, slug, title, excerpt, level, topic_id, read_time_min, published_at, topics(name_en, slug)')
+      .eq('topic_id', post.topic_id)
+      .eq('published', true)
+      .neq('id', post.id)
+      .order('published_at', { ascending: false })
+      .limit(3),
+    supabase
+      .from('posts')
+      .select('title, slug')
+      .eq('topic_id', post.topic_id)
+      .eq('published', true)
+      .lt('published_at', post.published_at)
+      .order('published_at', { ascending: false })
+      .limit(1),
+    supabase
+      .from('posts')
+      .select('title, slug')
+      .eq('topic_id', post.topic_id)
+      .eq('published', true)
+      .gt('published_at', post.published_at)
+      .order('published_at', { ascending: true })
+      .limit(1),
+  ]);
 
+  const relatedPostsData = relatedPostsResult.data;
   const relatedPosts = relatedPostsData?.map((p: any) => ({
     ...p,
     topics: Array.isArray(p.topics) ? p.topics[0] : p.topics,
   })) || [];
-
-  // Fetch previous and next articles in the same topic (chronological order)
-  const { data: prevPostData } = await supabase
-    .from('posts')
-    .select('title, slug')
-    .eq('topic_id', post.topic_id)
-    .eq('published', true)
-    .lt('published_at', post.published_at)
-    .order('published_at', { ascending: false })
-    .limit(1);
+  const prevPostData = prevPostResult.data;
   const prevPost = prevPostData?.[0] || null;
-
-  const { data: nextPostData } = await supabase
-    .from('posts')
-    .select('title, slug')
-    .eq('topic_id', post.topic_id)
-    .eq('published', true)
-    .gt('published_at', post.published_at)
-    .order('published_at', { ascending: true })
-    .limit(1);
+  const nextPostData = nextPostResult.data;
   const nextPost = nextPostData?.[0] || null;
 
   const breadcrumbItems = [

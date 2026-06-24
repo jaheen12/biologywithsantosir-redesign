@@ -6,9 +6,34 @@ import { createClient } from '@/lib/supabase/server';
 import { Container } from '@/components/ui/Container';
 import PostCard from '@/components/ui/PostCard';
 import { Badge } from '@/components/ui/Badge';
+import type { Tables } from '@/lib/database.types';
 
 interface PageProps {
   searchParams: Promise<{ q?: string }>;
+}
+
+interface SearchPostResult {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  level: string;
+  topic_id: string;
+  read_time_min: number;
+  published_at: string | null;
+  topics: { name_en: string; name_bn: string | null; slug: string } | null;
+}
+
+interface RawSearchPostResult extends Omit<SearchPostResult, 'topics'> {
+  topics: { name_en: string; name_bn: string | null; slug: string } | { name_en: string; name_bn: string | null; slug: string }[] | null;
+}
+
+interface SearchTopicResult {
+  id: string;
+  name_en: string;
+  name_bn: string;
+  slug: string;
+  description: string | null;
 }
 
 export const metadata: Metadata = {
@@ -20,7 +45,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
   const query = resolvedSearchParams.q?.trim() || '';
 
-  let results = { posts: [] as any[], topics: [] as any[] };
+  let results: { posts: SearchPostResult[]; topics: SearchTopicResult[] } = { posts: [], topics: [] };
   let hasSearched = false;
 
   if (query) {
@@ -43,7 +68,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
       .limit(6);
 
     results = {
-      posts: postsData?.map((p: any) => ({
+      posts: postsData?.map((p: RawSearchPostResult) => ({
         ...p,
         topics: Array.isArray(p.topics) ? p.topics[0] : p.topics,
       })) || [],

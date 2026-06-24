@@ -25,8 +25,8 @@ export default function AboutPage() {
             alt="Santo Sir — Biology Teacher"
             fill
             className="object-cover"
-            priority
-            sizes="(max-w-768px) 100vw, 768px"
+            preload
+            sizes="(max-width: 768px) 100vw, 768px"
           />
         </div>
 

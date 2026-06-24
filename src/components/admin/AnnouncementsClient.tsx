@@ -26,7 +26,7 @@ interface Announcement {
   title: string;
   body: string;
   batch_id: string | null;
-  created_at: string;
+  created_at: string | null;
   batches: {
     name: string;
   } | null;

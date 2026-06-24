@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Loader2, Plus, AlertCircle, Info } from 'lucide-react';
+import { toBengaliNumerals } from '@/lib/bangla';
 
 interface Student {
   id: string;
@@ -20,17 +21,6 @@ interface NewPaymentFormProps {
   students: Student[];
   batches: Batch[];
   recordedBy: string;
-}
-
-// Converts numbers to Bengali numerals
-function toBengaliNumerals(num: number | string | null | undefined): string {
-  if (num === null || num === undefined) return '';
-  const numStr = num.toString();
-  const banglaDigits: Record<string, string> = {
-    '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
-    '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
-  };
-  return numStr.replace(/[0-9]/g, (digit) => banglaDigits[digit] || digit);
 }
 
 // Helper to generate months from -3 to +3 relative to current month
@@ -126,7 +116,8 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
       if (enrollments && enrollments.length > 0) {
         const enrollment = enrollments[0];
         setBatchId(enrollment.batch_id);
-        const name = (enrollment.batches as any)?.name || 'অজানা ব্যাচ';
+        const batchData = enrollment.batches as { name: string } | null;
+        const name = batchData?.name || 'অজানা ব্যাচ';
         setBatchName(name);
         setIsBatchSelectable(false);
       } else {
@@ -146,7 +137,7 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
 
       if (due) {
         setDueInfo(due);
-        setAmount(due.outstanding.toString());
+        setAmount(due.outstanding?.toString() ?? '');
       } else {
         setDueInfo(null);
         setAmount('');
@@ -219,8 +210,9 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
       router.push(`/admin/payments/${newPayment.id}/receipt`);
       router.refresh();
 
-    } catch (err: any) {
-      setErrorMessage(`পেমেন্ট সংরক্ষণ করা যায়নি: ${err.message || 'আবার চেষ্টা করুন।'}`);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'আবার চেষ্টা করুন।';
+      setErrorMessage(`পেমেন্ট সংরক্ষণ করা যায়নি: ${msg}`);
       setLoading(false);
     }
   };

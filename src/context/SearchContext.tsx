@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
 
 interface SearchContextType {
   isOpen: boolean;
@@ -14,12 +14,14 @@ const SearchContext = createContext<SearchContextType | undefined>(undefined);
 export function SearchProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openSearch = () => setIsOpen(true);
-  const closeSearch = () => setIsOpen(false);
-  const toggleSearch = () => setIsOpen((prev) => !prev);
+  const openSearch = useCallback(() => setIsOpen(true), []);
+  const closeSearch = useCallback(() => setIsOpen(false), []);
+  const toggleSearch = useCallback(() => setIsOpen((prev) => !prev), []);
+
+  const value = useMemo(() => ({ isOpen, openSearch, closeSearch, toggleSearch }), [isOpen, openSearch, closeSearch, toggleSearch]);
 
   return (
-    <SearchContext.Provider value={{ isOpen, openSearch, closeSearch, toggleSearch }}>
+    <SearchContext.Provider value={value}>
       {children}
     </SearchContext.Provider>
   );

@@ -2,17 +2,37 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function proxy(request: NextRequest) {
-  // Clone request headers and add x-pathname
-  const requestHeaders = new Headers(request.headers)
-  requestHeaders.set('x-pathname', request.nextUrl.pathname)
+  const path = request.nextUrl.pathname;
+  const isProtected = path.startsWith('/dashboard') || path.startsWith('/admin');
+  const isAuthPage = path === '/login' || path === '/signup';
 
-  // 1. Create a response object to forward cookies
+  // Check if there is a Supabase session cookie
+  const hasSessionCookie = request.cookies.getAll().some(
+    (c) => c.name.startsWith('sb-') && c.name.endsWith('-auth-token')
+  );
+
+  // x-pathname header clone
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-pathname', path)
+
+  // Response object
   let supabaseResponse = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   })
 
+  // Fast path 1: If accessing a protected route without any session cookie, redirect to login immediately
+  if (isProtected && !hasSessionCookie) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  // Fast path 2: If accessing a public page or auth page without a session cookie, proceed immediately
+  if (!isProtected && !hasSessionCookie) {
+    return supabaseResponse;
+  }
+
+  // Otherwise, we have a session cookie, so initialize Supabase client and verify/refresh session
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -41,35 +61,30 @@ export async function proxy(request: NextRequest) {
     }
   )
 
-  // 2. Refresh session — MUST use getUser(), not getSession()
+  // Verify token and fetch user
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname
-
-  // 3. Protect /dashboard/* — must be logged in
-  if (path.startsWith('/dashboard') && !user) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  // Redirect unauthenticated users if getUser() failed despite having a cookie
+  if (isProtected && !user) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // 4. Protect /admin/* — must be admin
+  // Redirect non-admin users away from /admin
   if (path.startsWith('/admin')) {
-    if (!user) {
-      return NextResponse.redirect(new URL('/login', request.url))
-    }
-    const role = user.app_metadata?.role
+    const role = user?.app_metadata?.role;
     if (role !== 'admin') {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      return NextResponse.redirect(new URL('/dashboard', request.url));
     }
   }
 
-  // 5. Redirect logged-in users away from auth pages
-  if (user && (path === '/login' || path === '/signup')) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+  // Redirect logged-in users away from login/signup
+  if (user && isAuthPage) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  return supabaseResponse
+  return supabaseResponse;
 }
 
 export const config = {

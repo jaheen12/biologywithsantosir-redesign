@@ -104,7 +104,7 @@ export default async function DashboardPage() {
     const { data: batch } = await supabase
       .from('batches')
       .select('name')
-      .eq('id', profile.batch_id)
+      .eq('id', profile.batch_id!)
       .single();
     if (batch) batchName = batch.name;
 
@@ -112,7 +112,7 @@ export default async function DashboardPage() {
     const { data: routines } = await supabase
       .from('routines')
       .select('*')
-      .eq('batch_id', profile.batch_id);
+      .eq('batch_id', profile.batch_id!);
     nextClass = getNextClass(routines || []);
 
     // Fetch next upcoming exam
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
     const { data: exams } = await supabase
       .from('exams')
       .select('*')
-      .eq('batch_id', profile.batch_id)
+      .eq('batch_id', profile.batch_id!)
       .gte('exam_date', todayStr)
       .order('exam_date', { ascending: true })
       .limit(1);
@@ -217,7 +217,7 @@ export default async function DashboardPage() {
                 <div className="flex flex-col gap-1 text-xs text-text-secondary">
                   <div className="flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 text-text-muted" />
-                    <span>{dayTranslations[nextClass.day_of_week] || nextClass.day_of_week} • {toBengaliNumerals(nextClass.start_time.slice(0, 5))} - {toBengaliNumerals(nextClass.end_time.slice(0, 5))}</span>
+                    <span>{dayTranslations[nextClass.day_of_week] || nextClass.day_of_week} • {toBengaliNumerals(nextClass.start_time?.slice(0, 5) || '')} - {toBengaliNumerals(nextClass.end_time?.slice(0, 5) || '')}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     {nextClass.platform === 'Physical' ? (

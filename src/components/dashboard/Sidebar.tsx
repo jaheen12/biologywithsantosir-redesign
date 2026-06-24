@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
@@ -22,7 +22,7 @@ import { createClient } from '@/lib/supabase/client';
 
 interface SidebarProps {
   profile: any;
-  paymentStatus: 'paid' | 'partial' | 'overdue' | null;
+  paymentStatus: string | null;
 }
 
 export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
@@ -30,6 +30,30 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
   const router = useRouter();
   const supabase = createClient();
   const [isOpen, setIsOpen] = useState(false);
+  const toggleBtnRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  // Mobile sidebar focus management
+  useEffect(() => {
+    if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
+    } else if (previousFocusRef.current) {
+      previousFocusRef.current.focus();
+      previousFocusRef.current = null;
+    }
+  }, [isOpen]);
+
+  // Escape key closes mobile sidebar
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   const hasPaymentDue = paymentStatus && paymentStatus !== 'paid';
 
@@ -59,7 +83,9 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
           <span>প্যানেল</span>
         </Link>
         <button
+          ref={toggleBtnRef}
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           className="p-2 text-text-primary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -70,6 +96,7 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
+          aria-hidden="true"
           className="fixed inset-0 bg-black/40 z-30 md:hidden transition-opacity duration-300"
         />
       )}

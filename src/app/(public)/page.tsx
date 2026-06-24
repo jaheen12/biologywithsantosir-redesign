@@ -10,24 +10,26 @@ export const revalidate = 3600; // Revalidate cache every hour
 
 export default async function HomePage() {
 
-  // Fetch 6 latest published posts with their associated topic slug/name
-  const { data: postsData } = await supabase
-    .from('posts')
-    .select('id, slug, title, excerpt, level, topic_id, read_time_min, published_at, topics(name_en, slug)')
-    .eq('published', true)
-    .order('published_at', { ascending: false })
-    .limit(6);
+  // Fetch posts and topics in parallel
+  const [postsResult, topicsResult] = await Promise.all([
+    supabase
+      .from('posts')
+      .select('id, slug, title, excerpt, level, topic_id, read_time_min, published_at, topics(name_en, slug)')
+      .eq('published', true)
+      .order('published_at', { ascending: false })
+      .limit(6),
+    supabase
+      .from('topics')
+      .select('id, slug, name_en, name_bn')
+      .order('sort_order', { ascending: true }),
+  ]);
 
-  const posts = postsData?.map((post: any) => ({
+  const posts = postsResult.data?.map((post: any) => ({
     ...post,
     topics: Array.isArray(post.topics) ? post.topics[0] : post.topics,
   })) || [];
 
-  // Fetch all topics
-  const { data: topics } = await supabase
-    .from('topics')
-    .select('id, slug, name_en, name_bn')
-    .order('sort_order', { ascending: true });
+  const topics = topicsResult.data || [];
 
   return (
     <main className="w-full flex flex-col">

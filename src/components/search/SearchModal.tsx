@@ -6,17 +6,35 @@ import { Search, X, BookOpen, Tag, Loader2, ArrowRight } from 'lucide-react';
 import { useSearch } from '@/context/SearchContext';
 import { createClient } from '@/lib/supabase/client';
 import { Badge } from '@/components/ui/Badge';
+import type { Tables } from '@/lib/database.types';
+
+interface SearchPostResult {
+  slug: string;
+  title: string;
+  level: string;
+  topic_id: string;
+  topics: { name_en: string; name_bn: string; slug: string } | null;
+}
+
+interface SearchTopicResult {
+  id: string;
+  name_en: string;
+  name_bn: string;
+  slug: string;
+}
+
 
 export default function SearchModal() {
   const { isOpen, closeSearch, toggleSearch } = useSearch();
   const router = useRouter();
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<{ posts: any[]; topics: any[] }>({ posts: [], topics: [] });
+  const [results, setResults] = useState<{ posts: SearchPostResult[]; topics: SearchTopicResult[] }>({ posts: [], topics: [] });
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   // Keyboard shortcut listener (Ctrl+K / Cmd+K / Esc)
   useEffect(() => {
@@ -34,9 +52,10 @@ export default function SearchModal() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, toggleSearch, closeSearch]);
 
-  // Focus input and toggle body scroll lock
+  // Focus input and toggle body scroll lock, save/restore focus
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
       setTimeout(() => {
         inputRef.current?.focus();
       }, 50);
@@ -46,6 +65,13 @@ export default function SearchModal() {
       setQuery('');
       setResults({ posts: [], topics: [] });
       setHasSearched(false);
+      // Restore focus to the previously focused element
+      if (previousFocusRef.current) {
+        requestAnimationFrame(() => {
+          previousFocusRef.current?.focus();
+        });
+        previousFocusRef.current = null;
+      }
     }
     return () => {
       document.body.style.overflow = '';
@@ -70,7 +96,7 @@ export default function SearchModal() {
         // 1. Search posts
         const { data: postsData, error: postsError } = await supabase
           .from('posts')
-          .select('slug, title, level, topics(name_en, name_bn, slug)')
+          .select('slug, title, level, topic_id, topics(name_en, name_bn, slug)')
           .or(`title.ilike.%${query}%,excerpt.ilike.%${query}%`)
           .eq('published', true)
           .limit(6)
@@ -85,18 +111,21 @@ export default function SearchModal() {
           .abortSignal(controller.signal);
 
         if (!postsError && !topicsError) {
-          const formattedPosts = postsData?.map((p: any) => ({
-            ...p,
-            topics: Array.isArray(p.topics) ? p.topics[0] : p.topics,
-          })) || [];
+          const formattedPosts: SearchPostResult[] = (postsData || []).map((p: Record<string, unknown>) => {
+            const topics = Array.isArray(p.topics)
+              ? (p.topics[0] as SearchPostResult['topics'])
+              : (p.topics as SearchPostResult['topics']);
+            return { slug: p.slug, title: p.title, level: p.level, topic_id: p.topic_id, topics } as SearchPostResult;
+          });
+          setResults({ posts: formattedPosts, topics: topicsData || [] });
 
           setResults({
             posts: formattedPosts,
             topics: topicsData || [],
           });
         }
-      } catch (err: any) {
-        if (err.name !== 'AbortError') {
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name !== 'AbortError') {
           console.error(err);
         }
       } finally {
@@ -171,6 +200,7 @@ export default function SearchModal() {
             ref={inputRef}
             type="text"
             placeholder="জীববিজ্ঞান খুঁজুন (উদাঃ কোষ বিভাজন, Genetics)..."
+            aria-label="জীববিজ্ঞান খুঁজুন"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full text-[1.0625rem] text-text-primary placeholder-text-muted outline-none border-none py-1 font-ui"
@@ -304,7 +334,7 @@ export default function SearchModal() {
                           <ArrowRight size={16} className="text-text-muted group-hover:text-primary transition -translate-x-1 group-hover:translate-x-0 flex-shrink-0" />
                         </div>
                         <div className="flex gap-2">
-                          <Badge variant={post.level as any}>{post.level.toUpperCase()}</Badge>
+                          <Badge variant={post.level as 'ssc' | 'hsc' | 'honours' | 'topic'}>{post.level.toUpperCase()}</Badge>
                           <Badge variant="topic">{topicName}</Badge>
                         </div>
                       </button>

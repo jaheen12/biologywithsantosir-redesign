@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { Callout } from '@/components/ui/Callout';
 
 export interface HeadingItem {
@@ -44,9 +44,9 @@ export function extractHeadings(content: string): HeadingItem[] {
   return headings;
 }
 
-export function parseInline(text: string): React.ReactNode[] {
+export function parseInline(text: string): ReactNode[] {
   const regex = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
-  const result: React.ReactNode[] = [];
+  const result: ReactNode[] = [];
   let lastIndex = 0;
   let match;
 
@@ -95,7 +95,7 @@ export function parseInline(text: string): React.ReactNode[] {
   return result.length > 0 ? result : [text];
 }
 
-export function parseBlocks(content: string): React.ReactNode[] {
+export function parseBlocks(content: string): ReactNode[] {
   const normalized = content.replace(/\r\n/g, '\n');
   const rawBlocks = normalized.split(/\n\n+/);
 
@@ -193,5 +193,5 @@ export function parseBlocks(content: string): React.ReactNode[] {
         </p>
       );
     })
-    .filter(Boolean) as React.ReactNode[];
+    .filter(Boolean) as ReactNode[];
 }

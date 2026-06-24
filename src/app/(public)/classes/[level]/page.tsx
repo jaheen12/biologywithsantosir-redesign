@@ -4,13 +4,33 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { BookOpen, FileDown, GraduationCap, School, ChevronRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
-import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { Container } from '@/components/ui/Container';
 import PostCard from '@/components/ui/PostCard';
 import { Badge } from '@/components/ui/Badge';
 
 interface PageProps {
   params: Promise<{ level: string }>;
+}
+
+interface PostResult {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  level: string;
+  topic_id: string;
+  read_time_min: number;
+  published_at: string | null;
+  topics: { name_en: string; name_bn: string; slug: string } | { name_en: string; name_bn: string; slug: string }[] | null;
+}
+
+interface NoteResult {
+  id: string;
+  title: string;
+  description: string | null;
+  topic_id: string | null;
+  public_url: string | null;
+  topics: { name_en: string; name_bn: string; slug: string } | { name_en: string; name_bn: string; slug: string }[] | null;
 }
 
 export function generateStaticParams() {
@@ -114,12 +134,12 @@ export default async function ClassesPage({ params }: PageProps) {
     .eq('level', info.dbLevel)
     .order('created_at', { ascending: false });
 
-  let posts = (postsData || []).map((p: any) => ({
+  let posts = (postsData || []).map((p: PostResult) => ({
     ...p,
     topics: Array.isArray(p.topics) ? p.topics[0] : p.topics,
   }));
 
-  let notes = (notesData || []).map((n: any) => ({
+  let notes = (notesData || []).map((n: NoteResult) => ({
     ...n,
     topics: Array.isArray(n.topics) ? n.topics[0] : n.topics,
   }));
@@ -130,7 +150,7 @@ export default async function ClassesPage({ params }: PageProps) {
     notes = notes.filter(n => n.topic_id === 'genetics' || n.title.includes('প্রাণি') || n.description?.includes('প্রাণি'));
   } else if (level === 'hsc-botany') {
     posts = posts.filter(p => ['cell-biology', 'microbiology', 'physiology'].includes(p.topic_id));
-    notes = notes.filter(n => ['cell-biology', 'microbiology', 'physiology'].includes(n.topic_id) && !n.title.includes('প্রাণি'));
+    notes = notes.filter(n => n.topic_id !== null && ['cell-biology', 'microbiology', 'physiology'].includes(n.topic_id) && !n.title.includes('প্রাণি'));
   } else if (level === 'honours-3rd-year') {
     notes = notes.filter(n => n.title.includes('৩য়') || n.description?.includes('৩য়') || n.title.toLowerCase().includes('3rd'));
   } else if (level === 'honours-4th-year') {
@@ -156,7 +176,7 @@ export default async function ClassesPage({ params }: PageProps) {
           </div>
           <div>
             <div className="flex items-center gap-2.5 mb-2 flex-wrap">
-              <Badge variant={info.dbLevel as any}>{info.dbLevel.toUpperCase()}</Badge>
+              <Badge variant={info.dbLevel as 'ssc' | 'hsc' | 'honours'}>{info.dbLevel.toUpperCase()}</Badge>
               <h1 className="text-[1.75rem] md:text-[2.25rem] font-bold text-text-primary leading-tight">
                 {info.titleBn}
               </h1>
@@ -217,7 +237,7 @@ export default async function ClassesPage({ params }: PageProps) {
                       )}
                     </div>
                     <a
-                      href={note.public_url}
+                      href={note.public_url || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 text-center text-[0.875rem] font-bold text-white bg-primary hover:bg-primary-dark transition duration-150 px-4 py-2.5 rounded-lg w-full"

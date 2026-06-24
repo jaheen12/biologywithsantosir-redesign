@@ -1,7 +1,11 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import PaymentsClient from '@/components/admin/PaymentsClient';
+
+const PaymentsClient = dynamic(() => import('@/components/admin/PaymentsClient'), {
+  loading: () => <div className="animate-pulse h-96 bg-surface-secondary rounded-xl" />,
+});
 
 interface PaymentDetail {
   id: string;

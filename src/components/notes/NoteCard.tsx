@@ -9,11 +9,11 @@ export interface Note {
   id: string;
   title: string;
   description: string | null;
-  level: string;
+  level: string | null;
   topic_id: string | null;
   storage_path: string;
   public_url: string | null;
-  created_at: string;
+  created_at: string | null;
 }
 
 interface NoteCardProps {
@@ -32,7 +32,7 @@ export default function NoteCard({ note }: NoteCardProps) {
           <div className="p-3 bg-primary-light text-primary rounded-xl group-hover:scale-105 transition-transform duration-200">
             <FileText size={26} />
           </div>
-          <Badge variant={note.level as any}>{note.level.toUpperCase()}</Badge>
+          <Badge variant={(note.level || '') as any}>{note.level?.toUpperCase() || ''}</Badge>
         </div>
 
         {/* Title */}

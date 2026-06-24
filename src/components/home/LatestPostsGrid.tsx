@@ -11,11 +11,11 @@ interface Post {
   level: string;
   topic_id: string;
   read_time_min: number;
-  published_at: string;
+  published_at: string | null;
   author?: string;
   topics?: {
     name_en: string;
-    name_bn?: string;
+    name_bn: string;
     slug: string;
   } | null;
 }

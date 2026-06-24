@@ -1,7 +1,11 @@
 import React, { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import NewPaymentForm from '@/components/admin/NewPaymentForm';
+
+const NewPaymentForm = dynamic(() => import('@/components/admin/NewPaymentForm'), {
+  loading: () => <div className="animate-pulse h-96 bg-surface-secondary rounded-xl" />,
+});
 
 interface StudentData {
   id: string;

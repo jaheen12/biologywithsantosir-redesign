@@ -15,20 +15,30 @@ interface LeaderboardEntry {
 export default async function LeaderboardPage() {
   const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user;
+  try {
+    const { data: userData } = await supabase.auth.getUser();
+    user = userData.user;
+  } catch {
+    user = null;
+  }
 
   if (!user) {
     redirect('/login');
   }
 
   // Get student's batch_id from profile
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('batch_id')
-    .eq('id', user.id)
-    .single();
+  let profile;
+  try {
+    const { data: profileData } = await supabase
+      .from('profiles')
+      .select('batch_id')
+      .eq('id', user.id)
+      .single();
+    profile = profileData;
+  } catch {
+    profile = null;
+  }
 
   if (!profile || !profile.batch_id) {
     return (
@@ -45,8 +55,14 @@ export default async function LeaderboardPage() {
   }
 
   // Query leaderboard
-  const { data: leaderboardData } = await supabase
-    .rpc('get_batch_leaderboard', { p_batch_id: profile.batch_id });
+  let leaderboardData;
+  try {
+    const { data } = await supabase
+      .rpc('get_batch_leaderboard', { p_batch_id: profile.batch_id });
+    leaderboardData = data;
+  } catch {
+    leaderboardData = null;
+  }
 
   const leaderboard = (leaderboardData as unknown as LeaderboardEntry[]) || [];
 

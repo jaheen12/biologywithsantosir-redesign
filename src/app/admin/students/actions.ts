@@ -88,9 +88,10 @@ export async function createStudent(formData: {
 
     revalidatePath('/admin/students');
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating student:', error);
-    return { error: error.message || 'শিক্ষার্থী তৈরিতে সমস্যা হয়েছে।' };
+    const message = error instanceof Error ? error.message : 'শিক্ষার্থী তৈরিতে সমস্যা হয়েছে।';
+    return { error: message };
   }
 }
 
@@ -184,9 +185,10 @@ export async function updateStudent(studentId: string, formData: {
 
     revalidatePath('/admin/students');
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating student:', error);
-    return { error: error.message || 'শিক্ষার্থীর তথ্য পরিবর্তনে সমস্যা হয়েছে।' };
+    const message = error instanceof Error ? error.message : 'শিক্ষার্থীর তথ্য পরিবর্তনে সমস্যা হয়েছে।';
+    return { error: message };
   }
 }
 
@@ -214,8 +216,9 @@ export async function deleteStudent(studentId: string) {
 
     revalidatePath('/admin/students');
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error deleting student:', error);
-    return { error: error.message || 'শিক্ষার্থী ডিলিট করতে সমস্যা হয়েছে।' };
+    const message = error instanceof Error ? error.message : 'শিক্ষার্থী ডিলিট করতে সমস্যা হয়েছে।';
+    return { error: message };
   }
 }

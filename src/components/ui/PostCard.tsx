@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 
+type LevelVariant = 'ssc' | 'hsc' | 'honours' | 'topic';
+
 export interface PostCardProps {
   post: {
     id: string;
@@ -11,11 +13,11 @@ export interface PostCardProps {
     level: string;
     topic_id: string;
     read_time_min: number;
-    published_at: string;
+    published_at: string | null;
     author?: string;
     topics?: {
       name_en: string;
-      name_bn?: string;
+      name_bn: string | null;
       slug: string;
     } | null;
   };
@@ -23,7 +25,7 @@ export interface PostCardProps {
 
 export default function PostCard({ post }: PostCardProps) {
   const authorName = post.author || 'Santo Sir';
-  
+
   // Format published date in Bangla
   const dateStr = post.published_at
     ? new Date(post.published_at).toLocaleDateString('bn-BD', {
@@ -51,6 +53,10 @@ export default function PostCard({ post }: PostCardProps) {
     }
   };
 
+  const levelVariant: LevelVariant = ['ssc', 'hsc', 'honours', 'topic'].includes(post.level)
+    ? (post.level as LevelVariant)
+    : 'topic';
+
   return (
     <Link
       href={`/topics/${topicSlug}/${post.slug}`}
@@ -71,7 +77,7 @@ export default function PostCard({ post }: PostCardProps) {
       <div className="p-5 flex flex-col flex-grow">
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-3">
-          <Badge variant={post.level as any}>
+          <Badge variant={levelVariant}>
             {post.level.toUpperCase()}
           </Badge>
           <Badge variant="topic">

@@ -1,7 +1,11 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import AttendanceClient from '@/components/admin/AttendanceClient';
+
+const AttendanceClient = dynamic(() => import('@/components/admin/AttendanceClient'), {
+  loading: () => <div className="animate-pulse h-96 bg-surface-secondary rounded-xl" />,
+});
 
 export default async function AdminAttendancePage() {
   const supabase = await createClient();

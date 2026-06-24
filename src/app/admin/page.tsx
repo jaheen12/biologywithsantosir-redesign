@@ -2,8 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { 
-  Users, 
+import dynamic from 'next/dynamic';
+import {
+  Users,
   TrendingUp, 
   AlertTriangle, 
   CheckSquare, 

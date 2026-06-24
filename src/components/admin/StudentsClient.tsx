@@ -1,25 +1,26 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { 
-  Search, 
-  Eye, 
-  CreditCard, 
-  UserCheck, 
-  UserX, 
-  AlertCircle, 
+import {
+  Search,
+  Eye,
+  CreditCard,
+  UserCheck,
+  UserX,
+  AlertCircle,
   CheckCircle,
-  Phone, 
-  BookOpen, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  X, 
-  Loader2 
+  Phone,
+  BookOpen,
+  Plus,
+  Edit,
+  Trash2,
+  X,
+  Loader2
 } from 'lucide-react';
 import { createStudent, updateStudent, deleteStudent } from '@/app/admin/students/actions';
+import { toBengaliNumerals } from '@/lib/bangla';
 
 interface Batch {
   id: string;
@@ -27,22 +28,38 @@ interface Batch {
   is_active: boolean;
 }
 
-// Converts numbers to Bengali numerals
-function toBengaliNumerals(num: number | string | null | undefined): string {
-  if (num === null || num === undefined) return '';
-  const numStr = num.toString();
-  const banglaDigits: Record<string, string> = {
-    '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
-    '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
-  };
-  return numStr.replace(/[0-9]/g, (digit) => banglaDigits[digit] || digit);
+interface Enrollment {
+  id?: string;
+  batch_id: string;
+  status: string;
+  batches?: { name: string } | { name: string }[];
 }
 
-export default function StudentsClient({ 
+interface PaymentDue {
+  student_id: string | null;
+  status: string | null;
+  outstanding: number | null;
+  paid_this_month: number | null;
+  monthly_fee: number | null;
+}
+
+interface Student {
+  id: string;
+  full_name: string;
+  phone: string | null;
+  email?: string;
+  role?: string;
+  created_at?: string | null;
+  batch_id?: string | null;
+  enrollments?: Enrollment[];
+  payment_due?: PaymentDue | PaymentDue[] | null;
+}
+
+export default function StudentsClient({
   students,
   batches
-}: { 
-  students: any[];
+}: {
+  students: Student[];
   batches: Batch[];
 }) {
   const router = useRouter();
@@ -63,13 +80,13 @@ export default function StudentsClient({
   const [createBatchId, setCreateBatchId] = useState('');
 
   // Form states - Edit
-  const [selectedStudent, setSelectedStudent] = useState<any>(null);
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [editName, setEditName] = useState('');
   const [editPhone, setEditPhone] = useState('');
   const [editBatchId, setEditBatchId] = useState('');
 
   // Delete state
-  const [studentToDelete, setStudentToDelete] = useState<any>(null);
+  const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
 
   // Form submit loading / errors / success states
   const [loading, setLoading] = useState(false);
@@ -114,18 +131,18 @@ export default function StudentsClient({
         setCreateBatchId('');
         router.refresh();
       }
-    } catch (err: any) {
-      setError(err.message || 'শিক্ষার্থী তৈরিতে সমস্যা হয়েছে।');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'শিক্ষার্থী তৈরিতে সমস্যা হয়েছে।');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEditClick = (student: any) => {
+  const handleEditClick = (student: Student) => {
     setSelectedStudent(student);
     setEditName(student.full_name || '');
     setEditPhone(student.phone || '');
-    const activeEnrollment = student.enrollments?.find((e: any) => e.status === 'active');
+    const activeEnrollment = student.enrollments?.find((e: Enrollment) => e.status === 'active');
     setEditBatchId(activeEnrollment?.batch_id || '');
     setIsEditOpen(true);
     setError(null);
@@ -152,14 +169,14 @@ export default function StudentsClient({
         setSelectedStudent(null);
         router.refresh();
       }
-    } catch (err: any) {
-      setError(err.message || 'তথ্য পরিবর্তনে সমস্যা হয়েছে।');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'তথ্য পরিবর্তনে সমস্যা হয়েছে।');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDeleteClick = (student: any) => {
+  const handleDeleteClick = (student: Student) => {
     setStudentToDelete(student);
     setIsDeleteOpen(true);
     setError(null);
@@ -181,42 +198,44 @@ export default function StudentsClient({
         setStudentToDelete(null);
         router.refresh();
       }
-    } catch (err: any) {
-      setError(err.message || 'ডিলিট করতে সমস্যা হয়েছে।');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'ডিলিট করতে সমস্যা হয়েছে।');
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredStudents = students.filter((student) => {
-    // 1. Process search
-    const nameMatch = student.full_name?.toLowerCase().includes(searchTerm.toLowerCase());
-    const phoneMatch = student.phone?.includes(searchTerm);
-    const searchMatch = nameMatch || phoneMatch;
+  const filteredStudents = useMemo(() => {
+    return students.filter((student) => {
+      // 1. Process search
+      const nameMatch = student.full_name?.toLowerCase().includes(searchTerm.toLowerCase());
+      const phoneMatch = student.phone?.includes(searchTerm);
+      const searchMatch = nameMatch || phoneMatch;
 
-    if (!searchMatch) return false;
+      if (!searchMatch) return false;
 
-    // 2. Process active enrollment
-    const activeEnrollment = student.enrollments?.find((e: any) => e.status === 'active');
-    
-    // 3. Process payment status
-    const payment = Array.isArray(student.payment_due) 
-      ? student.payment_due[0] 
-      : student.payment_due;
-    const paymentStatus = payment?.status || null;
+      // 2. Process active enrollment
+      const activeEnrollment = student.enrollments?.find((e: Enrollment) => e.status === 'active');
 
-    if (filterType === 'active') {
-      return !!activeEnrollment;
-    }
-    if (filterType === 'due') {
-      return paymentStatus === 'overdue' || paymentStatus === 'partial';
-    }
-    if (filterType === 'paid') {
-      return paymentStatus === 'paid';
-    }
+      // 3. Process payment status
+      const payment = Array.isArray(student.payment_due)
+        ? student.payment_due[0]
+        : student.payment_due;
+      const paymentStatus = payment?.status || null;
 
-    return true;
-  });
+      if (filterType === 'active') {
+        return !!activeEnrollment;
+      }
+      if (filterType === 'due') {
+        return paymentStatus === 'overdue' || paymentStatus === 'partial';
+      }
+      if (filterType === 'paid') {
+        return paymentStatus === 'paid';
+      }
+
+      return true;
+    });
+  }, [students, searchTerm, filterType]);
 
   return (
     <div className="space-y-6">
@@ -272,7 +291,7 @@ export default function StudentsClient({
                 : 'bg-surface-alt text-text-secondary border border-border hover:bg-surface-alt/75 hover:text-primary'
             }`}
           >
-            সক্রিয় ব্যাচ ({toBengaliNumerals(students.filter(s => s.enrollments?.some((e: any) => e.status === 'active')).length)})
+            সক্রিয় ব্যাচ ({toBengaliNumerals(students.filter(s => s.enrollments?.some((e: Enrollment) => e.status === 'active')).length)})
           </button>
           <button
             onClick={() => setFilterType('due')}
@@ -344,8 +363,9 @@ export default function StudentsClient({
               </thead>
               <tbody className="divide-y divide-border text-sm">
                 {filteredStudents.map((student) => {
-                  const activeEnrollment = student.enrollments?.find((e: any) => e.status === 'active');
-                  const batchName = activeEnrollment?.batches?.name || 'কোনো ব্যাচ নেই';
+                  const activeEnrollment = student.enrollments?.find((e: Enrollment) => e.status === 'active');
+                  const batchData = activeEnrollment?.batches;
+                  const batchName = batchData ? (Array.isArray(batchData) ? batchData[0]?.name : batchData.name) || 'কোনো ব্যাচ নেই' : 'কোনো ব্যাচ নেই';
 
                   const payment = Array.isArray(student.payment_due) 
                     ? student.payment_due[0] 

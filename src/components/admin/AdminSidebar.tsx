@@ -215,15 +215,8 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
           })}
         </nav>
 
-        {/* Footer / Back & Logout */}
+        {/* Footer / Logout */}
         <div className="px-5 py-3.5 border-t border-border font-ui flex flex-col gap-2 bg-surface-alt/30">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2.5 py-1 text-xs font-medium text-text-secondary hover:text-primary transition duration-150"
-          >
-            <ArrowLeft className="w-4 h-4 text-text-muted" />
-            <span>ছাত্র প্যানেলে ফিরুন</span>
-          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-2.5 py-1 text-xs font-medium text-error hover:text-error transition duration-150 cursor-pointer text-left w-full"

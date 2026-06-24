@@ -284,10 +284,10 @@ export default function PaymentsClient({ initialPayments, initialDueStudents, ba
                 className="w-full px-3 py-2 bg-surface border border-border rounded-xl font-semibold cursor-pointer text-text-primary focus:outline-none focus:border-primary"
               >
                 <option value="">সকল পদ্ধতি</option>
-                <option value="Cash">নগদ (Cash)</option>
+                <option value="cash">নগদ (Cash)</option>
                 <option value="bKash">bKash</option>
                 <option value="Nagad">Nagad</option>
-                <option value="Bank">ব্যাংক</option>
+                <option value="bank">ব্যাংক</option>
               </select>
             </div>
 

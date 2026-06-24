@@ -148,6 +148,9 @@ export default async function PaymentReceiptPage({
 
       {/* Receipt Layout Voucher */}
       <div className="max-w-2xl mx-auto bg-surface p-6 md:p-10 rounded-2xl border border-border shadow-sm receipt-container relative overflow-hidden">
+        {/* Top brand accent bar */}
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-primary" />
+
         {/* Style injection for browser printing */}
         <style dangerouslySetInnerHTML={{ __html: `
           @media print {
@@ -175,7 +178,14 @@ export default async function PaymentReceiptPage({
         {/* Voucher Top Header */}
         <div className="text-center border-b border-dashed border-border pb-6 space-y-2">
           <div className="text-primary font-bold text-lg uppercase tracking-wider flex items-center justify-center gap-2">
-            🌿 Biology with Santo Sir
+            <svg
+              className="w-5 h-5 fill-current shrink-0"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7,18.5C15.5,18.5 19,13 22,8C19,10 16,8 17,8M12,2C11.5,4 8.5,8 3,8C3.5,6 6.5,2 12,2Z" />
+            </svg>
+            <span>Biology with Santo Sir</span>
           </div>
           <h2 className="text-xl font-extrabold text-text-primary">অফিসিয়াল পেমেন্ট রশিদ</h2>
           <p className="text-text-secondary text-xs">ধন্যবাদ, আপনার জীববিজ্ঞানের পড়াশোনা আনন্দময় হোক!</p>
@@ -247,7 +257,7 @@ export default async function PaymentReceiptPage({
             <div>
               <span className="text-text-muted uppercase block">পদ্ধতি</span>
               <span className="text-text-primary text-sm font-bold block mt-0.5">
-                {payment.method}
+                {payment.method === 'cash' ? 'নগদ (Cash)' : payment.method === 'bank' ? 'ব্যাংক (Bank)' : payment.method}
               </span>
             </div>
             {payment.transaction_id && (

@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
-interface BadgeProps {
-  variant?: 'ssc' | 'hsc' | 'honours' | 'default';
-  children: React.ReactNode;
-  className?: string;
+export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  variant?: 'topic' | 'ssc' | 'hsc' | 'honours';
 }
 
-const Badge: React.FC<BadgeProps> = ({ variant = 'default', children, className = '' }) => {
-  const baseStyles = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-semibold uppercase tracking-wider font-sans';
+export function Badge({
+  variant = 'topic',
+  children,
+  className = '',
+  ...props
+}: BadgeProps) {
+  const baseClass = 'inline-flex items-center px-2.5 py-1 text-[0.75rem] font-bold font-ui uppercase tracking-wide';
 
-  const variantStyles = {
-    ssc: 'bg-[#E3F2FD] text-[#1565C0]',
-    hsc: 'bg-primary-light text-primary',
-    honours: 'bg-[#F3E5F5] text-[#6A1B9A]',
-    default: 'bg-primary-light text-primary',
-  };
+  let variantClass = '';
+  switch (variant) {
+    case 'topic':
+      variantClass = 'bg-primary-light text-primary rounded-full';
+      break;
+    case 'ssc':
+      variantClass = 'bg-[#E3F2FD] text-[#1565C0] rounded-md';
+      break;
+    case 'hsc':
+      variantClass = 'bg-[#E8F5F0] text-[#1A7A5E] rounded-md';
+      break;
+    case 'honours':
+      variantClass = 'bg-[#F3E5F5] text-[#6A1B9A] rounded-md';
+      break;
+  }
 
   return (
-    <span className={`${baseStyles} ${variantStyles[variant]} ${className}`}>
+    <span
+      className={`${baseClass} ${variantClass} ${className}`}
+      {...props}
+    >
       {children}
     </span>
   );
-};
-
-export default Badge;
+}

@@ -1,40 +1,51 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
-  children: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({
+export function Button({
   variant = 'primary',
   size = 'md',
   children,
   className = '',
   ...props
-}) => {
-  const baseStyles = 'inline-flex items-center justify-center font-sans font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed';
-  
-  const variantStyles = {
-    primary: 'bg-primary text-white hover:bg-primary-mid active:bg-primary shadow-sm',
-    secondary: 'bg-primary-light text-primary hover:bg-primary-mid/10 active:bg-primary-light',
-    outline: 'border border-border bg-transparent text-text-primary hover:bg-surface-alt active:bg-transparent',
-  };
+}: ButtonProps) {
+  const baseClass = 'inline-flex items-center justify-center font-medium rounded-lg transition duration-150 ease-in-out min-h-[44px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none font-ui';
 
-  const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-sm',
-    lg: 'px-6 py-3 text-base',
-  };
+  let variantClass = '';
+  switch (variant) {
+    case 'primary':
+      variantClass = 'bg-primary text-white hover:bg-primary-dark shadow-sm';
+      break;
+    case 'secondary':
+      variantClass = 'bg-primary-light text-primary hover:bg-primary-mid hover:text-white';
+      break;
+    case 'outline':
+      variantClass = 'border border-primary text-primary hover:bg-primary-light bg-transparent';
+      break;
+  }
+
+  let sizeClass = '';
+  switch (size) {
+    case 'sm':
+      sizeClass = 'px-3 py-1.5 text-[0.75rem]'; // min text size constraint (badge size)
+      break;
+    case 'md':
+      sizeClass = 'px-4 py-2 text-[0.875rem]';
+      break;
+    case 'lg':
+      sizeClass = 'px-6 py-3 text-[1rem]';
+      break;
+  }
 
   return (
     <button
-      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      className={`${baseClass} ${variantClass} ${sizeClass} ${className}`}
       {...props}
     >
       {children}
     </button>
   );
-};
-
-export default Button;
+}

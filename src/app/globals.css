@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand */
+  --primary:        #1A7A5E;
+  --primary-mid:    #2EA87A;
+  --primary-dark:   #135E47;
+  --primary-light:  #E8F5F0;
+  --accent:         #F0A500;
+  --accent-light:   #FEF3CD;
+  /* Surfaces */
+  --surface:        #FFFFFF;
+  --surface-alt:    #F7FAFA;
+  /* Text */
+  --text-primary:   #1A2930;
+  --text-secondary: #4A6370;
+  --text-muted:     #8FA8B2;
+  /* Borders */
+  --border:         #DCE8E4;
+  --border-strong:  #B0CEC5;
+  /* Semantic */
+  --error:          #D94040;
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-mid: var(--primary-mid);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  
+  --color-error: var(--error);
+  
+  --font-tiro: var(--font-tiro);
+  --font-noto: var(--font-noto);
+  --font-inter: var(--font-inter);
+  --font-hind: var(--font-hind);
+  --font-mono: var(--font-mono);
+}
+
+/* Base typography rules */
+html {
+  font-size: 17px;
+}
+
+body {
+  font-family: var(--font-inter), var(--font-tiro), var(--font-noto), sans-serif;
+  color: var(--text-primary);
+  background-color: var(--surface);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings & UI elements */
+h1, h2, h3, h4, h5, h6,
+button, input, select, textarea, label, .font-ui, .font-hero {
+  font-family: var(--font-inter), var(--font-hind), sans-serif;
+}
+
+/* Article prose (English + Bangla mixed) */
+.prose-bio {
+  font-family: var(--font-inter), var(--font-tiro), var(--font-noto), sans-serif;
+  font-size: 1.125rem;   /* ~19px — ideal long-form reading size */
+  line-height: 1.9;
+  color: var(--text-primary); /* full contrast, not grey */
+}
+.prose-bio h2, .prose-bio h3 {
+  font-family: var(--font-inter), var(--font-hind), sans-serif; /* matches global headings rule */
+  color: var(--text-primary);
+}
+.prose-bio h2 {
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  border-left: 4px solid var(--primary);
+  padding-left: 0.875rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  font-weight: 700;
+}
+.prose-bio h3 {
+  font-size: clamp(1.1875rem, 2vw, 1.4375rem);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.prose-bio p, .prose-bio li {
+  color: var(--text-primary); /* NOT text-secondary — this is content, not metadata */
+}
+.prose-bio img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+.prose-bio figcaption {
+  font-style: italic;
+  color: var(--text-secondary); /* captions = metadata, secondary OK here */
+  text-align: center;
+  font-size: 0.9375rem; /* ~16px — NOT 14px */
+}
+
+/* Pure Bangla blocks */
+.prose-bn {
+  font-family: var(--font-tiro), var(--font-noto), var(--font-hind), serif;
+}
+
+/* Reading Progress Phospholipid Bilayer Bilayer Fill */
+.reading-progress-fill {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--primary)      0px,
+    var(--primary)      3px,
+    var(--primary-mid)  3px,
+    var(--primary-mid)  5px,
+    transparent         5px,
+    transparent         7px
+  );
+  transition: width 50ms linear;
+}
+
+/* CLS Safe Ad Unit Containers */
+.ad-slot {
+  min-height: 250px;
+  background: var(--surface-alt);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}

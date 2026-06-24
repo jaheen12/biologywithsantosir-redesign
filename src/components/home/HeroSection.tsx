@@ -36,8 +36,8 @@ export default function HeroSection() {
           বাংলায় জীববিজ্ঞান শিক্ষা
         </span>
 
-        {/* Heading */}
-        <h1 className="text-text-primary font-bold leading-tight tracking-tight mb-6 max-w-3xl text-[2.25rem] md:text-[3.25rem] lg:text-[3.75rem] font-hero">
+        {/* Heading - text scales down on very small screens (320px) */}
+        <h1 className="text-text-primary font-bold leading-tight tracking-tight mb-6 max-w-3xl max-[400px]:text-[1.75rem] text-[2.25rem] md:text-[3.25rem] lg:text-[3.75rem] font-hero">
           <span className="relative inline-block">
             জীববিজ্ঞান
             {/* SVG Wavy Underline */}
@@ -64,8 +64,8 @@ export default function HeroSection() {
           SSC &middot; HSC &middot; Honours স্তরের শিক্ষার্থীদের জন্য Santo Sir-এর তৈরি বিশেষ ও গোছানো পাঠ। কোনো মুখস্থ নয়, কেবল বুঝে পড়ার আনন্দ।
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center mb-10">
+        {/* CTA Buttons - gap-3 on mobile for tighter stack */}
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto justify-center mb-10">
           <Link href="/topics">
             <Button variant="primary" size="lg" className="w-full sm:w-auto min-w-[180px]">
               শেখা শুরু করো
@@ -78,13 +78,13 @@ export default function HeroSection() {
           </Link>
         </div>
 
-        {/* Stats Row */}
-        <div className="text-[0.875rem] text-text-muted flex items-center justify-center gap-2 flex-wrap">
+        {/* Stats Row - grid on very small screens to prevent overflow */}
+        <div className="max-[400px]:grid max-[400px]:grid-cols-2 max-[400px]:gap-3 text-[0.875rem] text-text-muted flex items-center justify-center gap-2 flex-wrap">
           <span className="font-semibold text-text-secondary">৫০,০০০+</span> শিক্ষার্থী
-          <span>&middot;</span>
+          <span className="max-[400px]:hidden">&middot;</span>
           <span className="font-semibold text-text-secondary">২০০+</span> বিস্তারিত টপিক
-          <span>&middot;</span>
-          <span className="text-primary font-semibold">সম্পূর্ণ বিনামূল্যে</span>
+          <span className="max-[400px]:hidden">&middot;</span>
+          <span className="text-primary font-semibold max-[400px]:col-span-2">সম্পূর্ণ বিনামূল্যে</span>
         </div>
       </Container>
     </section>

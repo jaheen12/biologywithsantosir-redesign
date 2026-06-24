@@ -181,12 +181,12 @@ export default function SearchModal() {
 
   return (
     <div
-      className="fixed inset-0 bg-text-primary/45 backdrop-blur-sm z-50 flex items-start justify-center p-4 md:p-10 transition-opacity duration-200 animate-fade-in"
+      className="fixed inset-0 bg-text-primary/45 backdrop-blur-sm z-50 flex items-start justify-center p-0 md:p-10 transition-opacity duration-200 animate-fade-in"
       onClick={closeSearch}
     >
       <div
         ref={modalRef}
-        className="bg-surface border border-border w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden mt-10 md:mt-20 flex flex-col max-h-[75vh]"
+        className="bg-surface border border-border w-full max-w-2xl rounded-none md:rounded-2xl shadow-2xl overflow-hidden mt-0 md:mt-20 flex flex-col max-h-[100dvh] md:max-h-[75vh]"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleTabKey}
         role="dialog"
@@ -225,15 +225,15 @@ export default function SearchModal() {
           )}
           <button
             onClick={closeSearch}
-            className="text-text-muted hover:text-text-primary p-1.5 rounded-lg transition sm:hidden"
+            className="text-text-muted hover:text-text-primary min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition sm:hidden"
             aria-label="Close search"
           >
-            <X size={20} />
+            <X size={24} />
           </button>
         </div>
 
         {/* Search Results Area */}
-        <div className="flex-grow overflow-y-auto p-5 font-ui">
+        <div className="flex-grow overflow-y-auto overscroll-contain scrollable-touch p-5 font-ui">
           {/* Welcome Screen */}
           {!query && (
             <div className="text-center py-10">

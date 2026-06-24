@@ -143,7 +143,7 @@ export default function ContactPage() {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white text-[0.875rem] font-bold rounded-lg transition"
+                  className="px-5 py-3 md:py-2.5 bg-primary hover:bg-primary-dark text-white text-[0.875rem] font-bold rounded-lg transition"
                 >
                   আরেকটি বার্তা পাঠান
                 </button>
@@ -164,7 +164,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="উদাঃ আবির রহমান"
-                      className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-[0.9375rem] text-text-primary"
+                      className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-base md:text-[0.9375rem] text-text-primary"
                     />
                   </div>
                   
@@ -179,7 +179,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="username@email.com"
-                      className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-[0.9375rem] text-text-primary"
+                      className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-base md:text-[0.9375rem] text-text-primary"
                     />
                   </div>
                 </div>
@@ -194,7 +194,7 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="উদাঃ প্রিমিয়াম ব্যাচে ভর্তি বা সাধারণ প্রশ্ন"
-                    className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-[0.9375rem] text-text-primary"
+                    className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-base md:text-[0.9375rem] text-text-primary"
                   />
                 </div>
 
@@ -209,14 +209,14 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="এখানে আপনার মেসেজটি বিস্তারিত লিখুন..."
-                    className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-[0.9375rem] text-text-primary resize-none"
+                    className="p-3 border border-border rounded-lg outline-none focus:border-primary transition text-base md:text-[0.9375rem] text-text-primary resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="inline-flex items-center justify-center gap-2 text-center text-[0.9375rem] font-bold text-white bg-primary hover:bg-primary-dark disabled:bg-primary/50 transition duration-150 py-3 rounded-lg w-full mt-2"
+                  className="inline-flex items-center justify-center gap-2 text-center text-[0.9375rem] font-bold text-white bg-primary hover:bg-primary-dark disabled:bg-primary/50 transition duration-150 py-3.5 md:py-3 rounded-lg w-full mt-2 cursor-pointer select-none"
                 >
                   {loading ? 'পাঠানো হচ্ছে...' : 'মেসেজ পাঠান'}
                   <Send size={16} />

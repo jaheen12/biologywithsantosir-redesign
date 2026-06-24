@@ -183,8 +183,8 @@ export default async function ExamsPage() {
           </div>
         ) : (
           <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
+            <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+              <table className="w-full text-left border-collapse text-sm min-w-[600px]">
                 <thead>
                   <tr className="border-b border-border text-xs text-text-muted uppercase font-medium bg-surface-alt/40">
                     <th className="px-6 py-4">পরীক্ষার নাম</th>
@@ -251,6 +251,8 @@ export default async function ExamsPage() {
                   })}
                 </tbody>
               </table>
+              {/* Mobile scroll hint */}
+              <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
             </div>
           </div>
         )}

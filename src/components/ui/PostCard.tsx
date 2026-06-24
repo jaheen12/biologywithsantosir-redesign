@@ -63,7 +63,7 @@ export default function PostCard({ post }: PostCardProps) {
       className="group block bg-surface border border-border rounded-[10px] overflow-hidden transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-md h-full flex flex-col font-ui"
     >
       {/* Decorative Top Gradient Block (since no thumbnail is available) */}
-      <div className={`h-24 w-full bg-gradient-to-br ${getGradientClass(topicSlug)} flex items-center justify-center border-b border-border`}>
+      <div className={`aspect-video w-full bg-gradient-to-br ${getGradientClass(topicSlug)} flex items-center justify-center border-b border-border`}>
         <svg
           className="w-10 h-10 text-primary/30 group-hover:text-primary/50 transition-colors duration-200"
           viewBox="0 0 24 24"

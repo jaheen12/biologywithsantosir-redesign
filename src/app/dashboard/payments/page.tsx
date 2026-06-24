@@ -280,8 +280,8 @@ export default async function PaymentsPage() {
                   </div>
 
                   {/* Payment Rows / Table */}
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse text-sm">
+                  <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+                    <table className="w-full text-left border-collapse text-sm min-w-[600px]">
                       <thead>
                         <tr className="border-b border-border text-xs text-text-muted uppercase font-medium bg-surface-alt/20">
                           <th className="px-6 py-3">ধরণ</th>
@@ -296,8 +296,8 @@ export default async function PaymentsPage() {
                         {monthPayments.map((payment) => (
                           <tr key={payment.id} className="hover:bg-surface-alt/30 transition-colors">
                             <td className="px-6 py-4 font-medium text-text-primary">
-                              {payment.is_installment 
-                                ? `কিস্তি ${toBengaliNumerals(payment.installment_number)}` 
+                              {payment.is_installment
+                                ? `কিস্তি ${toBengaliNumerals(payment.installment_number)}`
                                 : 'পূর্ণ পেমেন্ট'
                               }
                             </td>
@@ -336,6 +336,8 @@ export default async function PaymentsPage() {
                         ))}
                       </tbody>
                     </table>
+                    {/* Mobile scroll hint */}
+                    <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
                   </div>
                 </div>
               );

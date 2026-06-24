@@ -162,7 +162,7 @@ export default function ProfileForm({ profile, email }: ProfileFormProps) {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 disabled={loading}
-                className="w-full px-4 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:border-primary-mid transition duration-150"
+                className="w-full px-4 py-3 md:py-2.5 border border-border rounded-xl text-base md:text-sm focus:outline-none focus:border-primary-mid transition duration-150"
                 placeholder="আপনার নাম লিখুন"
                 required
               />
@@ -179,7 +179,7 @@ export default function ProfileForm({ profile, email }: ProfileFormProps) {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 disabled={loading}
-                className="w-full px-4 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:border-primary-mid transition duration-150"
+                className="w-full px-4 py-3 md:py-2.5 border border-border rounded-xl text-base md:text-sm focus:outline-none focus:border-primary-mid transition duration-150"
                 placeholder="মোবাইল নম্বর লিখুন"
               />
             </div>
@@ -189,7 +189,7 @@ export default function ProfileForm({ profile, email }: ProfileFormProps) {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs font-bold bg-primary text-white hover:bg-primary-dark rounded-xl transition duration-150 cursor-pointer disabled:opacity-50 shadow-sm"
+                className="inline-flex items-center gap-1.5 px-5 py-3 md:py-2.5 text-xs font-bold bg-primary text-white hover:bg-primary-dark rounded-xl transition duration-150 cursor-pointer disabled:opacity-50 shadow-sm select-none"
               >
                 <Save className="w-4 h-4" />
                 <span>সংরক্ষণ করুন</span>
@@ -202,7 +202,7 @@ export default function ProfileForm({ profile, email }: ProfileFormProps) {
                   setIsEditMode(false);
                 }}
                 disabled={loading}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs font-semibold border border-border hover:bg-surface-alt rounded-xl transition duration-150 cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-5 py-3 md:py-2.5 text-xs font-semibold border border-border hover:bg-surface-alt rounded-xl transition duration-150 cursor-pointer disabled:opacity-50 select-none"
               >
                 <X className="w-4 h-4" />
                 <span>বাতিল</span>

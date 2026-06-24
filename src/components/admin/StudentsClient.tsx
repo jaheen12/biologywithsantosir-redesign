@@ -350,8 +350,8 @@ export default function StudentsClient({
             <p className="text-text-secondary text-xs mt-1">সার্চ ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন।</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+            <table className="w-full text-left border-collapse min-w-[650px]">
               <thead>
                 <tr className="bg-surface-alt border-b border-border text-xs font-bold text-text-secondary uppercase">
                   <th className="px-6 py-4">নাম ও মোবাইল</th>
@@ -497,6 +497,8 @@ export default function StudentsClient({
                 })}
               </tbody>
             </table>
+            {/* Mobile scroll hint */}
+            <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
           </div>
         )}
       </div>

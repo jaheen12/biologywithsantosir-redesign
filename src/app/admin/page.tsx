@@ -158,7 +158,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         {/* Total Active Students */}
         <div className="bg-surface p-6 rounded-2xl border border-border shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
           <div>
@@ -250,8 +250,8 @@ export default async function AdminDashboardPage() {
                 <p className="text-text-secondary text-xs mt-1">এই মাসের জন্য কোনো শিক্ষার্থীর বেতন বাকি নেই।</p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+                <table className="w-full text-left border-collapse min-w-[550px]">
                   <thead>
                     <tr className="bg-surface-alt border-b border-border">
                       <th className="px-6 py-3.5 text-xs font-bold text-text-secondary uppercase">শিক্ষার্থীর নাম</th>
@@ -275,7 +275,7 @@ export default async function AdminDashboardPage() {
                           {toBengaliNumerals(student.outstanding)}
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <Link 
+                          <Link
                             href={`/admin/payments/new?student_id=${student.student_id}`}
                             className="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary-dark transition duration-150"
                           >
@@ -286,6 +286,8 @@ export default async function AdminDashboardPage() {
                     ))}
                   </tbody>
                 </table>
+                {/* Mobile scroll hint */}
+                <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
               </div>
             )}
           </div>

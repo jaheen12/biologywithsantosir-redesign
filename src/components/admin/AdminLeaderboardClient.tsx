@@ -166,8 +166,8 @@ export default function AdminLeaderboardClient({
               <p className="text-xs">এই ব্যাচের কোনো শিক্ষার্থীর পরীক্ষার ফলাফল এখন পর্যন্ত প্রকাশ করা হয়নি।</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+            <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+              <table className="w-full text-left border-collapse min-w-[550px]">
                 <thead>
                   <tr className="border-b border-border text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
                     <th className="px-6 py-4 font-semibold text-center w-[100px]">স্থান (Rank)</th>
@@ -178,8 +178,8 @@ export default function AdminLeaderboardClient({
                 </thead>
                 <tbody className="divide-y divide-border/60 text-sm">
                   {leaderboard.map((student, idx) => (
-                    <tr 
-                      key={student.student_id} 
+                    <tr
+                      key={student.student_id}
                       className={`hover:bg-surface-alt/25 transition-colors ${
                         idx < 3 ? 'bg-primary-light/10' : ''
                       }`}
@@ -200,6 +200,8 @@ export default function AdminLeaderboardClient({
                   ))}
                 </tbody>
               </table>
+              {/* Mobile scroll hint */}
+              <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
             </div>
           )}
         </div>
@@ -215,13 +217,13 @@ export default function AdminLeaderboardClient({
               <p className="text-xs">গ্রিড দেখার জন্য পরীক্ষা এবং ফলাফল উভয়ই এন্ট্রি করা থাকতে হবে।</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
+            <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+              <table className="w-full text-left border-collapse text-sm min-w-[650px]">
                 <thead>
                   <tr className="border-b border-border text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
-                    <th className="px-6 py-4 font-semibold min-w-[200px] sticky left-0 bg-surface-alt/100 z-10">নাম</th>
+                    <th className="px-6 py-4 font-semibold min-w-[180px] sticky left-0 bg-surface-alt/100 z-10">নাম</th>
                     {exams.map((exam) => (
-                      <th key={exam.id} className="px-6 py-4 font-semibold text-center min-w-[140px]">
+                      <th key={exam.id} className="px-6 py-4 font-semibold text-center min-w-[130px]">
                         <div className="flex flex-col items-center">
                           <span className="block truncate max-w-[150px]">{exam.title}</span>
                           <span className="block text-[10px] text-text-muted mt-0.5 lowercase font-semibold">
@@ -230,13 +232,13 @@ export default function AdminLeaderboardClient({
                         </div>
                       </th>
                     ))}
-                    <th className="px-6 py-4 font-semibold text-center min-w-[120px] bg-primary-light/30">মোট প্রাপ্ত</th>
+                    <th className="px-6 py-4 font-semibold text-center min-w-[100px] bg-primary-light/30">মোট প্রাপ্ত</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
                   {leaderboard.map((student) => {
                     const studentResults = results.filter(r => r.student_id === student.student_id);
-                    
+
                     return (
                       <tr key={student.student_id} className="hover:bg-surface-alt/25 transition-colors">
                         <td className="px-6 py-4 font-bold text-text-primary sticky left-0 bg-surface z-10 border-r border-border/40">
@@ -244,7 +246,7 @@ export default function AdminLeaderboardClient({
                         </td>
                         {exams.map((exam) => {
                           const result = studentResults.find(r => r.exam_id === exam.id);
-                          
+
                           return (
                             <td key={exam.id} className="px-6 py-4 text-center">
                               {result ? (
@@ -272,6 +274,8 @@ export default function AdminLeaderboardClient({
                   })}
                 </tbody>
               </table>
+              {/* Mobile scroll hint */}
+              <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
             </div>
           )}
         </div>

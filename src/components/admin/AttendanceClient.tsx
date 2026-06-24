@@ -547,8 +547,8 @@ export default function AttendanceClient({ batches, adminId }: AttendanceClientP
               )}
 
               {/* Students attendance rows */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+                <table className="w-full text-left border-collapse min-w-[500px]">
                   <thead>
                     <tr className="border-b border-border/80 text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
                       <th className="px-6 py-3 font-semibold">শিক্ষার্থীর নাম</th>
@@ -598,6 +598,8 @@ export default function AttendanceClient({ batches, adminId }: AttendanceClientP
                     })}
                   </tbody>
                 </table>
+                {/* Mobile scroll hint */}
+                <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
               </div>
 
               {/* Footer Save Button */}
@@ -648,8 +650,8 @@ export default function AttendanceClient({ batches, adminId }: AttendanceClientP
                     <h3 className="font-bold text-text-primary text-base">শিক্ষার্থীভিত্তিক সারসংক্ষেপ</h3>
                     <p className="text-xs text-text-secondary mt-0.5">চলতি মাসে শিক্ষার্থীদের উপস্থিতির হার ও দিনসমূহ।</p>
                   </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                  <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+                    <table className="w-full text-left border-collapse min-w-[550px]">
                       <thead>
                         <tr className="border-b border-border/80 text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
                           <th className="px-6 py-3 font-semibold">শিক্ষার্থী</th>
@@ -704,6 +706,8 @@ export default function AttendanceClient({ batches, adminId }: AttendanceClientP
                         })}
                       </tbody>
                     </table>
+                    {/* Mobile scroll hint */}
+                    <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
                   </div>
                 </div>
               </div>

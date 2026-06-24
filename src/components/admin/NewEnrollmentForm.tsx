@@ -153,7 +153,7 @@ export default function NewEnrollmentForm({ students, batches }: NewEnrollmentFo
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5 md:space-y-4">
         {/* Student Select Group */}
         <div className="space-y-1.5">
           <label className="block text-xs font-bold text-text-secondary">
@@ -164,7 +164,7 @@ export default function NewEnrollmentForm({ students, batches }: NewEnrollmentFo
             placeholder="নাম বা মোবাইল দিয়ে ফিল্টার করুন..."
             value={studentSearch}
             onChange={(e) => setStudentSearch(e.target.value)}
-            className="w-full px-3 py-2 bg-surface border border-border rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted"
+            className="w-full px-3 py-3 md:py-2 bg-surface border border-border rounded-xl text-base md:text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted"
           />
           
           <label className="block text-xs font-bold text-text-secondary pt-1">
@@ -212,7 +212,7 @@ export default function NewEnrollmentForm({ students, batches }: NewEnrollmentFo
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-dark cursor-pointer disabled:opacity-50 transition duration-150 flex items-center justify-center gap-2"
+          className="w-full py-3 md:py-2.5 bg-primary text-white text-base md:text-xs font-bold rounded-xl hover:bg-primary-dark cursor-pointer disabled:opacity-50 transition duration-150 flex items-center justify-center gap-2 select-none"
         >
           {loading ? (
             <>

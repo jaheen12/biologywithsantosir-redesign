@@ -48,7 +48,7 @@ export default function QuickNavCards() {
               <Link
                 key={card.label}
                 href={card.link}
-                className="group flex flex-col justify-center bg-primary-light border border-border rounded-xl p-6 min-h-[110px] transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                className="group flex flex-col justify-center bg-primary-light border border-border rounded-xl p-6 min-h-[120px] transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
               >
                 <div className="flex items-center gap-3.5">
                   <div className="p-2.5 rounded-lg bg-surface border border-border text-primary group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-200">

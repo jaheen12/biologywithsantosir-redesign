@@ -313,8 +313,8 @@ export default function PaymentsClient({ initialPayments, initialDueStudents, ba
                 কোনো পেমেন্টের রেকর্ড পাওয়া যায়নি।
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+                <table className="w-full text-left border-collapse min-w-[800px]">
                   <thead>
                     <tr className="bg-surface-alt border-b border-border text-xs font-bold text-text-secondary uppercase">
                       <th className="px-6 py-4">শিক্ষার্থী ও ফোন</th>
@@ -330,8 +330,8 @@ export default function PaymentsClient({ initialPayments, initialDueStudents, ba
                   </thead>
                   <tbody className="divide-y divide-border text-sm">
                     {filteredPayments.map((payment) => (
-                      <tr 
-                        key={payment.id} 
+                      <tr
+                        key={payment.id}
                         className={`hover:bg-surface-alt/25 transition-colors ${
                           !payment.reconciled ? 'border-l-4 border-l-accent' : ''
                         }`}
@@ -403,6 +403,8 @@ export default function PaymentsClient({ initialPayments, initialDueStudents, ba
                     ))}
                   </tbody>
                 </table>
+                {/* Mobile scroll hint */}
+                <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
               </div>
             )}
           </div>
@@ -450,11 +452,11 @@ export default function PaymentsClient({ initialPayments, initialDueStudents, ba
                 কোনো বকেয়া বেতনের শিক্ষার্থী পাওয়া যায়নি।
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+                <table className="w-full text-left border-collapse min-w-[750px]">
                   <thead>
                     <tr className="bg-surface-alt border-b border-border text-xs font-bold text-text-secondary uppercase">
-                      <th className="px-6 py-4">শিক্ষার্থীর নাম & মোবাইল</th>
+                      <th className="px-6 py-4">শিক্ষার্থীর নাম ও মোবাইল</th>
                       <th className="px-6 py-4">ব্যাচ</th>
                       <th className="px-6 py-4">বকেয়া মাস</th>
                       <th className="px-6 py-4">মাসিক ফি</th>
@@ -512,6 +514,8 @@ export default function PaymentsClient({ initialPayments, initialDueStudents, ba
                     ))}
                   </tbody>
                 </table>
+                {/* Mobile scroll hint */}
+                <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
               </div>
             )}
           </div>

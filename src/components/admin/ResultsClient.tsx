@@ -264,8 +264,8 @@ export default function ResultsClient({
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+            <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+              <table className="w-full text-left border-collapse min-w-[550px]">
                 <thead>
                   <tr className="border-b border-border text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
                     <th className="px-6 py-4 font-semibold w-[300px]">শিক্ষার্থীর নাম</th>
@@ -349,6 +349,8 @@ export default function ResultsClient({
                   })}
                 </tbody>
               </table>
+              {/* Mobile scroll hint */}
+              <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
             </div>
 
             {/* Footer Save Row */}

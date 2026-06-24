@@ -226,7 +226,7 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5 text-xs font-medium text-text-secondary">
+      <form onSubmit={handleSubmit} className="space-y-5 text-base md:text-xs font-medium text-text-secondary">
         {/* Student Search and Selection */}
         <div className="space-y-2">
           <label className="block font-bold text-text-secondary">
@@ -239,7 +239,7 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
               placeholder="শিক্ষার্থীর নাম বা মোবাইল দিয়ে খুঁজুন..."
               value={studentSearch}
               onChange={(e) => setStudentSearch(e.target.value)}
-              className="w-full px-3 py-2 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-text-primary mb-2"
+              className="w-full px-3 py-3 md:py-2 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-text-primary text-base md:text-xs mb-2"
             />
           )}
 
@@ -437,7 +437,7 @@ export default function NewPaymentForm({ students, batches, recordedBy }: NewPay
         <button
           type="submit"
           disabled={loading || queryLoading}
-          className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold transition duration-150 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full py-3.5 md:py-3 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold transition duration-150 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 select-none"
         >
           {loading ? (
             <>

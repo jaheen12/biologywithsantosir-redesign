@@ -145,8 +145,8 @@ export default function ExamsClient({ batches, initialExams }: ExamsClientProps)
             <p className="text-xs">নতুন পরীক্ষা যুক্ত করতে ডান পাশের বাটনে ক্লিক করুন।</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+            <table className="w-full text-left border-collapse min-w-[700px]">
               <thead>
                 <tr className="border-b border-border text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
                   <th className="px-6 py-4 font-semibold">পরীক্ষার নাম</th>
@@ -229,6 +229,8 @@ export default function ExamsClient({ batches, initialExams }: ExamsClientProps)
                 })}
               </tbody>
             </table>
+            {/* Mobile scroll hint */}
+            <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
           </div>
         )}
       </div>

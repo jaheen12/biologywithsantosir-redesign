@@ -118,8 +118,8 @@ export default async function LeaderboardPage() {
 
           {/* Rankings Table */}
           <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
+            <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+              <table className="w-full text-left border-collapse text-sm min-w-[500px]">
                 <thead>
                   <tr className="border-b border-border text-xs text-text-muted uppercase font-medium bg-surface-alt/40">
                     <th className="px-6 py-4 w-24">র‍্যাংক</th>
@@ -140,11 +140,11 @@ export default async function LeaderboardPage() {
                     else if (row.rank === 3) rankDisplay = <span className="text-lg" title="Third Place">🥉</span>;
 
                     return (
-                      <tr 
-                        key={row.student_id} 
+                      <tr
+                        key={row.student_id}
                         className={`transition-colors ${
-                          isSelf 
-                            ? 'bg-primary-light/40 font-semibold border-l-4 border-primary hover:bg-primary-light/60' 
+                          isSelf
+                            ? 'bg-primary-light/40 font-semibold border-l-4 border-primary hover:bg-primary-light/60'
                             : 'hover:bg-surface-alt/30'
                         }`}
                       >
@@ -173,7 +173,7 @@ export default async function LeaderboardPage() {
                         </td>
 
                         {/* Exams Count */}
-                        <td className="px-6 py-4.5 text-text-secondary text-right pr-12 font-medium">
+                        <td className="px-6 py-4.5 text-text-secondary text-right font-medium">
                           {toBengaliNumerals(row.exams_count)}টি
                         </td>
                       </tr>
@@ -181,6 +181,8 @@ export default async function LeaderboardPage() {
                   })}
                 </tbody>
               </table>
+              {/* Mobile scroll hint */}
+              <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
             </div>
           </div>
         </div>

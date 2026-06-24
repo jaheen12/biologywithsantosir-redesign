@@ -63,7 +63,7 @@ export default function Navbar() {
         setIsScrolled(false);
       }
     }
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -323,7 +323,7 @@ export default function Navbar() {
             <button
               onClick={openSearch}
               aria-label="Open search"
-              className="p-2 text-text-secondary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+              className="p-2 text-text-secondary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer select-none"
             >
               <Search className="w-5 h-5" />
             </button>
@@ -388,22 +388,23 @@ export default function Navbar() {
       {/* Mobile Slide-in Drawer */}
       {isDrawerOpen && (
         <div className="fixed inset-0 z-[60] lg:hidden flex">
-          {/* Overlay */}
+          {/* Overlay — touch-action: manipulation prevents double-tap zoom on mobile */}
           <div
             onClick={toggleDrawer}
             aria-hidden="true"
-            className="fixed inset-0 bg-black/40 transition-opacity duration-300"
+            className="fixed inset-0 bg-black/40 transition-opacity duration-300 touch-action-manipulation"
+            onTouchMove={(e) => e.preventDefault()}
           />
 
-          {/* Drawer Panel */}
-          <div className="relative flex flex-col w-[280px] h-full bg-surface shadow-2xl transition-transform duration-300 z-10 p-5 font-ui">
+          {/* Drawer Panel — w-[85vw] scales on small phones vs tablets, max-w-[320px] prevents over-expansion, pb-6 for safe area */}
+          <div className="relative flex flex-col w-[85vw] max-w-[320px] h-full bg-surface shadow-2xl transition-transform duration-300 z-10 p-5 pb-6 font-ui">
             <div className="flex items-center justify-between mb-6">
               <span className="text-primary font-bold text-lg">Menu</span>
               <button
                 ref={closeBtnRef}
                 onClick={toggleDrawer}
                 aria-label="Close navigation menu"
-                className="p-2 text-text-primary hover:text-primary transition duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-2 text-text-primary hover:text-primary active:opacity-80 transition duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -414,26 +415,28 @@ export default function Navbar() {
               <div>
                 <button
                   onClick={() => setIsMobileClassesOpen(!isMobileClassesOpen)}
-                  className="flex items-center justify-between w-full text-base font-semibold text-text-primary py-2 text-left"
+                  // Mobile: py-3 for minimum 44px touch target
+                  className="flex items-center justify-between w-full text-base font-semibold text-text-primary py-3 text-left active:opacity-80"
                 >
                   Classes
                   <ChevronDown className={`w-4 h-4 transition-transform duration-150 ${isMobileClassesOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <div
+                  // Mobile: max-h-[50vh] prevents accordion from overflowing viewport on small screens
                   className={`overflow-hidden transition-all duration-300 pl-3 border-l border-border flex flex-col gap-2 mt-1 ${
-                    isMobileClassesOpen ? 'max-h-[300px] opacity-100 py-1' : 'max-h-0 opacity-0'
+                    isMobileClassesOpen ? 'max-h-[50vh] overflow-y-auto opacity-100 py-1' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <div className="text-[0.75rem] font-bold text-text-secondary uppercase tracking-wider mt-1">School</div>
-                  <Link href="/classes/ssc-biology" className="text-sm text-text-primary py-1 block">SSC Biology</Link>
-                  
+                  <Link href="/classes/ssc-biology" className="text-sm text-text-primary py-3 block active:opacity-80">SSC Biology</Link>
+
                   <div className="text-[0.75rem] font-bold text-text-secondary uppercase tracking-wider mt-1">College</div>
-                  <Link href="/classes/hsc-zoology" className="text-sm text-text-primary py-1 block">HSC Zoology</Link>
-                  <Link href="/classes/hsc-botany" className="text-sm text-text-primary py-1 block">HSC Botany</Link>
+                  <Link href="/classes/hsc-zoology" className="text-sm text-text-primary py-3 block active:opacity-80">HSC Zoology</Link>
+                  <Link href="/classes/hsc-botany" className="text-sm text-text-primary py-3 block active:opacity-80">HSC Botany</Link>
 
                   <div className="text-[0.75rem] font-bold text-text-secondary uppercase tracking-wider mt-1">University</div>
-                  <Link href="/classes/honours-3rd-year" className="text-sm text-text-primary py-1 block">Honours 3rd Year</Link>
-                  <Link href="/classes/honours-4th-year" className="text-sm text-text-primary py-1 block">Honours 4th Year</Link>
+                  <Link href="/classes/honours-3rd-year" className="text-sm text-text-primary py-3 block active:opacity-80">Honours 3rd Year</Link>
+                  <Link href="/classes/honours-4th-year" className="text-sm text-text-primary py-3 block active:opacity-80">Honours 4th Year</Link>
                 </div>
               </div>
 
@@ -441,42 +444,45 @@ export default function Navbar() {
               <div>
                 <button
                   onClick={() => setIsMobileTopicsOpen(!isMobileTopicsOpen)}
-                  className="flex items-center justify-between w-full text-base font-semibold text-text-primary py-2 text-left"
+                  // Mobile: py-3 for minimum 44px touch target
+                  className="flex items-center justify-between w-full text-base font-semibold text-text-primary py-3 text-left active:opacity-80"
                 >
                   Topics
                   <ChevronDown className={`w-4 h-4 transition-transform duration-150 ${isMobileTopicsOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <div
+                  // Mobile: max-h-[50vh] prevents accordion from overflowing viewport on small screens
                   className={`overflow-hidden transition-all duration-300 pl-3 border-l border-border flex flex-col gap-2 mt-1 ${
-                    isMobileTopicsOpen ? 'max-h-[300px] overflow-y-auto opacity-100 py-1' : 'max-h-0 opacity-0'
+                    isMobileTopicsOpen ? 'max-h-[50vh] overflow-y-auto opacity-100 py-1' : 'max-h-0 opacity-0'
                   }`}
                 >
                   {topics.length > 0 ? (
                     topics.map((topic) => (
-                      <Link key={topic.slug} href={`/topics/${topic.slug}`} className="text-sm text-text-primary py-1 block">
+                      <Link key={topic.slug} href={`/topics/${topic.slug}`} className="text-sm text-text-primary py-3 block active:opacity-80">
                         {topic.name_bn}
                       </Link>
                     ))
                   ) : (
-                    <span className="text-xs text-text-muted py-1">No topics available</span>
+                    // Mobile: visually distinct no-topics message with background and padding
+                    <span className="text-xs text-text-muted bg-surface-alt px-3 py-2 rounded-lg text-center">No topics available</span>
                   )}
                 </div>
               </div>
 
               {/* Other links */}
-              <Link href="/notes" className="text-base font-semibold text-text-primary py-2 block">
+              <Link href="/notes" className="text-base font-semibold text-text-primary py-3 block active:opacity-80">
                 Notes
               </Link>
-              <Link href="/mcq" className="text-base font-semibold text-text-primary py-2 block">
+              <Link href="/mcq" className="text-base font-semibold text-text-primary py-3 block active:opacity-80">
                 MCQ
               </Link>
-              <Link href="/courses" className="text-base font-semibold text-text-primary py-2 block">
+              <Link href="/courses" className="text-base font-semibold text-text-primary py-3 block active:opacity-80">
                 Courses
               </Link>
-              <Link href="/about" className="text-base font-semibold text-text-primary py-2 block">
+              <Link href="/about" className="text-base font-semibold text-text-primary py-3 block active:opacity-80">
                 About
               </Link>
-              <Link href="/contact" className="text-base font-semibold text-text-primary py-2 block">
+              <Link href="/contact" className="text-base font-semibold text-text-primary py-3 block active:opacity-80">
                 Contact
               </Link>
             </nav>

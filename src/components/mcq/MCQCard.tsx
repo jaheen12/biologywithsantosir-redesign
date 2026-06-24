@@ -66,7 +66,7 @@ export default function MCQCard({
               key={opt.key}
               disabled={isAnswered}
               onClick={() => setSelectedOption(opt.key as any)}
-              className={`w-full text-left px-5 py-4 border rounded-xl flex items-center gap-4 transition duration-150 min-h-[48px] cursor-pointer ${
+              className={`w-full text-left px-5 py-4 border rounded-xl flex items-center gap-4 transition duration-150 min-h-[48px] cursor-pointer select-none active:scale-[0.99] ${
                 isSelected
                   ? 'bg-primary-light border-primary text-primary font-bold shadow-sm'
                   : 'bg-surface border-border text-text-primary hover:bg-surface-alt hover:border-primary-mid'

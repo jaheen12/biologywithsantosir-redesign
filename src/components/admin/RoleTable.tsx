@@ -215,8 +215,8 @@ export default function RoleTable({
             <p className="font-bold text-text-primary text-base font-ui">কোনো ব্যবহারকারী পাওয়া যায়নি</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+            <table className="w-full text-left border-collapse min-w-[600px]">
               <thead>
                 <tr className="border-b border-border text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
                   <th className="px-6 py-4 font-semibold">নাম ও ইমেইল</th>
@@ -302,6 +302,8 @@ export default function RoleTable({
                 })}
               </tbody>
             </table>
+            {/* Mobile scroll hint */}
+            <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
           </div>
         )}
       </div>
@@ -319,8 +321,8 @@ export default function RoleTable({
               <span>ইতিপূর্বে কোনো রোল পরিবর্তন করা হয়নি।</span>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
+            <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+              <table className="w-full text-left border-collapse text-sm min-w-[600px]">
                 <thead>
                   <tr className="border-b border-border text-xs font-bold text-text-secondary bg-surface-alt/40 uppercase tracking-wider">
                     <th className="px-6 py-4 font-semibold">তারিখ</th>
@@ -360,6 +362,8 @@ export default function RoleTable({
                   ))}
                 </tbody>
               </table>
+              {/* Mobile scroll hint */}
+              <p className="text-xs text-text-muted text-right md:hidden mt-1">&#8592; স্ক্রোল করুন &#8594;</p>
             </div>
           )}
         </div>

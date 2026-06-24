@@ -266,14 +266,14 @@ export default function RoutineForm({
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="px-4 py-2.5 rounded-xl border border-border text-sm font-semibold text-text-secondary hover:bg-surface-alt transition cursor-pointer disabled:opacity-50"
+          className="px-4 py-3 md:py-2.5 rounded-xl border border-border text-sm font-semibold text-text-secondary hover:bg-surface-alt transition cursor-pointer disabled:opacity-50 select-none"
         >
           বাতিল
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition cursor-pointer disabled:opacity-50"
+          className="flex items-center gap-2 px-5 py-3 md:py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition cursor-pointer disabled:opacity-50 select-none"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />

@@ -24,7 +24,7 @@ export default function Breadcrumb({ topicName, topicSlug, postTitle }: Breadcru
         </li>
         <li aria-hidden="true" className="text-text-muted">&gt;</li>
         <li>
-          <span className="text-text-muted truncate max-w-[200px] sm:max-w-xs md:max-w-sm">
+          <span className="text-text-muted truncate max-w-[120px] sm:max-w-[200px] md:max-w-sm">
             {postTitle}
           </span>
         </li>

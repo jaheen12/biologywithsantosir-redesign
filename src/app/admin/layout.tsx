@@ -32,8 +32,8 @@ export default async function AdminLayout({
       {/* Admin Sidebar */}
       <AdminSidebar fullName={fullName} />
 
-      {/* Main Content Area */}
-      <main id="main-content" className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto min-h-0">
+      {/* Main Content Area — overscroll-behavior: contain prevents pull-to-refresh on mobile */}
+      <main id="main-content" className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto min-h-0" style={{ overscrollBehavior: 'contain' }}>
         {children}
       </main>
     </div>

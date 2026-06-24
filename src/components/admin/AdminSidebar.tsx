@@ -134,8 +134,8 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
 
   return (
     <>
-      {/* Mobile Header Bar */}
-      <div className="lg:hidden flex items-center justify-between bg-surface border-b border-border px-4 py-3 sticky top-0 z-40 h-[56px] w-full">
+      {/* Mobile Header Bar — min-h-[56px] prevents content push */}
+      <div className="lg:hidden flex items-center justify-between bg-surface border-b border-border px-4 py-3 sticky top-0 z-40 min-h-[56px] w-full">
         <Link href="/admin" className="flex items-center gap-2 text-primary font-bold font-ui">
           <Shield className="w-6 h-6" />
           <span>এডমিন প্যানেল</span>
@@ -156,12 +156,13 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
           className="fixed inset-0 bg-black/40 z-30 lg:hidden transition-opacity duration-300"
+          onTouchMove={(e) => e.preventDefault()}
         />
       )}
 
-      {/* Sidebar Panel */}
+      {/* Sidebar Panel — w-[85vw] max-w-[300px] scales on mobile (wider for admin content) */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 h-screen w-64 bg-surface border-r border-border flex flex-col z-35 transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed lg:sticky top-0 left-0 h-screen w-[85vw] max-w-[300px] bg-surface border-r border-border flex flex-col z-35 transition-transform duration-300 lg:translate-x-0 ${
           isOpen ? 'translate-x-0 pt-[56px] lg:pt-0' : '-translate-x-full'
         }`}
       >
@@ -174,13 +175,13 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
         </div>
 
         {/* Nav Links */}
-        <nav className="flex-1 px-4 py-4 space-y-5 overflow-y-auto font-ui scrollbar-thin">
+        <nav className="flex-1 px-4 py-4 space-y-5 overflow-y-auto font-ui scrollbar-thin overscroll-behavior-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           {/* Dashboard Home Link */}
           <div>
             <Link
               href="/admin"
               onClick={() => setIsOpen(false)}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition duration-150 ${
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition duration-150 active:opacity-80 ${
                 pathname === '/admin'
                   ? 'bg-primary/10 text-primary'
                   : 'text-text-secondary hover:bg-surface-alt hover:text-primary'
@@ -200,7 +201,7 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
                   type="button"
                   onClick={() => toggleGroup(group.title)}
                   aria-expanded={isExpanded}
-                  className="w-full flex items-center justify-between px-4 py-1 text-xs font-bold text-text-muted hover:text-primary uppercase tracking-wider transition-colors text-left cursor-pointer group/btn"
+                  className="w-full flex items-center justify-between px-4 py-2 text-xs font-bold text-text-muted hover:text-primary uppercase tracking-wider transition-colors text-left cursor-pointer group/btn active:opacity-80"
                 >
                   <span>{group.title}</span>
                   {isExpanded ? (
@@ -219,7 +220,7 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
                           key={item.path}
                           href={item.path}
                           onClick={() => setIsOpen(false)}
-                          className={`flex items-center gap-3 px-4 py-2 rounded-xl text-sm font-medium transition duration-150 ${
+                          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition duration-150 active:opacity-80 ${
                             isActive
                               ? 'bg-primary/10 text-primary font-semibold'
                               : 'text-text-secondary hover:bg-surface-alt hover:text-primary'
@@ -244,7 +245,7 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
             <Link
               href="/dashboard"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-text-secondary hover:bg-surface-alt hover:text-primary transition duration-150"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-text-secondary hover:bg-surface-alt hover:text-primary transition duration-150 active:opacity-80"
             >
               <ArrowLeft className="w-4 h-4 text-text-muted" />
               <span>ছাত্র প্যানেলে ফিরুন</span>
@@ -252,7 +253,7 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-error hover:bg-error/10 transition duration-150 cursor-pointer text-left w-full"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-error hover:bg-error/10 transition duration-150 cursor-pointer text-left w-full active:opacity-80"
             >
               <LogOut className="w-4 h-4 text-error" />
               <span>লগ আউট</span>

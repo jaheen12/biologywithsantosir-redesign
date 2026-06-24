@@ -76,8 +76,8 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile Header Bar */}
-      <div className="md:hidden flex items-center justify-between bg-surface border-b border-border px-4 py-3 sticky top-0 z-40 h-[56px] w-full">
+      {/* Mobile Header Bar — min-h-[56px] prevents content push */}
+      <div className="md:hidden flex items-center justify-between bg-surface border-b border-border px-4 py-3 sticky top-0 z-40 min-h-[56px] w-full">
         <Link href="/" className="flex items-center gap-2 text-primary font-bold font-ui">
           <GraduationCap className="w-6 h-6" />
           <span>প্যানেল</span>
@@ -86,7 +86,7 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
           ref={toggleBtnRef}
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          className="p-2 text-text-primary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+          className="p-2 text-text-primary hover:text-primary transition duration-150 rounded-lg hover:bg-surface-alt min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer active:opacity-80"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -98,12 +98,13 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
           className="fixed inset-0 bg-black/40 z-30 md:hidden transition-opacity duration-300"
+          onTouchMove={(e) => e.preventDefault()}
         />
       )}
 
-      {/* Sidebar Panel */}
+      {/* Sidebar Panel — w-[85vw] max-w-[280px] scales on mobile, keeps desktop w-64 feel */}
       <aside
-        className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-surface border-r border-border flex flex-col z-35 transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed md:sticky top-0 left-0 h-screen w-[85vw] max-w-[280px] bg-surface border-r border-border flex flex-col z-35 transition-transform duration-300 md:translate-x-0 ${
           isOpen ? 'translate-x-0 pt-[56px] md:pt-0' : '-translate-x-full'
         }`}
       >
@@ -116,9 +117,9 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
 
 
         {/* Nav Links */}
-        <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto font-ui">
+        <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto font-ui overscroll-behavior-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           {!profile?.batch_id && profile?.role !== 'admin' ? (
-            <div className="px-4 py-3 bg-accent-light text-accent text-xs rounded-xl font-medium">
+            <div className="px-4 py-3 bg-accent-light text-accent text-xs rounded-xl font-medium text-center">
               আপনি এখনো কোনো ব্যাচে ভর্তি হননি
             </div>
           ) : (
@@ -130,7 +131,7 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
                   key={item.path}
                   href={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-medium transition duration-150 ${
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition duration-150 active:opacity-80 ${
                     isActive
                       ? 'bg-primary text-white font-semibold'
                       : 'text-text-secondary hover:bg-surface-alt hover:text-primary'
@@ -153,14 +154,14 @@ export default function Sidebar({ profile, paymentStatus }: SidebarProps) {
         <div className="px-5 py-3.5 border-t border-border font-ui flex flex-col gap-2 bg-surface-alt/30">
           <Link
             href="/"
-            className="flex items-center gap-2.5 py-1 text-xs font-medium text-text-secondary hover:text-primary transition duration-150"
+            className="flex items-center gap-2.5 py-2 text-xs font-medium text-text-secondary hover:text-primary transition duration-150 active:opacity-80"
           >
             <ArrowLeft className="w-4 h-4 text-text-muted" />
             <span>ওয়েবসাইটে ফিরুন</span>
           </Link>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2.5 py-1 text-xs font-medium text-error hover:text-error transition duration-150 cursor-pointer text-left w-full"
+            className="flex items-center gap-2.5 py-2 text-xs font-medium text-error hover:text-error transition duration-150 cursor-pointer text-left w-full active:opacity-80"
           >
             <LogOut className="w-4 h-4" />
             <span>লগ আউট</span>

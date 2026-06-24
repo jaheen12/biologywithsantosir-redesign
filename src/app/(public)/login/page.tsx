@@ -83,7 +83,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="block w-full pl-11 pr-4 py-2.5 bg-surface border border-border rounded-xl text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150"
+                  className="block w-full pl-11 pr-4 py-3 md:py-2.5 bg-surface border border-border rounded-xl text-text-primary text-base md:text-sm placeholder:text-text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150"
                 />
               </div>
             </div>
@@ -104,7 +104,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="block w-full pl-11 pr-4 py-2.5 bg-surface border border-border rounded-xl text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150"
+                  className="block w-full pl-11 pr-4 py-3 md:py-2.5 bg-surface border border-border rounded-xl text-text-primary text-base md:text-sm placeholder:text-text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-150"
                 />
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full justify-center gap-2 mt-2 bg-primary text-white hover:bg-primary-dark cursor-pointer font-semibold py-2.5 rounded-xl transition duration-150"
+              className="w-full justify-center gap-2 mt-2 bg-primary text-white hover:bg-primary-dark cursor-pointer font-semibold py-3 md:py-2.5 rounded-xl transition duration-150"
             >
               {loading ? (
                 <>

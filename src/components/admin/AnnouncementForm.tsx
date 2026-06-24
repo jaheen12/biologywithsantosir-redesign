@@ -186,7 +186,7 @@ export default function AnnouncementForm({ batches, onSuccess }: AnnouncementFor
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition cursor-pointer disabled:opacity-50"
+          className="flex items-center gap-2 px-5 py-3 md:py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition cursor-pointer disabled:opacity-50 select-none"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />

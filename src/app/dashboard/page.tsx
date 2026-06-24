@@ -201,9 +201,9 @@ export default async function DashboardPage() {
       </div>
 
       {/* Summary Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
         {/* Next Class Card */}
-        <div className="bg-surface border border-border p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[160px]">
+        <div className="bg-surface border border-border p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[160px] h-full">
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">পরবর্তী ক্লাস</span>
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Next Exam Card */}
-        <div className="bg-surface border border-border p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[160px]">
+        <div className="bg-surface border border-border p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[160px] h-full">
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">পরবর্তী পরীক্ষা</span>
@@ -290,7 +290,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Latest Result Card */}
-        <div className="bg-surface border border-border p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[160px]">
+        <div className="bg-surface border border-border p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col justify-between min-h-[160px] h-full">
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">সর্বশেষ ফলাফল</span>

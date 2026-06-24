@@ -29,6 +29,16 @@ const tiroBangla = Tiro_Bangla({
   display: "swap",
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  minimumScale: 1,
+  userScalable: true,
+  viewportFit: 'cover',
+  themeColor: '#1A7A5E',
+};
+
 export const metadata: Metadata = {
   title: {
     default: 'BiologywithSantosir — জীববিজ্ঞান শেখো সহজভাবে',

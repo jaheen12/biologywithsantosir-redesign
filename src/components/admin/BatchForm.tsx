@@ -150,7 +150,7 @@ export default function BatchForm({ editBatch, onCancelEdit }: BatchFormProps) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4 text-xs font-medium text-text-secondary">
+      <form onSubmit={handleSubmit} className="space-y-5 md:space-y-4 text-base md:text-xs font-medium text-text-secondary">
         {/* Batch Name */}
         <div className="space-y-1.5">
           <label className="block font-bold text-text-secondary">
@@ -246,7 +246,7 @@ export default function BatchForm({ editBatch, onCancelEdit }: BatchFormProps) {
             <button
               type="button"
               onClick={onCancelEdit}
-              className="flex-1 py-2.5 border border-border hover:bg-surface-alt rounded-xl font-bold transition duration-150 cursor-pointer text-center text-text-primary"
+              className="flex-1 py-3 md:py-2.5 border border-border hover:bg-surface-alt rounded-xl font-bold transition duration-150 cursor-pointer text-center text-text-primary select-none"
             >
               বাতিল করুন
             </button>
@@ -254,7 +254,7 @@ export default function BatchForm({ editBatch, onCancelEdit }: BatchFormProps) {
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold transition duration-150 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
+            className="flex-1 py-3 md:py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold transition duration-150 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5 select-none"
           >
             {loading ? (
               <>

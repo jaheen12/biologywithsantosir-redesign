@@ -51,6 +51,8 @@
 /* Base typography rules */
 html {
   font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -132,4 +134,67 @@ button, input, select, textarea, label, .font-ui, .font-hero {
   background: var(--surface-alt);
   border: 1px dashed var(--border);
   border-radius: 8px;
+}
+
+/* Safe area padding for notched devices (iPhone X+) */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Improve tap highlight for touch devices */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better touch scrolling for scrollable containers */
+.scrollable-touch {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Mobile Forms & Touch Optimizations                                */
+/* ------------------------------------------------------------------ */
+
+/* iOS zoom prevention — all inputs must be >= 16px to prevent auto-zoom on focus */
+input, textarea, select {
+  font-size: 16px !important;
+}
+
+/* Eliminate 300ms tap delay on interactive mobile elements */
+html {
+  touch-action: manipulation;
+}
+button, a, label, select, input[type="checkbox"], input[type="radio"] {
+  touch-action: manipulation;
+}
+
+/* Improve touch feedback on interactive elements — only touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn-touch {
+    transition: transform 0.1s;
+  }
+  .btn-touch:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Honor light color scheme for native form controls (dark mode future-proofing) */
+input, select, textarea, button {
+  color-scheme: light;
 }

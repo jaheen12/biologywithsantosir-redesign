@@ -153,15 +153,16 @@ export default function Navbar() {
       >
         <Container className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 text-primary font-bold text-lg lg:text-xl font-ui">
+          {/* Logo — leading-none prevents body line-height from creating awkward gaps when text wraps on small screens; text-sm/md on mobile to avoid wrapping */}
+          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 text-primary font-bold text-sm sm:text-base lg:text-xl font-ui leading-none">
             <svg
-              className="w-6 h-6 fill-current"
+              className="w-5 h-5 sm:w-6 sm:h-6 fill-current shrink-0"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7,18.5C15.5,18.5 19,13 22,8C19,10 16,8 17,8M12,2C11.5,4 8.5,8 3,8C3.5,6 6.5,2 12,2Z" />
             </svg>
-            <span>Santo Sir Biology</span>
+            <span className="whitespace-nowrap">Santo Sir Biology</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -366,7 +367,8 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary-dark border border-primary hover:bg-primary-light rounded-lg transition duration-150"
+                // Mobile: larger touch target (py-3) + text-base to match 16px minimum that prevents iOS zoom
+                className="inline-flex items-center justify-center px-5 py-3 sm:px-4 sm:py-2 text-sm sm:text-xs font-medium text-primary-dark border border-primary hover:bg-primary-light rounded-lg transition duration-150 min-h-[44px] sm:min-h-0"
               >
                 লগ ইন
               </Link>

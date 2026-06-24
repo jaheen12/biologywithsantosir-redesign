@@ -162,7 +162,7 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
 
       {/* Sidebar Panel — anchored to right (matches hamburger on right) */}
       <aside
-        className={`fixed lg:sticky top-0 right-0 h-screen w-[85vw] max-w-[300px] bg-surface border-l border-border flex flex-col z-35 transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed lg:sticky top-0 right-0 h-screen w-[80vw] max-w-[280px] lg:w-[240px] lg:max-w-none bg-surface border-l border-border lg:border-r lg:border-l-0 flex flex-col z-35 transition-transform duration-300 lg:translate-x-0 ${
           isOpen ? 'translate-x-0 pt-[56px] lg:pt-0' : 'translate-x-full'
         }`}
       >

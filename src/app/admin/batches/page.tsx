@@ -38,9 +38,6 @@ export default async function AdminBatchesPage() {
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">ব্যাচ ব্যবস্থাপনা</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          কোচিং সেন্টারের সব ব্যাচ ও কোর্সের আসন সংখ্যা ও ভর্তি ফি পরিচালনা করুন।
-        </p>
       </div>
 
       <BatchesClient initialBatches={batches} />

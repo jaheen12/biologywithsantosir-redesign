@@ -98,6 +98,15 @@ CREATE POLICY "payments_select_own"
   ON payments FOR SELECT
   USING (auth.uid() = student_id);
 
+-- Students: submit pending bKash/Nagad payments
+CREATE POLICY "payments_insert_own"
+  ON payments FOR INSERT
+  WITH CHECK (
+    auth.uid() = student_id
+    AND reconciled = false
+    AND method IN ('bKash', 'Nagad')
+  );
+
 -- Admins: full access
 CREATE POLICY "payments_all_admin"
   ON payments FOR ALL

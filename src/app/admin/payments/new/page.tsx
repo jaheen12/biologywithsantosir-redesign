@@ -51,9 +51,6 @@ export default async function AdminNewPaymentPage() {
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">পেমেন্ট গ্রহণ করুন</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          শিক্ষার্থীর মাসিক বেতন নগদ বা মোবাইল ব্যাংকিংয়ের (bKash/Nagad) মাধ্যমে রেকর্ড করুন।
-        </p>
       </div>
 
       <div className="max-w-2xl">

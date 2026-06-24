@@ -13,6 +13,8 @@ import {
   FileText
 } from 'lucide-react';
 
+import MakePaymentModal from '@/components/dashboard/MakePaymentModal';
+
 const monthMap: Record<string, string> = {
   'January': 'জানুয়ারি',
   'February': 'ফেব্রুয়ারি',
@@ -120,6 +122,19 @@ export default async function PaymentsPage() {
     .eq('student_id', user.id)
     .maybeSingle();
 
+  // Fetch student profile to get batch_id if dueStatus is not available
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('batch_id')
+    .eq('id', user.id)
+    .single();
+
+  const studentBatchId = dueStatus?.batch_id || profile?.batch_id || null;
+
+  const defaultAmount = dueStatus 
+    ? (Number(dueStatus.outstanding) > 0 ? Number(dueStatus.outstanding) : Number(dueStatus.monthly_fee))
+    : 0;
+
   // 2. Full payment history, newest first
   const { data: paymentsData } = await supabase
     .from('payments')
@@ -152,14 +167,22 @@ export default async function PaymentsPage() {
   return (
     <div className="space-y-8 font-ui max-w-5xl mx-auto pb-12">
       {/* Title Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary flex items-center gap-3">
-          <CreditCard className="w-7 h-7 text-primary" />
-          <span>ফি ও পেমেন্ট</span>
-        </h1>
-        <p className="text-sm text-text-secondary mt-1">
-          আপনার মাসিক ফি ও পরিশোধের ইতিহাস এখানে পর্যবেক্ষণ করুন।
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-text-primary flex items-center gap-3">
+            <CreditCard className="w-7 h-7 text-primary" />
+            <span>ফি ও পেমেন্ট</span>
+          </h1>
+          <p className="text-sm text-text-secondary mt-1">
+            আপনার মাসিক ফি ও পরিশোধের ইতিহাস এখানে পর্যবেক্ষণ করুন।
+          </p>
+        </div>
+        <MakePaymentModal 
+          studentId={user.id}
+          batchId={studentBatchId}
+          defaultAmount={defaultAmount}
+          dueMonth={dueStatus?.due_month || null}
+        />
       </div>
 
       {/* Section 1: Current Month Status Card */}
@@ -321,16 +344,22 @@ export default async function PaymentsPage() {
                               {formatBanglaDate(payment.paid_on)}
                             </td>
                             <td className="px-6 py-4 text-right">
-                              <Link
-                                href={`/admin/payments/${payment.id}/receipt`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-dark transition-colors cursor-pointer"
-                              >
-                                <Receipt className="w-3.5 h-3.5" />
-                                <span>রশিদ দেখুন</span>
-                                <ExternalLink className="w-3 h-3" />
-                              </Link>
+                              {payment.reconciled ? (
+                                <Link
+                                  href={`/admin/payments/${payment.id}/receipt`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-dark transition-colors cursor-pointer"
+                                >
+                                  <Receipt className="w-3.5 h-3.5" />
+                                  <span>রশিদ দেখুন</span>
+                                  <ExternalLink className="w-3 h-3" />
+                                </Link>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-100 px-2 py-0.5 rounded-full">
+                                  পেন্ডিং
+                                </span>
+                              )}
                             </td>
                           </tr>
                         ))}

@@ -38,9 +38,6 @@ export default async function AdminAnnouncementsPage() {
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">নোটিশ বোর্ড ব্যবস্থাপনা</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          সকল শিক্ষার্থীদের জন্য বা নির্দিষ্ট ব্যাচের জন্য নোটিশ প্রকাশ ও মুছে ফেলার প্যানেল।
-        </p>
       </div>
 
       <Suspense fallback={

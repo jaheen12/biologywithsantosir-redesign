@@ -103,6 +103,7 @@ export default function BatchForm({ editBatch, onCancelEdit }: BatchFormProps) {
         setStartDate('');
         setEndDate('');
         setIsActive(true);
+        onCancelEdit();
       }
 
       router.refresh();
@@ -242,15 +243,13 @@ export default function BatchForm({ editBatch, onCancelEdit }: BatchFormProps) {
 
         {/* Buttons */}
         <div className="flex gap-2 pt-2">
-          {editBatch && (
-            <button
-              type="button"
-              onClick={onCancelEdit}
-              className="flex-1 py-3 md:py-2.5 border border-border hover:bg-surface-alt rounded-xl font-bold transition duration-150 cursor-pointer text-center text-text-primary select-none"
-            >
-              বাতিল করুন
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={onCancelEdit}
+            className="flex-1 py-3 md:py-2.5 border border-border hover:bg-surface-alt rounded-xl font-bold transition duration-150 cursor-pointer text-center text-text-primary select-none"
+          >
+            বাতিল করুন
+          </button>
           <button
             type="submit"
             disabled={loading}

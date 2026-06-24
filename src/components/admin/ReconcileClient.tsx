@@ -12,7 +12,9 @@ import {
   HelpCircle,
   Clock,
   Phone,
-  MessageSquare
+  MessageSquare,
+  Sparkles,
+  Inbox
 } from 'lucide-react';
 
 interface PendingPayment {
@@ -170,8 +172,8 @@ export default function ReconcileClient({ pendingPayments, currentAdminId }: Rec
       {/* Reconcile Header summary and Bulk Verify */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-surface p-5 rounded-2xl border border-border shadow-sm gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-accent-light text-accent flex items-center justify-center font-bold">
-            <AlertTriangle className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-primary-light text-primary flex items-center justify-center">
+            <Inbox className="w-5 h-5" />
           </div>
           <div>
             <span className="text-xs font-semibold text-text-secondary block">যাচাই বাকি</span>
@@ -208,7 +210,10 @@ export default function ReconcileClient({ pendingPayments, currentAdminId }: Rec
           <div className="w-12 h-12 rounded-full bg-primary-light text-primary flex items-center justify-center mb-4">
             <CheckCircle className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-text-primary">🎉 সকল মোবাইল পেমেন্ট যাচাই সম্পন্ন!</h3>
+          <h3 className="text-base font-bold text-text-primary flex items-center justify-center gap-1.5">
+            <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+            <span>সকল মোবাইল পেমেন্ট যাচাই সম্পন্ন!</span>
+          </h3>
           <p className="text-text-secondary text-xs mt-1">bKash বা Nagad-এর কোনো পেন্ডিং ট্রানজেকশন অবশিষ্ট নেই।</p>
         </div>
       ) : (

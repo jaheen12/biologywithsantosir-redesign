@@ -52,9 +52,6 @@ export default async function AdminReconcilePage() {
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">মোবাইল ব্যাংকিং পেমেন্ট যাচাই</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          শিক্ষার্থীদের পাঠানো bKash এবং Nagad পেমেন্টের TrxID এবং পরিমাণের সত্যতা যাচাই করুন।
-        </p>
       </div>
 
       <ReconcileClient 

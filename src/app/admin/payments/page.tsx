@@ -91,9 +91,6 @@ export default async function AdminPaymentsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-text-primary">পেমেন্ট লেজার</h1>
-          <p className="text-text-secondary text-sm mt-1">
-            পেমেন্টের বিবরণী এবং বকেয়া বেতনের হিসাব পরিচালনা করুন।
-          </p>
         </div>
       </div>
 

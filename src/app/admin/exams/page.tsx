@@ -54,9 +54,6 @@ export default async function AdminExamsPage() {
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">পরীক্ষা ব্যবস্থাপনা</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          কোচিং সেন্টারের সব পরীক্ষা তৈরি করুন, শিক্ষার্থীদের প্রাপ্ত নম্বর ইনপুট দিন ও পরিচালনা করুন।
-        </p>
       </div>
 
       <Suspense fallback={

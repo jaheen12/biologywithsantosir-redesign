@@ -11,6 +11,13 @@ interface Profile {
   avatar_url: string | null;
   role: string;
   created_at: string;
+  batch?: {
+    name: string;
+    fee: number;
+    start_date: string | null;
+    capacity: number;
+    is_active: boolean;
+  } | null;
 }
 
 export default async function ProfilePage() {
@@ -24,10 +31,10 @@ export default async function ProfilePage() {
     redirect('/login');
   }
 
-  // Fetch student profile
+  // Fetch student profile with batch details
   const { data: profileData } = await supabase
     .from('profiles')
-    .select('id, full_name, phone, avatar_url, role, created_at')
+    .select('id, full_name, phone, avatar_url, role, created_at, batch:batches(name, fee, start_date, capacity, is_active)')
     .eq('id', user.id)
     .single();
 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Loader2, Plus, AlertCircle, CheckCircle } from 'lucide-react';
+import { Loader2, Plus, AlertCircle, CheckCircle, Search, GraduationCap } from 'lucide-react';
 
 interface Student {
   id: string;
@@ -131,10 +131,10 @@ export default function NewEnrollmentForm({ students, batches }: NewEnrollmentFo
   };
 
   return (
-    <div className="bg-surface p-6 rounded-2xl border border-border shadow-sm space-y-5">
-      <h2 className="text-base font-bold text-text-primary flex items-center gap-2">
-        <Plus className="w-5 h-5 text-primary" />
-        <span>নতুন ভর্তি (Add Enrollment)</span>
+    <div className="bg-surface p-6 rounded-2xl border border-border/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-5">
+      <h2 className="text-base font-bold text-text-primary flex items-center gap-2 tracking-tight">
+        <GraduationCap className="w-5 h-5 text-primary" />
+        <span>নতুন শিক্ষার্থী ভর্তি</span>
       </h2>
 
       {/* Success Message */}
@@ -153,36 +153,45 @@ export default function NewEnrollmentForm({ students, batches }: NewEnrollmentFo
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5 md:space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Student Select Group */}
-        <div className="space-y-1.5">
-          <label className="block text-xs font-bold text-text-secondary">
-            শিক্ষার্থী খুঁজুন
-          </label>
-          <input
-            type="text"
-            placeholder="নাম বা মোবাইল দিয়ে ফিল্টার করুন..."
-            value={studentSearch}
-            onChange={(e) => setStudentSearch(e.target.value)}
-            className="w-full px-3 py-3 md:py-2 bg-surface border border-border rounded-xl text-base md:text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted"
-          />
+        <div className="space-y-3">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-text-secondary">
+              শিক্ষার্থী খুঁজুন
+            </label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted">
+                <Search className="w-4 h-4" />
+              </span>
+              <input
+                type="text"
+                placeholder="নাম বা মোবাইল দিয়ে ফিল্টার..."
+                value={studentSearch}
+                onChange={(e) => setStudentSearch(e.target.value)}
+                className="w-full pl-9 pr-3 py-2.5 bg-surface border border-border/80 rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-muted text-text-primary font-medium"
+              />
+            </div>
+          </div>
           
-          <label className="block text-xs font-bold text-text-secondary pt-1">
-            শিক্ষার্থী নির্বাচন করুন
-          </label>
-          <select
-            value={selectedStudentId}
-            onChange={(e) => setSelectedStudentId(e.target.value)}
-            required
-            className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer text-text-primary font-medium"
-          >
-            <option value="">নির্বাচন করুন ({filteredStudents.length} জন)</option>
-            {filteredStudents.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.full_name} ({s.phone || 'মোবাইল নেই'})
-              </option>
-            ))}
-          </select>
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-text-secondary">
+              শিক্ষার্থী নির্বাচন করুন
+            </label>
+            <select
+              value={selectedStudentId}
+              onChange={(e) => setSelectedStudentId(e.target.value)}
+              required
+              className="w-full px-3 py-2.5 bg-surface border border-border/80 rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer text-text-primary font-semibold"
+            >
+              <option value="">নির্বাচন করুন ({filteredStudents.length} জন)</option>
+              {filteredStudents.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.full_name} ({s.phone || 'মোবাইল নেই'})
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Batch Select Group */}
@@ -194,7 +203,7 @@ export default function NewEnrollmentForm({ students, batches }: NewEnrollmentFo
             value={selectedBatchId}
             onChange={(e) => setSelectedBatchId(e.target.value)}
             required
-            className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer text-text-primary font-medium"
+            className="w-full px-3 py-2.5 bg-surface border border-border/80 rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer text-text-primary font-semibold"
           >
             <option value="">ব্যাচ নির্বাচন করুন</option>
             {batches.map((b) => {
@@ -212,7 +221,7 @@ export default function NewEnrollmentForm({ students, batches }: NewEnrollmentFo
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 md:py-2.5 bg-primary text-white text-base md:text-xs font-bold rounded-xl hover:bg-primary-dark cursor-pointer disabled:opacity-50 transition duration-150 flex items-center justify-center gap-2 select-none"
+          className="w-full py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-dark cursor-pointer disabled:opacity-50 transition duration-150 flex items-center justify-center gap-2 select-none shadow-2xs hover:shadow-xs"
         >
           {loading ? (
             <>

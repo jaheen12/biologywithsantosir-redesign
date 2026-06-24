@@ -71,9 +71,6 @@ export default async function AdminLeaderboardPage({ searchParams }: PageProps) 
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">ব্যাচ র‍্যাংকিং বোর্ড</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          সব ব্যাচের মোট পরীক্ষা নম্বর অনুযায়ী শিক্ষার্থীদের র‍্যাংকিং ও পরীক্ষার তুলনামূলক ফলাফল।
-        </p>
       </div>
 
       {batches.length === 0 ? (

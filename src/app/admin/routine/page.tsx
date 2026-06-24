@@ -49,9 +49,6 @@ export default async function AdminRoutinePage({ searchParams }: PageProps) {
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">সাপ্তাহিক রুটিন ব্যবস্থাপনা</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          বায়োলজি উইথ সায়ন্ত স্যার প্ল্যাটফর্মের ব্যাচভিত্তিক ক্লাস রুটিন তৈরি ও সম্পাদনা করুন।
-        </p>
       </div>
 
       <Suspense fallback={

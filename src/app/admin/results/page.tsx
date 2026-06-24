@@ -74,9 +74,6 @@ export default async function AdminResultsPage({ searchParams }: PageProps) {
     <div className="space-y-8 font-ui">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-text-primary">ফলাফল এন্ট্রি বোর্ড</h1>
-        <p className="text-text-secondary text-sm mt-1">
-          একটি নির্দিষ্ট পরীক্ষা সিলেক্ট করুন এবং সব শিক্ষার্থীর প্রাপ্ত নম্বর ও মন্তব্য একবারে সংরক্ষণ করুন।
-        </p>
       </div>
 
       {exams.length === 0 ? (

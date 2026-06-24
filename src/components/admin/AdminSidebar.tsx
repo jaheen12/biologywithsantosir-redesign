@@ -63,7 +63,6 @@ const navigationGroups = [
     title: 'অন্যান্য',
     items: [
       { label: 'নোটিশ বোর্ড', path: '/admin/announcements', icon: Megaphone },
-      { label: 'রোল ব্যবস্থাপনা', path: '/admin/roles', icon: Shield },
     ]
   }
 ];
@@ -243,12 +242,12 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
           {/* Action Links */}
           <div className="pt-4 border-t border-border/50 space-y-1">
             <Link
-              href="/dashboard"
+              href="/"
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-text-secondary hover:bg-surface-alt hover:text-primary transition duration-150 active:opacity-80"
             >
               <ArrowLeft className="w-4 h-4 text-text-muted" />
-              <span>ছাত্র প্যানেলে ফিরুন</span>
+              <span>মূল ওয়েবসাইটে ফিরুন</span>
             </Link>
 
             <button

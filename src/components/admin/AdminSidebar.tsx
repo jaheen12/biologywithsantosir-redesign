@@ -205,18 +205,30 @@ export default function AdminSidebar({ fullName }: AdminSidebarProps) {
               </div>
             );
           })}
-        </nav>
 
-        {/* Footer / Logout */}
-        <div className="px-5 py-3.5 border-t border-border font-ui flex flex-col gap-2 bg-surface-alt/30">
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2.5 py-1 text-xs font-medium text-error hover:text-error transition duration-150 cursor-pointer text-left w-full"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>লগ আউট</span>
-          </button>
-        </div>
+          {/* Spacer */}
+          <div className="h-4"></div>
+
+          {/* Action Links */}
+          <div className="pt-4 border-t border-border/50 space-y-1">
+            <Link
+              href="/dashboard"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-text-secondary hover:bg-surface-alt hover:text-primary transition duration-150"
+            >
+              <ArrowLeft className="w-4 h-4 text-text-muted" />
+              <span>ছাত্র প্যানেলে ফিরুন</span>
+            </Link>
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-error hover:bg-error/10 transition duration-150 cursor-pointer text-left w-full"
+            >
+              <LogOut className="w-4 h-4 text-error" />
+              <span>লগ আউট</span>
+            </button>
+          </div>
+        </nav>
       </aside>
     </>
   );

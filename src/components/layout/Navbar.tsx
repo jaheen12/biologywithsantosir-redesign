@@ -320,7 +320,7 @@ export default function Navbar() {
           </nav>
 
           {/* Action buttons (Search + Auth + Hamburger) */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <button
               onClick={openSearch}
               aria-label="Open search"
@@ -369,7 +369,7 @@ export default function Navbar() {
                 href="/login"
                 // Consistent py-2 on both mobile and desktop avoids looking
                 // too tall in the 56px header while keeping adequate touch area
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary-dark border border-primary hover:bg-primary-light rounded-lg transition duration-150"
+                className="inline-flex items-center justify-center px-2.5 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium text-primary-dark border border-primary hover:bg-primary-light rounded-lg transition duration-150 whitespace-nowrap"
               >
                 লগ ইন
               </Link>
@@ -390,7 +390,7 @@ export default function Navbar() {
 
       {/* Mobile Slide-in Drawer */}
       {isDrawerOpen && (
-        {/* justify-end anchors drawer to the right (matching hamburger position) */}
+        // justify-end anchors drawer to the right (matching hamburger position)
         <div className="fixed inset-0 z-[60] lg:hidden flex justify-end">
           {/* Overlay — touch-action: manipulation prevents double-tap zoom on mobile */}
           <div

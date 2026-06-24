@@ -48,17 +48,17 @@ export default function QuickNavCards() {
               <Link
                 key={card.label}
                 href={card.link}
-                className="group flex flex-col justify-center bg-primary-light border border-border rounded-xl p-6 min-h-[120px] transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
+                className="group flex flex-col justify-center bg-primary-light border border-border rounded-xl p-4 sm:p-6 min-h-[140px] sm:min-h-[120px] transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
               >
-                <div className="flex items-center gap-3.5">
-                  <div className="p-2.5 rounded-lg bg-surface border border-border text-primary group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-200">
-                    <Icon className="w-6 h-6" />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-3.5">
+                  <div className="p-2 sm:p-2.5 rounded-lg bg-surface border border-border text-primary group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-200 shrink-0">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[1rem] font-bold text-text-primary group-hover:text-primary transition-colors duration-200">
+                    <span className="text-sm sm:text-[1rem] font-bold text-text-primary group-hover:text-primary transition-colors duration-200">
                       {card.label}
                     </span>
-                    <span className="text-[0.8125rem] text-text-secondary">
+                    <span className="text-xs sm:text-[0.8125rem] text-text-secondary">
                       {card.bangla}
                     </span>
                   </div>

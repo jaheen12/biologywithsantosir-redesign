@@ -24,6 +24,11 @@ export default async function DashboardLayout({
     .eq('id', user.id)
     .single();
 
+  // Redirect admin to admin panel
+  if (user.app_metadata?.role === 'admin' || profile?.role === 'admin') {
+    redirect('/admin');
+  }
+
   // Fetch payment due status
   const { data: paymentDue } = await supabase
     .from('payment_due')

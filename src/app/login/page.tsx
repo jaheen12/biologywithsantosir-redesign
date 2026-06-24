@@ -22,7 +22,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -34,7 +34,12 @@ export default function LoginPage() {
           setError('লগইন করা যাচ্ছে না, আবার চেষ্টা করুন');
         }
       } else {
-        router.push('/dashboard');
+        const user = data?.user;
+        if (user?.app_metadata?.role === 'admin') {
+          router.push('/admin');
+        } else {
+          router.push('/dashboard');
+        }
         router.refresh();
       }
     } catch (err) {

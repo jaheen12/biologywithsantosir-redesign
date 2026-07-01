@@ -31,7 +31,8 @@ export default async function AdminAttendancePage() {
   return (
     <div className="space-y-8 font-ui">
       <div>
-        <h1 className="text-2xl md:text-3xl font-bold text-text-primary">উপস্থিতি ব্যবস্থাপনা</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-text-primary">পরীক্ষার উপস্থিতি</h1>
+        <p className="text-sm text-text-secondary mt-1">ফলাফল এন্ট্রির ভিত্তিতে পরীক্ষায় শিক্ষার্থীদের উপস্থিতি ট্র্যাক করুন।</p>
       </div>
 
       <AttendanceClient batches={batches} adminId={user.id} />

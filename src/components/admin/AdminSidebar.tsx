@@ -33,7 +33,7 @@ const navigationGroups = [
     items: [
       { label: 'শিক্ষার্থী তালিকা', path: '/admin/students', icon: Users },
       { label: 'ভর্তি ব্যবস্থাপনা', path: '/admin/enrollments', icon: GraduationCap },
-      { label: 'উপস্থিতি', path: '/admin/attendance', icon: CheckSquare },
+      { label: 'পরীক্ষার উপস্থিতি', path: '/admin/attendance', icon: CheckSquare },
     ]
   },
   {

@@ -45,6 +45,9 @@ interface MakePaymentModalProps {
   batchId: string | null;
   defaultAmount: number;
   dueMonth: string | null;
+  dueMonths?: Array<{ month: string; outstanding: number }>;
+  monthlyFee?: number;
+  includeCurrentMonth?: boolean;
 }
 
 export default function MakePaymentModal({
@@ -52,6 +55,9 @@ export default function MakePaymentModal({
   batchId,
   defaultAmount,
   dueMonth,
+  dueMonths = [],
+  monthlyFee = 0,
+  includeCurrentMonth = true,
 }: MakePaymentModalProps) {
   const router = useRouter();
   const supabase = createClient();
@@ -72,20 +78,27 @@ export default function MakePaymentModal({
     const optionsMap = new Map<number, string>();
     const formatValue = (d: Date) => d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
     
-    // Last 3 months, current month, and next 2 months
-    for (let i = -3; i <= 2; i++) {
-      const d = new Date(today.getFullYear(), today.getMonth() + i, 1);
-      optionsMap.set(d.getTime(), formatValue(d));
+    // 1. Add all due months from the list
+    if (dueMonths && dueMonths.length > 0) {
+      dueMonths.forEach((item) => {
+        const time = new Date(`1 ${item.month}`).getTime();
+        if (!isNaN(time)) {
+          optionsMap.set(time, item.month);
+        }
+      });
+    } else if (dueMonth) {
+      // Fallback if list not provided
+      const time = new Date(`1 ${dueMonth}`).getTime();
+      if (!isNaN(time)) {
+        optionsMap.set(time, dueMonth);
+      }
     }
     
-    // Explicitly include dueMonth if it exists
-    if (dueMonth) {
-      const dueTime = new Date(`1 ${dueMonth}`).getTime();
-      if (!isNaN(dueTime)) {
-        optionsMap.set(dueTime, dueMonth);
-      } else {
-        optionsMap.set(0, dueMonth);
-      }
+    // 2. Add current month if it is not paid
+    if (includeCurrentMonth) {
+      const currentMonthStr = formatValue(today);
+      const currentMonthTime = new Date(today.getFullYear(), today.getMonth(), 1).getTime();
+      optionsMap.set(currentMonthTime, currentMonthStr);
     }
     
     const sortedTimestamps = Array.from(optionsMap.keys()).sort((a, b) => a - b);
@@ -107,6 +120,19 @@ export default function MakePaymentModal({
   };
 
   const [selectedMonth, setSelectedMonth] = useState(getDefaultMonth());
+
+  const handleMonthChange = (monthStr: string) => {
+    setSelectedMonth(monthStr);
+    
+    // Look up outstanding fee for the selected month
+    const found = dueMonths?.find(m => m.month === monthStr);
+    if (found) {
+      setAmount(found.outstanding.toString());
+    } else {
+      // If it's the current month (not in due list), prefill with full monthly fee
+      setAmount((monthlyFee || defaultAmount).toString());
+    }
+  };
 
   // Payment numbers (configurable/hardcoded)
   const paymentNumbers = {
@@ -247,7 +273,7 @@ export default function MakePaymentModal({
                   <select
                     id="month"
                     value={selectedMonth}
-                    onChange={(e) => setSelectedMonth(e.target.value)}
+                    onChange={(e) => handleMonthChange(e.target.value)}
                     required
                     disabled={!batchId}
                     className="w-full px-3 py-2 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-text-primary text-sm font-medium cursor-pointer"

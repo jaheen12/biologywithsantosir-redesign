@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { 
-  AlertCircle, 
   Calendar, 
   BookOpen, 
   Trophy, 
@@ -83,12 +82,7 @@ export default async function DashboardPage() {
     redirect('/login');
   }
 
-  // 2. Fetch payment due status
-  const { data: paymentDue } = await supabase
-    .from('payment_due')
-    .select('*')
-    .eq('student_id', user.id)
-    .single();
+
 
   const isEnrolled = !!profile.batch_id;
 
@@ -153,36 +147,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6 font-ui">
-      {/* Payment Banner */}
-      {isEnrolled && paymentDue && paymentDue.status !== 'paid' && (
-        <div 
-          className={`p-4 border rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300 ${
-            paymentDue.status === 'overdue' 
-              ? 'bg-error/10 border-error/20 text-error' 
-              : 'bg-accent/10 border-accent/20 text-text-primary'
-          }`}
-        >
-          <div className="flex items-start sm:items-center gap-3">
-            <AlertCircle className={`w-5 h-5 shrink-0 mt-0.5 sm:mt-0 ${paymentDue.status === 'overdue' ? 'text-error' : 'text-accent'}`} />
-            <p className="text-sm font-medium">
-              {paymentDue.status === 'overdue' 
-                ? `এই মাসের বেতন বকেয়া আছে (৳${toBengaliNumerals(paymentDue.monthly_fee)})` 
-                : `এই মাসের আংশিক পেমেন্ট হয়েছে। বকেয়া: ৳${toBengaliNumerals(paymentDue.outstanding)}`}
-            </p>
-          </div>
-          <Link 
-            href="/dashboard/payments" 
-            className={`inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl transition duration-150 shrink-0 w-fit ${
-              paymentDue.status === 'overdue'
-                ? 'bg-error text-white hover:bg-error-dark'
-                : 'bg-accent text-white hover:bg-accent/90'
-            }`}
-          >
-            পেমেন্ট বিবরণ দেখুন
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      )}
+
 
       {/* Welcome Card */}
       <div className="relative overflow-hidden bg-gradient-to-r from-primary to-primary-mid text-white p-6 sm:p-8 rounded-3xl shadow-sm">

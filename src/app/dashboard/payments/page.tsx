@@ -122,18 +122,22 @@ export default async function PaymentsPage() {
     .eq('student_id', user.id)
     .maybeSingle();
 
-  // Fetch student profile to get batch_id if dueStatus is not available
+  // Fetch enrollment details to get enrolled_at and batch_id
+  const { data: enrollment } = await supabase
+    .from('enrollments')
+    .select('enrolled_at, batch_id')
+    .eq('student_id', user.id)
+    .eq('status', 'active')
+    .maybeSingle();
+
+  // Fetch student profile to get batch_id if enrollment is not available
   const { data: profile } = await supabase
     .from('profiles')
     .select('batch_id')
     .eq('id', user.id)
     .single();
 
-  const studentBatchId = dueStatus?.batch_id || profile?.batch_id || null;
-
-  const defaultAmount = dueStatus 
-    ? (Number(dueStatus.outstanding) > 0 ? Number(dueStatus.outstanding) : Number(dueStatus.monthly_fee))
-    : 0;
+  const studentBatchId = dueStatus?.batch_id || enrollment?.batch_id || profile?.batch_id || null;
 
   // 2. Full payment history, newest first
   const { data: paymentsData } = await supabase
@@ -143,6 +147,85 @@ export default async function PaymentsPage() {
     .order('paid_on', { ascending: false });
 
   const payments = paymentsData as unknown as PaymentRecord[] | null;
+
+  // Generate due months list
+  const unpaidMonths: Array<{
+    month: string;
+    fee: number;
+    paid: number;
+    outstanding: number;
+    status: 'overdue' | 'partial';
+  }> = [];
+
+  if (enrollment && dueStatus) {
+    const enrolledDate = new Date(enrollment.enrolled_at || new Date().toISOString());
+    const today = new Date();
+    const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    
+    const monthlyFee = Number(dueStatus.monthly_fee);
+    
+    // Generate months from enrolledDate to prevMonth
+    const current = new Date(enrolledDate.getFullYear(), enrolledDate.getMonth(), 1);
+    const target = new Date(prevMonth.getFullYear(), prevMonth.getMonth(), 1);
+    
+    while (current <= target) {
+      const monthStr = current.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+      
+      // Calculate payments for this month
+      const paymentsForMonth = payments?.filter(p => p.month === monthStr) || [];
+      const paidForMonth = paymentsForMonth.reduce((sum, p) => sum + Number(p.amount), 0);
+      const outstandingForMonth = monthlyFee - paidForMonth;
+      
+      if (outstandingForMonth > 0) {
+        unpaidMonths.push({
+          month: monthStr,
+          fee: monthlyFee,
+          paid: paidForMonth,
+          outstanding: outstandingForMonth,
+          status: paidForMonth === 0 ? 'overdue' : 'partial'
+        });
+      }
+      
+      current.setMonth(current.getMonth() + 1);
+    }
+  }
+
+  // Generate all months of the current year and filter out fully paid ones, as well as months before enrollment
+  const currentYear = new Date().getFullYear();
+  const enrolledDate = new Date(enrollment?.enrolled_at || new Date().toISOString());
+  const enrolledStartOfMonth = new Date(enrolledDate.getFullYear(), enrolledDate.getMonth(), 1);
+
+  const monthNamesEn = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  const eligiblePaymentMonths = monthNamesEn.map((monthName, index) => {
+    const monthStr = `${monthName} ${currentYear}`;
+    const monthDate = new Date(currentYear, index, 1);
+    
+    // Check if this month is before the student's enrollment month
+    const isBeforeEnrollment = monthDate < enrolledStartOfMonth;
+
+    const paymentsForMonth = payments?.filter(p => p.month === monthStr) || [];
+    const paidForMonth = paymentsForMonth.reduce((sum, p) => sum + Number(p.amount), 0);
+    const monthlyFee = Number(dueStatus?.monthly_fee || 0);
+    const outstandingForMonth = Math.max(0, monthlyFee - paidForMonth);
+    return {
+      month: monthStr,
+      outstanding: outstandingForMonth,
+      isPaid: paidForMonth >= monthlyFee,
+      isBeforeEnrollment
+    };
+  }).filter(item => !item.isPaid && !item.isBeforeEnrollment);
+
+  // Pre-fill amount for the oldest unpaid month of the current year, or cumulative outstanding if no unpaid months
+  const defaultAmount = eligiblePaymentMonths.length > 0
+    ? eligiblePaymentMonths[0].outstanding
+    : (dueStatus ? (Number(dueStatus.outstanding) > 0 ? Number(dueStatus.outstanding) : Number(dueStatus.monthly_fee)) : 0);
+
+  const dueMonthForModal = eligiblePaymentMonths.length > 0
+    ? eligiblePaymentMonths[0].month
+    : null;
 
   // Group payments by month
   const grouped = payments?.reduce((acc, payment) => {
@@ -181,7 +264,9 @@ export default async function PaymentsPage() {
           studentId={user.id}
           batchId={studentBatchId}
           defaultAmount={defaultAmount}
-          dueMonth={dueStatus?.due_month || null}
+          dueMonth={dueMonthForModal}
+          dueMonths={eligiblePaymentMonths.map(m => ({ month: m.month, outstanding: m.outstanding }))}
+          monthlyFee={Number(dueStatus?.monthly_fee || 0)}
         />
       </div>
 
@@ -206,23 +291,25 @@ export default async function PaymentsPage() {
 
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-2">
-                <span className="text-xs text-text-secondary font-medium tracking-wider uppercase">চলতি মাসের স্ট্যাটাস</span>
+                <span className="text-xs text-text-secondary font-medium tracking-wider uppercase">বকেয়া বেতন স্ট্যাটাস</span>
                 <h3 className="text-xl font-bold text-text-primary">
-                  {formatMonth(dueStatus.due_month)} এর বেতন
+                  সর্বমোট বকেয়া বেতন
                 </h3>
                 
                 {/* Due status details */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2 pt-2 text-sm">
                   <div>
-                    <span className="text-text-muted block text-xs">মাসিক ফি</span>
-                    <span className="font-medium text-text-primary text-base">{formatPrice(dueStatus.monthly_fee)}</span>
+                    <span className="text-text-muted block text-xs">মোট ফি</span>
+                    <span className="font-medium text-text-primary text-base">
+                      {formatPrice(Number(dueStatus.outstanding) + Number(dueStatus.paid_this_month))}
+                    </span>
                   </div>
                   <div>
-                    <span className="text-text-muted block text-xs">পরিশোধিত</span>
+                    <span className="text-text-muted block text-xs">মোট পরিশোধিত</span>
                     <span className="font-medium text-text-primary text-base">{formatPrice(dueStatus.paid_this_month)}</span>
                   </div>
                   <div>
-                    <span className="text-text-muted block text-xs">বাকি / বকেয়া</span>
+                    <span className="text-text-muted block text-xs">মোট বকেয়া / বাকি</span>
                     <span className={`font-semibold text-base ${Number(dueStatus.outstanding) > 0 ? 'text-error' : 'text-primary-mid'}`}>
                       {formatPrice(dueStatus.outstanding)}
                     </span>
@@ -253,6 +340,38 @@ export default async function PaymentsPage() {
           </div>
         )}
       </div>
+
+      {/* Section 1.5: Individual Unpaid Months */}
+      {dueStatus && unpaidMonths.length > 0 && (
+        <div className="bg-surface border border-border rounded-2xl p-6 shadow-sm space-y-4">
+          <h3 className="text-sm font-bold text-text-primary flex items-center gap-2">
+            <Receipt className="w-5 h-5 text-primary" />
+            <span>মাসভিত্তিক বকেয়ার তালিকা</span>
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {unpaidMonths.map((item, idx) => (
+              <div key={idx} className="p-4 border border-border rounded-xl bg-surface-alt/40 flex flex-col justify-between gap-3">
+                <div>
+                  <h4 className="font-bold text-text-primary text-sm">{formatMonth(item.month)}</h4>
+                  <p className="text-xs text-text-secondary mt-1">
+                    মাসিক ফি: {formatPrice(item.fee)}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between border-t border-border pt-2 text-xs">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold ${
+                    item.status === 'overdue' ? 'bg-error/10 text-error' : 'bg-accent/10 text-accent'
+                  }`}>
+                    {item.status === 'overdue' ? 'বকেয়া' : 'আংশিক বকেয়া'}
+                  </span>
+                  <p className="font-semibold text-text-primary">
+                    বাকি: <span className="text-error">{formatPrice(item.outstanding)}</span>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Section 2: Payment History Table */}
       <div className="space-y-6">
@@ -346,7 +465,7 @@ export default async function PaymentsPage() {
                             <td className="px-6 py-4 text-right">
                               {payment.reconciled ? (
                                 <Link
-                                  href={`/admin/payments/${payment.id}/receipt`}
+                                  href={`/dashboard/payments/${payment.id}/receipt`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-dark transition-colors cursor-pointer"
